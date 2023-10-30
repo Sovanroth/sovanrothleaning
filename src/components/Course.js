@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import TeacherNavBar from "../../components/TeacherNavBar";
-import Footer from "../../components/Footer";
+import {FiMoreHorizontal} from 'react-icons/fi'
 
 const data = [
   {
@@ -44,40 +43,12 @@ const data = [
     price: "100",
     status: "unpublish",
   },
-  {
-    title: "NodeJS",
-    price: "10",
-    status: "publish",
-  },
-  {
-    title: "Advence NodeJS",
-    price: "100",
-    status: "unpublish",
-  },
 ];
-const stats = [
-  {
-    name: "All Revenue",
-    value: "$405,091.00",
-  },
-  {
-    name: "All Sale",
-    value: "100",
-  },
-  {
-    name: "This Month Revenue",
-    value: "$213434",
-  },
-  {
-    name: "This Month Sale",
-    value: "40",
-  },
-];
+
 
 const Courses = () => {
   return (
-    <div className="mx-auto min-h-screen ">
-      <TeacherNavBar />
+    <div className="mx-auto">
       <div className="App max-w-7xl px-4 sm:px-6 lg:px-8 mx-auto">
         <div className="mt-8 flow-root">
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -115,6 +86,17 @@ const Courses = () => {
                       >
                         Status
                       </th>
+                      <th
+                        scope="col"
+                        className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}
+                      >
+                        <FiMoreHorizontal size={18}/>
+                      </th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200 bg-white">
@@ -137,6 +119,14 @@ const Courses = () => {
                             ? "Publish"
                             : "Unpublish"}
                         </td>
+                        <td>
+                          <button
+                            type="button"
+                            className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                          >
+                            Edit
+                          </button>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -146,7 +136,6 @@ const Courses = () => {
           </div>
         </div>
       </div>
-      <Footer/>
     </div>
   );
 };

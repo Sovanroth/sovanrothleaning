@@ -38,7 +38,7 @@ export default function TeacherNavBar() {
                 </div>
               </div>
               <div className="relative z-0 flex flex-1 items-center justify-center px-2 sm:absolute sm:inset-0">
-                <div className="w-full sm:max-w-xs">
+                <div className="w-full sm:max-w-xs font-bold">
                     Welcome to Teacher Mode
                   {/* <label htmlFor="search" className="sr-only">
                     Search

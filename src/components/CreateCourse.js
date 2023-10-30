@@ -10,7 +10,7 @@ const CreateCourse = () => {
           What would you like to name your course? You can edit it later if you
           want to.
         </p>
-        <div className="pt-10">
+        <div className="pt-5">
           <label className="block text-sm font-medium leading-6 text-gray-900">
             Course Title
           </label>

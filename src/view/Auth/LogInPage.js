@@ -1,15 +1,11 @@
 import React from "react";
-import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
-import CourseOwned from "../../components/CourseOwned";
+import Login from "../../components/Login";
 
-const Home = () => {
+const LogInPage = () => {
   return (
     <div className="flex flex-col min-h-screen">
-      <NavBar />
-      <div>
-        <CourseOwned />
-      </div>
+      <Login />
       <div className="flex-grow"></div>
       <footer>
         <Footer />
@@ -18,4 +14,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default LogInPage;
