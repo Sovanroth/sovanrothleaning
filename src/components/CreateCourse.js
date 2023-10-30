@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const CreateCourse = () => {
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex items-center justify-center">
       <div className="max-w-7xl p-6">
         <h1 className="text-2xl">Name Your Course</h1>
         <p className="text-sm text-slate-600">
@@ -25,7 +25,7 @@ const CreateCourse = () => {
             What will you teach in this course?
           </p>
         </div>
-        <Link to='/teacher-mode'>
+        <Link to="/teacher-mode">
           <button
             type="button"
             className="mr-2 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
@@ -34,12 +34,14 @@ const CreateCourse = () => {
           </button>
         </Link>
 
-        <button
-          type="button"
-          className="mt-5 rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-        >
-          Continue
-        </button>
+        <Link to="/edit-course">
+          <button
+            type="button"
+            className="mt-5 rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+          >
+            Continue
+          </button>
+        </Link>
       </div>
     </div>
   );
