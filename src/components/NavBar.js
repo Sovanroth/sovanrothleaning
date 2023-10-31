@@ -2,12 +2,13 @@ import { Fragment, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const navigation = [
-  { name: "Dashboard", href: "/", current: true },
+  { name: "Dashboard", href: "/", current: false },
   { name: "Browse", href: "/browse", current: false },
 ];
+
 const userNavigation = [{ name: "Sign out", href: "/login" }];
 
 function classNames(...classes) {
@@ -15,7 +16,7 @@ function classNames(...classes) {
 }
 
 export default function NavBar() {
-  const [activeNavItem, setActiveNavItem] = useState("/");
+  const location = useLocation();
 
   return (
     <Disclosure as="header" className="bg-white shadow">
@@ -28,7 +29,7 @@ export default function NavBar() {
                   <img
                     className="h-8 w-auto"
                     src="sovanroth.png"
-                    alt="Your Company"
+                    alt="Sovanroth Nath"
                   />
                 </div>
               </div>
@@ -67,7 +68,7 @@ export default function NavBar() {
                 </Disclosure.Button>
               </div>
               <div className="hidden lg:relative lg:z-10 lg:ml-4 lg:flex lg:items-center">
-                <Link to='/teacher-mode'>
+                <Link to="/teacher-mode">
                   <button
                     type="button"
                     className="rounded-full bg-white px-3.5 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
@@ -109,7 +110,7 @@ export default function NavBar() {
                         <Menu.Item key={item.name}>
                           {({ active }) => (
                             <Link
-                            // {item.href === "/" ? }
+                              // {item.href === "/" ? }
                               to={item.href}
                               className={classNames(
                                 active ? "bg-gray-100" : "",
@@ -135,9 +136,9 @@ export default function NavBar() {
                   key={item.name}
                   to={item.href}
                   className={classNames(
-                    item.current
+                    item.current || location.pathname === item.href
                       ? "bg-gray-100 text-gray-900"
-                      : "text-gray-900 hover:bg-gray-50 hover:text-gray-900 ",
+                      : "text-gray-900 hover:bg-gray-50 hover:text-gray-900",
                     "inline-flex items-center rounded-md py-2 px-3 text-sm font-medium"
                   )}
                   aria-current={item.current ? "page" : undefined}
