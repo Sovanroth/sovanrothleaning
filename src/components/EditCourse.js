@@ -1,20 +1,9 @@
 import { Fragment, useState } from "react";
-import {
-  Bars3Icon,
-  CalendarIcon,
-  ChartPieIcon,
-  DocumentDuplicateIcon,
-  FolderIcon,
-  HomeIcon,
-  UsersIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
-import NavBar from "./NavBar";
 import { FaTrash, FaThList, FaEdit } from "react-icons/fa";
 import { TbCategoryFilled } from "react-icons/tb";
 import Footer from "./Footer";
 import {
-  Accessibility,
+  ChevronLeft,
   CircleDollarSign,
   Edit2,
   Eye,
@@ -69,7 +58,12 @@ export default function EditCourse() {
       <div className="grid grid-cols-2 gap-4 max-w-7xl mx-auto pt-4">
         <div className="pl-8">
           <div className=" text-start">
-            <p className=" text-xl font-bold">Course Setup</p>
+            <div className=" flex">
+              <button>
+                <ChevronLeft size={30} />
+              </button>
+              <p className=" text-xl font-bold">Course Setup</p>
+            </div>
             <p className=" text-xs mt-2">Complete all fields "(6/6)"</p>
           </div>
           <div className="mt-10 flex">
