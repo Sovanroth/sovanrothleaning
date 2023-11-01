@@ -53,7 +53,6 @@ const footerNavigation = {
   export default function Footer() {
     return (
       <footer
-        class="FooterSection"
         id="footer"
         className="mx-auto max-w-7xl overflow-hidden pb-10 sm:pb-10"
       >
