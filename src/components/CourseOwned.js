@@ -60,13 +60,14 @@ export default function CourseOwned() {
     <div className="bg-white ">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto mt-8 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-4 md:grid-cols-2">
-          {posts.map((post) => (
+          {posts.map((post, index) => (
             <article
-              key={post.id}
+              key={post.id + index}
               className="flex flex-col items-start justify-between"
             >
               <div className="relative w-full">
                 <img
+                  key={post.imageUrl}
                   src={post.imageUrl}
                   alt=""
                   className="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]"
@@ -75,11 +76,16 @@ export default function CourseOwned() {
               </div>
               <div className="max-w-xl">
                 <div className="mt-8 flex items-center gap-x-4 text-xs">
-                  <time dateTime={post.datetime} className="text-gray-500">
+                  <time
+                    key={post.date}
+                    dateTime={post.datetime}
+                    className="text-gray-500"
+                  >
                     {post.date}
                   </time>
                   <a
                     href={post.category.href}
+                    key={post.category.title}
                     className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
                   >
                     {post.category.title}
@@ -87,7 +93,7 @@ export default function CourseOwned() {
                 </div>
                 <div className="group relative">
                   <h3 className="mt-3 font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-                    <a href={post.href}>
+                    <a href={post.href} key={post.title}>
                       <span className="absolute inset-0" />
                       {post.title}
                     </a>
@@ -97,6 +103,7 @@ export default function CourseOwned() {
                   <div className="mt-5" aria-hidden="true">
                     <div className="overflow-hidden rounded-full bg-gray-200">
                       <div
+                        key={post.status}
                         className="h-2 rounded-full bg-green-600"
                         style={{ width: post.status }}
                       />

@@ -1,21 +1,62 @@
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 export default function Login() {
+  function handleFormSubmit(event) {
+    event.preventDefault(); // prevent the default form submission
+
+    // Perform any necessary form processing here
+
+    // Redirect to another route
+    window.location.href = "/";
+  }
+
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChangeEmail = (e) => {
+    const newVal = { ...data, email: e.target.value };
+    setData(newVal);
+  };
+
+  const handleChangePassword = (e) => {
+    const newVal = { ...data, password: e.target.value };
+    setData(newVal);
+  };
+
+  const handleLoginUser = async () => {
+    setLoading(true);
+
+    try {
+      const params = {
+        email: data?.email,
+        password: data?.password,
+      };
+      // dispatch(createUser(params));
+      console.log("login", params);
+    } catch (error) {
+      console.log(true);
+    }
+    setLoading(false);
+  };
+
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
-            className="mx-auto h-10 w-auto"
-            src="sovanroth.png"
-          />
+          <img className="mx-auto h-10 w-auto" src="sovanroth.png" />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Log in to your account
           </h2>
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form className="space-y-6" onSubmit={handleFormSubmit} method="POST">
             <div>
               <label
                 htmlFor="email"
@@ -25,6 +66,8 @@ export default function Login() {
               </label>
               <div className="mt-2">
                 <input
+                  value={data?.email}
+                  onChange={(e) => handleChangeEmail(e)}
                   id="email"
                   name="email"
                   type="email"
@@ -54,6 +97,8 @@ export default function Login() {
               </div>
               <div className="mt-2">
                 <input
+                  value={data?.password}
+                  onChange={(e) => handleChangePassword(e)}
                   id="password"
                   name="password"
                   type="password"
@@ -64,14 +109,15 @@ export default function Login() {
               </div>
             </div>
             <div>
-              <Link to="/">
-                <button
-                  type="submit"
-                  className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Log in
-                </button>
-              </Link>
+              {/* <Link to="/"> */}
+              <button
+                onClick={handleLoginUser}
+                type="submit"
+                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                Log in
+              </button>
+              {/* </Link> */}
             </div>
             <p className="mt-10 text-center text-sm text-gray-500">
               No account?{" "}
