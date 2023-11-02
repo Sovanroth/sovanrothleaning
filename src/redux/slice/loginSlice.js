@@ -11,7 +11,7 @@ const initialState = {
   user: [],
 };
 
-const signUpSlice = createSlice({
+const logInSlice = createSlice({
   name: "logIn", // Add the name option
   initialState,
   reducers: {
@@ -36,8 +36,8 @@ const signUpSlice = createSlice({
   },
 });
 
-export const { startLoading, stopLoading, hasError, setFilterSuccess, signUp } =
-  signUpSlice.actions;
+export const { startLoading, stopLoading, hasError, setFilterSuccess, login } =
+  logInSlice.actions;
 
 export const createUser = (params) => async (dispatch) => {
   dispatch(startLoading());
@@ -48,7 +48,7 @@ export const createUser = (params) => async (dispatch) => {
       params
     );
     if (response?.data) {
-      dispatch(signUp(response?.data));
+      dispatch(login(response?.data));
     }
     console.log("login", params);
     return response;

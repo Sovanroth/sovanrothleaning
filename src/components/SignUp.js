@@ -1,10 +1,27 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { createUser } from "../../src/redux/slice/signUpSlice";
 
 export default function SignUp() {
   const [loading, setLoading] = useState(false);
+  const user = useSelector((state) => state.signUp.user);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const getMessage = () => {
+    try {
+      const status = user.status;
+
+      if (status === 0) {
+        setErrorMessage(user.message);
+      } else if (status === 1 ){
+        console.log("")
+      }
+    } catch (error) {
+      setErrorMessage("An error occurred. Please try again later.");
+    }
+  };
+
   const dispatch = useDispatch();
   const [data, setData] = useState({
     email: "",
@@ -14,12 +31,14 @@ export default function SignUp() {
   });
 
   function handleFormSubmit(event) {
-    event.preventDefault(); // prevent the default form submission
+    // event.preventDefault(); // Move the preventDefault call to the beginning of the function
 
-    // Perform any necessary form processing here
-
-    // Redirect to another route
-    window.location.href = "/login";
+    if (user.status === 1) {
+      window.location.href = "/login";
+    } else {
+      getMessage();
+      window.location.href = "/signup";
+    }
   }
 
   const handleChangeUserName = (e) => {
@@ -52,11 +71,13 @@ export default function SignUp() {
     } catch (error) {
       console.log(true);
     }
+    getMessage();
     setLoading(false);
   };
 
   return (
     <>
+      {/* {JSON.stringify(user.status)} */}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img className="mx-auto h-10 w-auto" src="sovanroth.png" />
@@ -64,9 +85,8 @@ export default function SignUp() {
             Create your Account
           </h2>
         </div>
-
-        <form method="POST" onSubmit={handleFormSubmit}>
-          <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+          {/* <form className="space-y-6" method="POST" onSubmit={handleFormSubmit}> */}
             <div>
               <label
                 htmlFor="text"
@@ -118,14 +138,6 @@ export default function SignUp() {
                 >
                   Password
                 </label>
-                {/* <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
-                  >
-                    Forgot password?
-                  </a>
-                </div> */}
               </div>
               <div className="mt-2">
                 <input
@@ -141,37 +153,21 @@ export default function SignUp() {
                 />
               </div>
             </div>
-
-            {/* <div>
-            <div className="flex items-center justify-between">
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Confirm Password
-              </label>
-            </div>
-            <div className="mt-2">
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div> */}
             <div>
+              {errorMessage && (
+                <p className=" text-sm pt-1 text-end text-red-600">
+                  {errorMessage}
+                </p>
+              )}
               {/* <Link to="../login"> */}
-                <button
-                  onClick={handleCreateUser}
-                  // disabled={!data.username && !data?.email && !data.password}
-                  type="submit"
-                  className="mt-4 flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Sign up
-                </button>
+              <button
+                onClick={handleCreateUser}
+                // disabled={!data.username && !data?.email && !data.password}
+                type="submit"
+                className="mt-4 flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                Sign up
+              </button>
               {/* </Link> */}
             </div>
             <p className="mt-10 text-center text-sm text-gray-500">
@@ -183,8 +179,8 @@ export default function SignUp() {
                 Sign in
               </Link>
             </p>
-          </div>
-        </form>
+          {/* </form> */}
+        </div>
       </div>
     </>
   );

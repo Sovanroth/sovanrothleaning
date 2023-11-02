@@ -8,8 +8,16 @@ import TeacherHome from "./view/Teacher/TeacherHome";
 import NotFoundPage from "./components/NotFoundPage";
 import LogInPage from "./view/Auth/LogInPage";
 import EditCoursePage from "./view/Teacher/EditCoursePage";
+import useToken from '../src/view/Auth/useToken';
 
 function App() {
+
+  // const { token, setToken } = useToken();
+  // if(!token) {
+  //   return <LogInPage setToken={setToken} />
+  // }
+
+
   return (
     <Router>
       <Routes>
