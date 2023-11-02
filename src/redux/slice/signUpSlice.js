@@ -38,9 +38,6 @@ const signUpSlice = createSlice({
   },
 });
 
-export const { startLoading, stopLoading, hasError, setFilterSuccess, signUp } =
-  signUpSlice.actions;
-
 export const createUser = (params) => async (dispatch) => {
   dispatch(startLoading());
 
@@ -52,12 +49,15 @@ export const createUser = (params) => async (dispatch) => {
     if (response?.data) {
       dispatch(signUp(response?.data));
     }
-    // console.log("signup", params);
+    console.log("signup", response);
     return response;
   } catch (error) {
     console.log(error);
     return error;
   }
 };
+
+export const { startLoading, stopLoading, hasError, setFilterSuccess, signUp } =
+  signUpSlice.actions;
 
 export default signUpSlice.reducer;
