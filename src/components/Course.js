@@ -27,20 +27,13 @@ const Courses = () => {
     refreshData();
   }
 
-  // const refreshData = () => {
-  //   dispatch(getEventData(filter?.school?.id));
-  // };
-
-
   useEffect(() => {
     dispatch(getCoursesData());
-    // deleteData();
     console.log(course)
   }, [])
 
   return (
     <div className="mx-auto">
-      {/* {JSON.stringify(course)} */}
       <div className="App max-w-7xl mx-auto mt-5">
         <div className="flow-root">
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
