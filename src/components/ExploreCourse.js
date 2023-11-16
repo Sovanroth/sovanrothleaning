@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getCoursesData } from "../redux/slice/courseSlice";
 import Moment from "react-moment";
 
-export default function CourseOwned() {
+export default function ExploreCourse() {
   const [loading, setLoading] = useState(false);
   const data = useSelector((state) => state?.courses?.data);
   const dispatch = useDispatch();
@@ -22,7 +22,6 @@ export default function CourseOwned() {
   };
 
 
-  const activeCourses = data?.data?.filter(course => course.active === "1") || [];
 
   useEffect(() => {
     console.log(data);
@@ -34,7 +33,7 @@ export default function CourseOwned() {
       {/* {JSON.stringify(activeCourses)} */}
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto mt-8 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-4 md:grid-cols-2">
-          {activeCourses?.map((post, index) => (
+          {data?.data?.map((post, index) => (
             <article
               key={post.id + index}
               className="flex flex-col items-start justify-between"

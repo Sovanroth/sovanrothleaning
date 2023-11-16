@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createSlice } from "@reduxjs/toolkit";
+import { async } from "@firebase/util";
 
 const initialState = {
   isLoading: false,
@@ -41,21 +42,30 @@ const coursesSlice = createSlice({
 
 export const getCoursesData = () => async (dispatch) => {
   dispatch(startLoading());
-
   try{
       const response = await axios.get(`http://localhost:8000/course/get-all-courses`);
       if(response?.data) {
-          dispatch(getCoursesData(response?.data));
-          console.log("course", response);
+          dispatch(getCourses(response?.data));
+          // console.log("course", response);
           return response;
       }
   } catch (error) {
       console.log(error);
       return error;
   }
-
-  dispatch(stopLoading());
+  dispatch(stopLoading())
 };
+
+export const deleteCourse = (param) => async (dispatch) => {
+  dispatch(startLoading());
+  try {
+    const response = await axios.delete(`http://localhost:8000/course/delete-course/${param}`);
+    return response;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+}
 
 
 export const { startLoading, stopLoading, hasError, setFilterSuccess, getCourses } =

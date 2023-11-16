@@ -1,56 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {FiMoreHorizontal} from 'react-icons/fi'
-
-const data = [
-  {
-    title: "NodeJS",
-    price: "10",
-    status: "publish",
-  },
-  {
-    title: "Advence NodeJS",
-    price: "100",
-    status: "unpublish",
-  },
-  {
-    title: "NodeJS",
-    price: "10",
-    status: "publish",
-  },
-  {
-    title: "Advence NodeJS",
-    price: "100",
-    status: "unpublish",
-  },
-  {
-    title: "NodeJS",
-    price: "10",
-    status: "publish",
-  },
-  {
-    title: "Advence NodeJS",
-    price: "100",
-    status: "unpublish",
-  },
-  {
-    title: "NodeJS",
-    price: "10",
-    status: "publish",
-  },
-  {
-    title: "Advence NodeJS",
-    price: "100",
-    status: "unpublish",
-  },
-];
+import { useSelector, useDispatch } from "react-redux";
+import { deleteCourse, getCoursesData } from "../../src/redux/slice/courseSlice"
 
 
 const Courses = () => {
+
+  const course = useSelector((state) => state?.courses?.data);
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+
+  const refreshData = () => {
+    dispatch(getCoursesData())
+  }
+
+  const deleteData = async (param) =>{
+    setLoading(true);
+    try {
+      const response = await dispatch(deleteCourse(param))
+      return response;
+    } catch(error) {
+      console.log(error);
+      return error;
+    }
+    refreshData();
+  }
+
+  // const refreshData = () => {
+  //   dispatch(getEventData(filter?.school?.id));
+  // };
+
+
+  useEffect(() => {
+    dispatch(getCoursesData());
+    // deleteData();
+    console.log(course)
+  }, [])
+
   return (
     <div className="mx-auto">
-      <div className="App max-w-7xl px-4 sm:px-6 lg:px-8 mx-auto">
-        <div className="mt-8 flow-root">
+      {/* {JSON.stringify(course)} */}
+      <div className="App max-w-7xl mx-auto mt-5">
+        <div className="flow-root">
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8 mx-auto">
               <div className="flex justify-between items-center mb-4">
@@ -100,22 +92,22 @@ const Courses = () => {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200 bg-white">
-                    {data.map((person) => (
+                    {course?.data?.map((person) => (
                       <tr key={person.title}>
                         <td className="whitespace-nowrap py-4 pr-3 text-sm font-medium text-gray-900">
-                          {person.title}
+                          {person.courseTitle}
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {person.price}$
+                          {person.coursePrice}
                         </td>
                         <td
                           className={`whitespace-nowrap px-3 py-4 text-sm font-bold ${
-                            person.status === "publish"
+                            person.active === "1"
                               ? "text-green"
                               : "text-red"
                           }`}
                         >
-                          {person.status === "publish"
+                          {person.active === "1"
                             ? "Publish"
                             : "Unpublish"}
                         </td>
@@ -125,6 +117,13 @@ const Courses = () => {
                             className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                           >
                             Edit
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => deleteData(person?.course_id)}
+                            className="ml-1 rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-red-100"
+                          >
+                            Delete
                           </button>
                         </td>
                       </tr>
