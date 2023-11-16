@@ -29,7 +29,7 @@ const logInSlice = createSlice({
       state.isLoading = false;
       state.filter = actions.payload;
     },
-    login(state, actions) {
+    login(state, actions) {sc
       state.isLoading = false;
       state.user = actions.payload;
     },

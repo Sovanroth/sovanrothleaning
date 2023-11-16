@@ -43,7 +43,7 @@ export const createUser = (params) => async (dispatch) => {
 
   try {
     const response = await axios.post(
-      `http://localhost:8000/auth/register`,
+      `http://localhost:8000/auth/signup`,
       params
     );
     if (response?.data) {

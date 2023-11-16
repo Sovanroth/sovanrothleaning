@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import { createUser } from "../../src/redux/slice/signUpSlice";
 
 export default function SignUp() {
   const [loading, setLoading] = useState(false);
   const user = useSelector((state) => state.signUp.user);
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
 
   const getMessage = () => {
     try {
@@ -14,8 +16,8 @@ export default function SignUp() {
 
       if (status === 0) {
         setErrorMessage(user.message);
-      } else if (status === 1 ){
-        console.log("")
+      } else if (status === 1) {
+        setErrorMessage("");
       }
     } catch (error) {
       setErrorMessage("An error occurred. Please try again later.");
@@ -58,7 +60,6 @@ export default function SignUp() {
 
   const handleCreateUser = async () => {
     setLoading(true);
-
     try {
       const params = {
         email: data?.email,
@@ -68,6 +69,7 @@ export default function SignUp() {
       };
       dispatch(createUser(params));
       console.log("dataSignup", params);
+      navigate('/login');
     } catch (error) {
       console.log(true);
     }
@@ -85,8 +87,8 @@ export default function SignUp() {
             Create your Account
           </h2>
         </div>
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          {/* <form className="space-y-6" method="POST" onSubmit={handleFormSubmit}> */}
+        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm space-y-6">
+          <form className="space-y-6" method="POST">
             <div>
               <label
                 htmlFor="text"
@@ -94,7 +96,7 @@ export default function SignUp() {
               >
                 Username
               </label>
-              <div className="mt-2">
+              <div>
                 <input
                   onClick={handleChangeUserName}
                   value={data?.username}
@@ -115,7 +117,7 @@ export default function SignUp() {
               >
                 Email address
               </label>
-              <div className="mt-2">
+              <div >
                 <input
                   onClick={handleChangEmail}
                   value={data?.email}
@@ -139,7 +141,7 @@ export default function SignUp() {
                   Password
                 </label>
               </div>
-              <div className="mt-2">
+              <div>
                 <input
                   onClick={handleChangePassword}
                   value={data?.password}
@@ -155,22 +157,20 @@ export default function SignUp() {
             </div>
             <div>
               {errorMessage && (
-                <p className=" text-sm pt-1 text-end text-red-600">
+                <p className=" text-xs text-end text-red-600 font-bold">
                   {errorMessage}
                 </p>
               )}
-              {/* <Link to="../login"> */}
               <button
                 onClick={handleCreateUser}
-                // disabled={!data.username && !data?.email && !data.password}
+                disabled={!data.username || !data?.email || !data.password}
                 type="submit"
                 className="mt-4 flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Sign up
               </button>
-              {/* </Link> */}
             </div>
-            <p className="mt-10 text-center text-sm text-gray-500">
+            <p className=" text-center text-sm text-gray-500">
               Have an account?{" "}
               <Link
                 to="../login"
@@ -179,7 +179,7 @@ export default function SignUp() {
                 Sign in
               </Link>
             </p>
-          {/* </form> */}
+          </form>
         </div>
       </div>
     </>
