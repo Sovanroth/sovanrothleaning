@@ -1,4 +1,7 @@
-import { Progress } from "@material-tailwind/react";
+import { async, isEmpty } from "@firebase/util";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getCoursesData } from "../redux/slice/courseSlice";
 
 const posts = [
   {
@@ -56,8 +59,29 @@ const posts = [
 ];
 
 export default function CourseOwned() {
+  const [loading, setLoading] = useState(false);
+  const data = useSelector((state) => state?.courses?.data);
+  const dispatch = useDispatch();
+
+  const initData = async () => {
+    setLoading(true);
+    try {
+      const response = await dispatch(getCoursesData());
+      return response;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    console.log(data);
+  }, [data])
+
   return (
     <div className="bg-white ">
+      {JSON.stringify(data)}
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto mt-8 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-4 md:grid-cols-2">
           {posts.map((post, index) => (
