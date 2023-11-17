@@ -1,36 +1,38 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {FiMoreHorizontal} from 'react-icons/fi'
+import { FiMoreHorizontal } from "react-icons/fi";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteCourse, getCoursesData } from "../../src/redux/slice/courseSlice"
-
+import {
+  deleteCourse,
+  getCoursesData,
+} from "../../src/redux/slice/courseSlice";
 
 const Courses = () => {
-
   const course = useSelector((state) => state?.courses?.data);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
   const refreshData = () => {
-    dispatch(getCoursesData())
-  }
+    dispatch(getCoursesData());
+  };
 
-  const deleteData = async (param) =>{
+  const deleteData = async (param) => {
     setLoading(true);
     try {
-      const response = await dispatch(deleteCourse(param))
+      const response = dispatch(deleteCourse(param));
+      refreshData();
       return response;
-    } catch(error) {
+    } catch (error) {
       console.log(error);
       return error;
     }
-    refreshData();
-  }
+    setLoading(false);
+  };
 
   useEffect(() => {
     dispatch(getCoursesData());
-    console.log(course)
-  }, [])
+    console.log(course);
+  }, []);
 
   return (
     <div className="mx-auto">
@@ -75,12 +77,12 @@ const Courses = () => {
                         scope="col"
                         className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
                         style={{
-                          display: 'flex',
-                          justifyContent: 'center',
-                          alignItems: 'center',
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
                         }}
                       >
-                        <FiMoreHorizontal size={18}/>
+                        <FiMoreHorizontal size={18} />
                       </th>
                     </tr>
                   </thead>
@@ -95,14 +97,10 @@ const Courses = () => {
                         </td>
                         <td
                           className={`whitespace-nowrap px-3 py-4 text-sm font-bold ${
-                            person.active === "1"
-                              ? "text-green"
-                              : "text-red"
+                            person.active === "1" ? "text-green" : "text-red"
                           }`}
                         >
-                          {person.active === "1"
-                            ? "Publish"
-                            : "Unpublish"}
+                          {person.active === "1" ? "Publish" : "Unpublish"}
                         </td>
                         <td>
                           <button

@@ -4,7 +4,8 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getCoursesData, getOneData } from "../redux/slice/courseSlice";
-import MuxVideo from "@mux/mux-video-react";
+import MuxPlayer from "@mux/mux-video-react";
+import { CheckCircleIcon } from "@heroicons/react/20/solid";
 
 const BuyCourse = () => {
   const { id } = useParams();
@@ -46,7 +47,7 @@ const BuyCourse = () => {
   }, []);
 
   return (
-    <div className="px-6 lg:px-8 mt-5">
+    <div className="mx-auto max-w-7xl px-6 lg:px-8 mt-5">
       {/* {JSON.stringify(oneData)} */}
       <div className="flex">
         {/* First Column */}
@@ -77,12 +78,37 @@ const BuyCourse = () => {
         <div className="w-2/3">
           {/* Your content for the second column goes here */}
           <div className="p-4">
-            <MuxVideo
-              stream-type="on-demand"
-              playback-id="EcHgOK9coz5K4rjSwOkoE7Y7O01201YMIC200RI6lNxnhs"
-              metadata-video-title="Test VOD"
-              metadata-viewer-user-id="user-id-007"
+            <MuxPlayer
+              streamType="on-demand"
+              width={1080}
+              playbackId="EcHgOK9coz5K4rjSwOkoE7Y7O01201YMIC200RI6lNxnhs"
+              metadata={{
+                video_id: "video-id-54321",
+                video_title: "Test video title",
+                viewer_user_id: "user-id-007",
+              }}
             />
+            <div class="mt-6 border bg-slate-100 rounded-md p-4">
+              <div class="font-medium text-sm flex items-center justify-between">
+                Resource and Attatchments
+              </div>
+              {/* <p className=" text-sm pt-5 italic">No Attatchments</p> */}
+              <a
+                className=" text-sm pt-10 italic text-blue-400 underline"
+                href={oneData?.course?.courseResource}
+                target="_blank"
+              >
+                {oneData?.course?.courseResource}
+              </a>
+            </div>
+            <div className="flex justify-end">
+              <button
+                type="button"
+                className="rounded-full mt-5 bg-indigo-600 px-3.5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                Buy Course
+              </button>
+            </div>
           </div>
         </div>
       </div>
