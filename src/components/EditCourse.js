@@ -1,74 +1,29 @@
-import { Fragment, useState } from "react";
 import { FaTrash, FaThList, FaEdit } from "react-icons/fa";
-import { TbCategoryFilled } from "react-icons/tb";
 import Footer from "./Footer";
-import {
-  ChevronLeft,
-  CircleDollarSign,
-  Edit2,
-  Eye,
-  File,
-  PlusCircle,
-} from "lucide-react";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-
-const finalSpaceCharacters = [
-  {
-    id: "gary",
-    name: "Gary Goodspeed",
-    thumb: "/images/gary.png",
-  },
-  {
-    id: "cato",
-    name: "Little Cato",
-    thumb: "/images/cato.png",
-  },
-  {
-    id: "kvn",
-    name: "KVN",
-    thumb: "/images/kvn.png",
-  },
-  {
-    id: "mooncake",
-    name: "Mooncake",
-    thumb: "/images/mooncake.png",
-  },
-  {
-    id: "quinn",
-    name: "Quinn Ergon",
-    thumb: "/images/quinn.png",
-  },
-];
+import { Edit2, PlusCircle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function EditCourse() {
-  const [characters, updateCharacters] = useState(finalSpaceCharacters);
-
-  function handleOnDragEnd(result) {
-    if (!result.destination) return;
-
-    const items = Array.from(characters);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-
-    updateCharacters(items);
-  }
+  const navigate = useNavigate();
 
   return (
     <>
+    <div className=" text-center m-5 font-bold text-xl">
+      Course Setup
+    </div>
       <div className="grid grid-cols-2 gap-4 max-w-7xl mx-auto pt-4">
         <div className="pl-8">
           <div className=" text-start">
             <div className=" flex">
-              <button>
-                <ChevronLeft size={30} />
+              <button
+                onClick={() => navigate(-1)}
+                type="button"
+                className="rounded-full bg-indigo-600 px-3.5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                Back
               </button>
-              <p className=" text-xl font-bold">Course Setup</p>
+              {/* <p className=" text-xl font-bold">Course Setup</p> */}
             </div>
-            <p className=" text-xs mt-2">Complete all fields "(6/6)"</p>
-          </div>
-          <div className="mt-10 flex">
-            <TbCategoryFilled color="#CCCCCC" size={35} />
-            <div className="pt-1.5">Customize Your Course</div>
           </div>
 
           {/* Course Title */}
@@ -129,12 +84,6 @@ export default function EditCourse() {
             />
           </div>
 
-          {/* Course Setting  */}
-          <div className="mt-10 flex">
-            <Eye color="#CCCCCC" className=" rounded-2xl " size={35} />
-            <div className="mt-1.5 ml-1 ">Customize Your Course</div>
-          </div>
-
           {/* Access Setting */}
           <div class="mt-6 border bg-slate-100 rounded-md p-4">
             <div class="font-medium text-sm flex items-center justify-between">
@@ -149,22 +98,23 @@ export default function EditCourse() {
         </div>
         <div className=" pt-4">
           <div className="flex justify-end">
-            <div className="grid grid-cols-2 max-w-fit">
-              <button
-                type="button"
-                className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-              >
-                Unpublish
-              </button>
-              <button className="ml-2 max-w-fit">
-                <FaTrash size={20} />
-              </button>
-            </div>
+            <button
+              type="button"
+              className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+            >
+              Unpublish
+            </button>
+            {/* <button
+              type="button"
+              className="ml-2 rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-red-500"
+            >
+              Delete
+            </button> */}
           </div>
-          <div className=" mt-12 flex">
+          {/* <div className=" mt-12 flex">
             <FaThList color="#CCCCCC" size={30} />
             <div className="pt-1 pl-1.5">Course Chapters</div>
-          </div>
+          </div> */}
 
           <div class="mt-6 border bg-slate-100 rounded-md p-4">
             <div class="font-medium text-sm flex items-center justify-between">
@@ -180,12 +130,6 @@ export default function EditCourse() {
             </p>
           </div>
 
-          {/* Course Setting  */}
-          <div className="mt-10 flex">
-            <CircleDollarSign color="#CCCCCC" size={35} />
-            <div className="mt-1.5 ml-1 ">Customize Your Course</div>
-          </div>
-
           {/* Course Price */}
           <div class="mt-6 border bg-slate-100 rounded-md p-4">
             <div class="font-medium text-sm flex items-center justify-between">
@@ -196,13 +140,6 @@ export default function EditCourse() {
               </button>
             </div>
             <p className=" text-sm pt-5">10$</p>
-          </div>
-
-          {/* Resource and Attatch */}
-          <div className="mt-10 flex">
-            {/* <AiFillFile size={35} /> */}
-            <File color="#CCCCCC" size={35} />
-            <div className="mt-1.5 "> Resource and Attatchments Setting</div>
           </div>
 
           {/* Resource */}

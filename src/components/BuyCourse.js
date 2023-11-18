@@ -1,11 +1,11 @@
 import { PlayCircle } from "lucide-react";
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getCoursesData, getOneData } from "../redux/slice/courseSlice";
-import MuxPlayer from "@mux/mux-video-react";
-import { CheckCircleIcon } from "@heroicons/react/20/solid";
+import { getOneData } from "../redux/slice/courseSlice";
+import MuxPlayer from "@mux/mux-player-react";
+import FAQ from "./FAQ";
 
 const BuyCourse = () => {
   const { id } = useParams();
@@ -13,6 +13,7 @@ const BuyCourse = () => {
   const [loading, setLoading] = useState(false);
   const oneData = useSelector((state) => state?.courses?.oneData);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const initData = async () => {
     setLoading(true);
@@ -49,6 +50,15 @@ const BuyCourse = () => {
   return (
     <div className="mx-auto max-w-7xl px-6 lg:px-8 mt-5">
       {/* {JSON.stringify(oneData)} */}
+
+      <button
+        onClick={() => navigate(-1)}
+        type="button"
+        className="rounded-full bg-indigo-600 px-3.5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+      >
+        Back
+      </button>
+
       <div className="flex">
         {/* First Column */}
         <div className="w-1/3">
@@ -80,13 +90,11 @@ const BuyCourse = () => {
           <div className="p-4">
             <MuxPlayer
               streamType="on-demand"
-              width={1080}
-              playbackId="EcHgOK9coz5K4rjSwOkoE7Y7O01201YMIC200RI6lNxnhs"
-              metadata={{
-                video_id: "video-id-54321",
-                video_title: "Test video title",
-                viewer_user_id: "user-id-007",
-              }}
+              playbackId="UOWU9Q302GvkoYIP2JzUhL3ZeNFMM7zCSwOcmHEolj8A"
+              metadataVideoTitle="Placeholder (optional)"
+              metadataViewerUserId="Placeholder (optional)"
+              primaryColor="#FFFFFF"
+              secondaryColor="#000000"
             />
             <div class="mt-6 border bg-slate-100 rounded-md p-4">
               <div class="font-medium text-sm flex items-center justify-between">
@@ -112,6 +120,7 @@ const BuyCourse = () => {
           </div>
         </div>
       </div>
+      {/* <FAQ/> */}
     </div>
   );
 };

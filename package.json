@@ -7,6 +7,7 @@
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
     "@material-tailwind/react": "^2.1.4",
+    "@mux/mux-player-react": "^2.2.0",
     "@mux/mux-video-react": "^0.8.0",
     "@reduxjs/toolkit": "^1.9.7",
     "@testing-library/jest-dom": "^5.17.0",
