@@ -28,7 +28,7 @@ export default function NavBar() {
                 <div className="flex flex-shrink-0 items-center">
                   <img
                     className="h-8 w-auto"
-                    src="sovanroth.png"
+                    src="/sovanroth.png"
                     alt="Sovanroth Nath"
                   />
                 </div>

@@ -9,6 +9,8 @@ import NotFoundPage from "./components/NotFoundPage";
 import LogInPage from "./view/Auth/LogInPage";
 import EditCoursePage from "./view/Teacher/EditCoursePage";
 import useToken from '../src/view/Auth/useToken';
+import BuyCourse from "./components/BuyCourse";
+import PurchaseCourse from "./view/Student/PurchaseCourse";
 
 function App() {
 
@@ -29,6 +31,7 @@ function App() {
         <Route path="/login" element={<LogInPage />}></Route>
         <Route path="/edit-course" element={<EditCoursePage />}></Route>
         <Route path="*" element={<NotFoundPage />}></Route>
+        <Route path="/browse/buy-course/:id" element={<PurchaseCourse/>}></Route>
       </Routes>
     </Router>
   );
