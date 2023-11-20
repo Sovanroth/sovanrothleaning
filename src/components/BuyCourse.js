@@ -1,4 +1,4 @@
-import { PlayCircle } from "lucide-react";
+import { Play, PlayCircle, PlayIcon } from "lucide-react";
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -74,13 +74,22 @@ const BuyCourse = () => {
             {/* ))} */}
 
             <div class="border-t border-gray-500 my-4"></div>
-
-            <div className="flex flex-row">
-              <div>
-                <PlayCircle />
+            {/* {JSON.stringify(oneData)} */}
+            {oneData?.course?.videos.map((video) => (
+              <div className="flex flex-row mt-2">
+                <button
+                  type="button"
+                  className=" w-screen text-start rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                >
+                  <div className="flex flex-row">
+                    <PlayCircle />
+                    <p className=" content-center ml-2 align-middle">{video.video_title}</p>
+                  </div>
+                </button>
+                {/* <PlayIcon/>
+                <p className="ml-2">{video.video_title}</p> */}
               </div>
-              <div className="ml-2">description</div>
-            </div>
+            ))}
           </div>
         </div>
 

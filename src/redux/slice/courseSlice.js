@@ -61,7 +61,7 @@ export const getOneData = (param) => async (dispatch) => {
 
   try {
     const respone = await axios.get(
-      `http://localhost:8000/course/get-one-course/${param}`
+      `http://localhost:8000/course/get-course-with-video/${param}`
     );
     if (respone?.data) {
       // dispatch(getone)
