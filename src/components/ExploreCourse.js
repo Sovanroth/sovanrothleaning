@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getCoursesData, getOneData } from "../redux/slice/courseSlice";
 import Moment from "react-moment";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AreaChart, Code2, DatabaseZap, Music, Settings } from "lucide-react";
 
 const list = [
   {
     id: 1,
     category: "FRONT END",
-    icon: <Code2 size={16} color="blue"/>,
+    icon: <Code2 size={16} color="blue" />,
   },
   {
     id: 2,
@@ -37,6 +37,10 @@ export default function ExploreCourse() {
   const [loading, setLoading] = useState(false);
   const data = useSelector((state) => state?.courses?.data);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const originalCourse = data?.data;
+  const [course, setCourse] = useState(originalCourse)
+  // const course = data?.data;
 
   const initData = async () => {
     setLoading(true);
@@ -64,6 +68,12 @@ export default function ExploreCourse() {
   //   }
   // };
 
+  const handleClickBackend = () => {
+    const category1 =
+      data?.data?.filter((course) => course.category === "1") || [];
+    setCourse(category1)
+  };
+
   useEffect(() => {
     console.log(data);
     initData();
@@ -78,6 +88,7 @@ export default function ExploreCourse() {
               <button
                 type="button"
                 className="rounded-full bg-white px-3 py-1.5 text-xs text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                onClick={() => handleClickBackend()}
               >
                 <div className=" flex flex-row">
                   {data.icon}
@@ -88,7 +99,7 @@ export default function ExploreCourse() {
           </div>
         </div>
         <div className="mx-auto mt-5 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-4 md:grid-cols-2">
-          {data?.data?.map((post, index) => (
+          {course?.map((post, index) => (
             <Link to={`/browse/buy-course/${post.course_id}`}>
               <article
                 key={post.id + index}
