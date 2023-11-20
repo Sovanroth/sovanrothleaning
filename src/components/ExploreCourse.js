@@ -116,7 +116,7 @@ export default function ExploreCourse() {
                 </div>
                 <div className="max-w-xl">
                   <div className="mt-2 flex items-center gap-x-4 text-xs">
-                    <Moment key={post?.create_at} format="DD-MMMM-YYYY">
+                    <Moment key={post?.create_at} format="DD-MMM-YYYY">
                       {post.create_at}
                     </Moment>
                     {/* <time
