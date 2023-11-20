@@ -1,9 +1,38 @@
-import { async, isEmpty } from "@firebase/util";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getCoursesData } from "../redux/slice/courseSlice";
 import Moment from "react-moment";
 import { Link } from "react-router-dom";
+import { AreaChart, Code2, DatabaseZap, Music, Settings } from "lucide-react";
+
+
+const list = [
+  {
+    id: 1,
+    category: "FRONT END",
+    icon: <Code2 size={16} color="blue" />,
+  },
+  {
+    id: 2,
+    category: "BACK END",
+    icon: <DatabaseZap size={16} color="red" />,
+  },
+  {
+    id: 3,
+    category: "ACCOUNTING",
+    icon: <AreaChart size={16} color="green" />,
+  },
+  {
+    id: 4,
+    category: "ENGINEERING",
+    icon: <Settings size={16} />,
+  },
+  {
+    id: 5,
+    category: "MUSIC",
+    icon: <Music size={16} color="purple" />,
+  },
+];
 
 export default function CourseOwned() {
   const [loading, setLoading] = useState(false);
@@ -22,8 +51,8 @@ export default function CourseOwned() {
     // setLoading(false);
   };
 
-
-  const activeCourses = data?.data?.filter(course => course.active === "1") || [];
+  const activeCourses =
+    data?.data?.filter((course) => course.active === "1") || [];
 
   useEffect(() => {
     console.log(data);
@@ -33,7 +62,22 @@ export default function CourseOwned() {
   return (
     <div className="bg-white ">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto mt-8 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-4 md:grid-cols-2">
+        <div className="mx-auto mt-5 grid max-w-2xl">
+          <div className="flex flex-row gap-2">
+            {list.map((data) => (
+              <button
+                type="button"
+                className="rounded-full bg-white px-3 py-1.5 text-xs text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+              >
+                <div className=" flex flex-row">
+                  {data.icon}
+                  <div className="ml-px align-middle">{data.category}</div>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="mx-auto mt-5 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-4 md:grid-cols-2">
           {activeCourses?.map((post, index) => (
             <Link to={`/browse/buy-course/${post.course_id}`}>
               <article
@@ -64,7 +108,7 @@ export default function CourseOwned() {
                     <a
                       // href={post.category}
                       key={post.category}
-                      className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
+                      className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600"
                     >
                       {/* {post.category} */}
                       {post?.category === "1"
@@ -81,7 +125,7 @@ export default function CourseOwned() {
                     </a>
                     <p
                       key={post.coursePrice}
-                      className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
+                      className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 "
                     >
                       {post.coursePrice}
                     </p>
