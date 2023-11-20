@@ -11,7 +11,7 @@ const TRANSITION = {
 function LoadingScreen({ className, ...other }) {
   return (
     <div
-      className={`h-full flex items-center justify-center bg-transparent ${className}`}
+      className={`h-full relative ${className}`}
       {...other}
     >
       <motion.div
@@ -23,8 +23,14 @@ function LoadingScreen({ className, ...other }) {
           flip: Infinity,
           repeatDelay: 1,
         }}
+        style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
       >
-        <img src="/sovanroth.png" className="h-20 mx-auto" alt="Sovanroth" />
+        <img
+          src="/sovanroth.png"
+          className="h-20 mt-96"
+          alt="Sovanroth"
+          style={{ display: "block" }}
+        />
       </motion.div>
 
       <motion.div

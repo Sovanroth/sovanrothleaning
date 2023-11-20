@@ -11,6 +11,7 @@ import EditCoursePage from "./view/Teacher/EditCoursePage";
 import useToken from '../src/view/Auth/useToken';
 import BuyCourse from "./components/BuyCourse";
 import PurchaseCourse from "./view/Student/PurchaseCourse";
+import LoadingScreen from "./components/LoadingScreen";
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
         <Route path="/edit-course" element={<EditCoursePage />}></Route>
         <Route path="*" element={<NotFoundPage />}></Route>
         <Route path="/browse/buy-course/:id" element={<PurchaseCourse/>}></Route>
+        <Route path="/loading" element= {<LoadingScreen/>}> </Route>
       </Routes>
     </Router>
   );
