@@ -83,7 +83,9 @@ const BuyCourse = () => {
                 >
                   <div className="flex flex-row">
                     <PlayCircle />
-                    <p className=" content-center ml-2 align-middle">{video.video_title}</p>
+                    <p className=" content-center ml-2 mt-px rem align-middle">
+                      {video.video_title}
+                    </p>
                   </div>
                 </button>
                 {/* <PlayIcon/>
@@ -99,7 +101,7 @@ const BuyCourse = () => {
           <div className="p-4">
             <MuxPlayer
               streamType="on-demand"
-              playbackId="UOWU9Q302GvkoYIP2JzUhL3ZeNFMM7zCSwOcmHEolj8A"
+              playbackId="p6ONh8T3gJ89jEX1JOlMZJzXNlB6FMFTCVsskQfnY6Q"
               metadataVideoTitle="Placeholder (optional)"
               metadataViewerUserId="Placeholder (optional)"
               primaryColor="#FFFFFF"

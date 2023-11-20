@@ -1,15 +1,13 @@
-import { async, isEmpty } from "@firebase/util";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getCoursesData, getOneData } from "../redux/slice/courseSlice";
 import Moment from "react-moment";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function ExploreCourse() {
   const [loading, setLoading] = useState(false);
   const data = useSelector((state) => state?.courses?.data);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const initData = async () => {
     setLoading(true);
@@ -23,27 +21,25 @@ export default function ExploreCourse() {
     // setLoading(false);
   };
 
-  const initDataByOne = async () => {
-    setLoading(true);
-    try {
-      const respone = await dispatch(getOneData());
-      console.log("onedata", respone);
-      return respone;
-    } catch (error) {
-      console.log(error);
-      return error;
-    }
-  };
+  // const initDataByOne = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const respone = await dispatch(getOneData());
+  //     console.log("onedata", respone);
+  //     return respone;
+  //   } catch (error) {
+  //     console.log(error);
+  //     return error;
+  //   }
+  // };
 
   useEffect(() => {
     console.log(data);
-    // initDataByOne();
     initData();
   }, []);
 
   return (
     <div className="bg-white ">
-      {/* {JSON.stringify(activeCourses)} */}
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto mt-8 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-4 md:grid-cols-2">
           {data?.data?.map((post, index) => (
@@ -111,23 +107,6 @@ export default function ExploreCourse() {
                     >
                       {post.courseDescription}
                     </p>
-                    {/* <Progress value={post.status}/> */}
-                    {/* {post.status} */}
-                    {/* <div className="mt-5" aria-hidden="true">
-                    <div className="overflow-hidden rounded-full bg-gray-200">
-                      <div
-                        key={post.status}
-                        className="h-2 rounded-full bg-green-600"
-                        style={{ width: post.status }}
-                      />
-                    </div>
-                    <div className="mt-6 hidden text-xs font-medium text-gray-600 sm:grid text-center">
-                      <div className="text-green-600">{post.status}</div>
-                    </div>
-                  </div> */}
-                    {/* <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">
-                    {post.description}
-                  </p> */}
                   </div>
                 </div>
               </article>
