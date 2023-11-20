@@ -2,7 +2,7 @@ import { Fragment, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const user = {
   name: "Tom Cook",
@@ -20,7 +20,7 @@ function classNames(...classes) {
 }
 
 export default function TeacherNavBar() {
-  const [activeNavItem, setActiveNavItem] = useState("/");
+  const navigate = useNavigate();
 
   return (
     <Disclosure as="header" className="bg-white shadow">
@@ -30,16 +30,18 @@ export default function TeacherNavBar() {
             <div className="relative flex h-16 justify-between">
               <div className="relative z-10 flex px-2 lg:px-0">
                 <div className="flex flex-shrink-0 items-center">
-                  <img
-                    className="h-8 w-auto"
-                    src="/sovanroth.png"
-                    alt="Your Company"
-                  />
+                  <button onClick={() => navigate("/teacher-mode")}>
+                    <img
+                      className="h-8 w-auto"
+                      src="/sovanroth.png"
+                      alt="Your Company"
+                    />
+                  </button>
                 </div>
               </div>
               <div className="relative z-0 flex flex-1 items-center justify-center px-2 sm:absolute sm:inset-0">
                 <div className="w-full sm:max-w-xs font-bold">
-                    Welcome to Teacher Mode
+                  Welcome to Teacher Mode
                   {/* <label htmlFor="search" className="sr-only">
                     Search
                   </label>
@@ -73,7 +75,7 @@ export default function TeacherNavBar() {
                 </Disclosure.Button>
               </div>
               <div className="hidden lg:relative lg:z-10 lg:ml-4 lg:flex lg:items-center">
-                <Link to='/'>
+                <Link to="/">
                   <button
                     type="button"
                     className="rounded-full bg-white px-3.5 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"

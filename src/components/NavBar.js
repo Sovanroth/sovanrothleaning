@@ -2,7 +2,7 @@ import { Fragment, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const navigation = [
   { name: "Dashboard", href: "/", current: false },
@@ -17,6 +17,7 @@ function classNames(...classes) {
 
 export default function NavBar() {
   const location = useLocation();
+  const navigate = useNavigate();
 
   return (
     <Disclosure as="header" className="bg-white shadow">
@@ -26,11 +27,13 @@ export default function NavBar() {
             <div className="relative flex h-16 justify-between">
               <div className="relative z-10 flex px-2 lg:px-0">
                 <div className="flex flex-shrink-0 items-center">
-                  <img
-                    className="h-8 w-auto"
-                    src="/sovanroth.png"
-                    alt="Sovanroth Nath"
-                  />
+                  <button onClick={() => navigate("/")}>
+                    <img
+                      className="h-8 w-auto"
+                      src="/sovanroth.png"
+                      alt="Sovanroth Nath"
+                    />
+                  </button>
                 </div>
               </div>
               <div className="relative z-0 flex flex-1 items-center justify-center px-2 sm:absolute sm:inset-0">
