@@ -42,7 +42,7 @@ export const getCoursesData = () => async (dispatch) => {
   dispatch(startLoading());
   try {
     const response = await axios.get(
-      `http://localhost:8000/course/get-all-courses`
+      `http://13.250.50.200:8000/course/get-all-courses`
     );
     if (response?.data) {
       dispatch(getCourses(response?.data));
@@ -61,7 +61,7 @@ export const getOneData = (param) => async (dispatch) => {
 
   try {
     const respone = await axios.get(
-      `http://localhost:8000/course/get-course-with-video/${param}`
+      `http://13.250.50.200:8000/course/get-course-with-video/${param}`
     );
     if (respone?.data) {
       // dispatch(getone)
@@ -80,7 +80,7 @@ export const deleteCourse = (param) => async (dispatch) => {
   dispatch(startLoading());
   try {
     const response = await axios.delete(
-      `http://localhost:8000/course/delete-course/${param}`
+      `http://13.250.50.200:8000/course/delete-course/${param}`
     );
     return response;
   } catch (error) {
