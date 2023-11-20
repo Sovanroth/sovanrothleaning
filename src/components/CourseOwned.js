@@ -63,7 +63,7 @@ export default function CourseOwned() {
     <div className="bg-white ">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto mt-5 grid max-w-2xl">
-          <div className="flex flex-row gap-2">
+          <div className="hidden md:flex flex-row gap-2">
             {list.map((data) => (
               <button
                 type="button"
