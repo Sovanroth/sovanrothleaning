@@ -2,7 +2,7 @@ import axios from "axios";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  isLoading: false,
+  loading: false,
   error: false,
   filter: {},
   data: [],
@@ -14,25 +14,25 @@ const coursesSlice = createSlice({
   initialState,
   reducers: {
     startLoading(state) {
-      state.isLoading = true;
+      state.loading = true;
     },
     stopLoading(state) {
-      state.isLoading = false;
+      state.loading = false;
     },
     hasError(state, action) {
-      state.isLoading = false;
+      state.loading = false;
       state.filter = action.payload;
     },
     setFilterSuccess(state, actions) {
-      state.isLoading = false;
+      state.loading = false;
       state.filter = actions.payload;
     },
     getCourses(state, actions) {
-      state.isLoading = false;
+      state.loading = false;
       state.data = actions.payload;
     },
     getCourseByone(state, actions) {
-      state.isLoading = false;
+      state.loading = false;
       state.oneData = actions.payload;
     },
   },
@@ -61,7 +61,7 @@ export const getOneData = (param) => async (dispatch) => {
 
   try {
     const respone = await axios.get(
-      `http://localhost:8000/course/get-one-course/${param}`
+      `http://localhost:8000/course/get-course-with-video/${param}`
     );
     if (respone?.data) {
       // dispatch(getone)

@@ -18,15 +18,16 @@ const Courses = () => {
 
   const deleteData = async (param) => {
     setLoading(true);
+    let respone = {};
     try {
       const response = dispatch(deleteCourse(param));
       refreshData();
-      return response;
     } catch (error) {
       console.log(error);
-      return error;
+      respone = error;
     }
     setLoading(false);
+    return respone;
   };
 
   useEffect(() => {

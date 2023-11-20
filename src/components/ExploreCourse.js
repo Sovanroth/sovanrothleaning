@@ -1,53 +1,95 @@
-import { async, isEmpty } from "@firebase/util";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getCoursesData, getOneData } from "../redux/slice/courseSlice";
 import Moment from "react-moment";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { AreaChart, Code2, DatabaseZap, Music, Settings } from "lucide-react";
+
+const list = [
+  {
+    id: 1,
+    category: "FRONT END",
+    icon: <Code2 size={16} color="blue"/>,
+  },
+  {
+    id: 2,
+    category: "BACK END",
+    icon: <DatabaseZap size={16} color="red" />,
+  },
+  {
+    id: 3,
+    category: "ACCOUNTING",
+    icon: <AreaChart size={16} color="green" />,
+  },
+  {
+    id: 4,
+    category: "ENGINEERING",
+    icon: <Settings size={16} />,
+  },
+  {
+    id: 5,
+    category: "MUSIC",
+    icon: <Music size={16} color="purple" />,
+  },
+];
 
 export default function ExploreCourse() {
   const [loading, setLoading] = useState(false);
   const data = useSelector((state) => state?.courses?.data);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const initData = async () => {
     setLoading(true);
+    let response = {};
+
     try {
       const response = await dispatch(getCoursesData());
-      return response;
     } catch (error) {
       console.log(error);
-      return error;
+      response = error;
     }
-    // setLoading(false);
+    setLoading(false);
+    return response;
   };
 
-  const initDataByOne = async () => {
-    setLoading(true);
-    try {
-      const respone = await dispatch(getOneData());
-      console.log("onedata", respone);
-      return respone;
-    } catch (error) {
-      console.log(error);
-      return error;
-    }
-  };
+  // const initDataByOne = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const respone = await dispatch(getOneData());
+  //     console.log("onedata", respone);
+  //     return respone;
+  //   } catch (error) {
+  //     console.log(error);
+  //     return error;
+  //   }
+  // };
 
   useEffect(() => {
     console.log(data);
-    // initDataByOne();
     initData();
   }, []);
 
   return (
     <div className="bg-white ">
-      {/* {JSON.stringify(activeCourses)} */}
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto mt-8 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-4 md:grid-cols-2">
+        <div className="mx-auto mt-5 grid max-w-2xl">
+          <div className="flex flex-row gap-2">
+            {list.map((data) => (
+              <button
+                type="button"
+                className="rounded-full bg-white px-3 py-1.5 text-xs text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+              >
+                <div className=" flex flex-row">
+                  {data.icon}
+                  <div className="ml-px align-middle">{data.category}</div>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="mx-auto mt-5 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-4 md:grid-cols-2">
           {data?.data?.map((post, index) => (
-            <Link to= {`/browse/buy-course/${post.course_id}`}>
+            <Link to={`/browse/buy-course/${post.course_id}`}>
               <article
                 key={post.id + index}
                 className="flex flex-col items-start justify-between"
@@ -76,7 +118,7 @@ export default function ExploreCourse() {
                     <a
                       // href={post.category}
                       key={post.category}
-                      className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
+                      className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 "
                     >
                       {/* {post.category} */}
                       {post?.category === "1"
@@ -93,7 +135,7 @@ export default function ExploreCourse() {
                     </a>
                     <p
                       key={post.coursePrice}
-                      className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
+                      className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 "
                     >
                       {post.coursePrice}
                     </p>
@@ -111,23 +153,6 @@ export default function ExploreCourse() {
                     >
                       {post.courseDescription}
                     </p>
-                    {/* <Progress value={post.status}/> */}
-                    {/* {post.status} */}
-                    {/* <div className="mt-5" aria-hidden="true">
-                    <div className="overflow-hidden rounded-full bg-gray-200">
-                      <div
-                        key={post.status}
-                        className="h-2 rounded-full bg-green-600"
-                        style={{ width: post.status }}
-                      />
-                    </div>
-                    <div className="mt-6 hidden text-xs font-medium text-gray-600 sm:grid text-center">
-                      <div className="text-green-600">{post.status}</div>
-                    </div>
-                  </div> */}
-                    {/* <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">
-                    {post.description}
-                  </p> */}
                   </div>
                 </div>
               </article>
