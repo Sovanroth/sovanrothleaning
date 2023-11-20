@@ -6,6 +6,8 @@ import {
   deleteCourse,
   getCoursesData,
 } from "../../src/redux/slice/courseSlice";
+import LoadingScreen from "./LoadingScreen";
+import { isEmpty } from "@firebase/util";
 
 const Courses = () => {
   const course = useSelector((state) => state?.courses?.data);
