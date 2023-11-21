@@ -7,7 +7,6 @@ import { AreaChart, Code2, DatabaseZap, Music, Settings } from "lucide-react";
 import LoadingScreen from "./LoadingScreen";
 import { isEmpty } from "@firebase/util";
 
-
 const list = [
   {
     id: 1,
@@ -40,29 +39,39 @@ export default function CourseOwned() {
   const [loading, setLoading] = useState(false);
   const data = useSelector((state) => state?.courses?.data);
   const dispatch = useDispatch();
+  const [activeCourses, setActiveCourse] = useState([]);
 
   const initData = async () => {
     setLoading(true);
+    let response = {};
     try {
       const response = await dispatch(getCoursesData());
-      return response;
     } catch (error) {
       console.log(error);
-      return error;
+      response = error;
     }
-    // setLoading(false);
+    setLoading(false);
+    return response;
   };
 
-  const activeCourses =
-    data?.data?.filter((course) => course.active === "1") || [];
+  // const activeCourses =
+  //   data?.data?.filter((course) => course.active === "1") || [];
 
   useEffect(() => {
     console.log(data);
     initData();
   }, []);
 
+  useEffect(() => {
+    const item = data?.data?.filter((course) => course.active === "1") || [];
+    console.log(item);
+    setActiveCourse(item);
+  }, [data]);
+
+  console.log(activeCourses);
   return (
     <div>
+      {/* {JSON.stringify(activeCourses)} */}
       {loading ? (
         <LoadingScreen />
       ) : isEmpty(activeCourses) ? (
