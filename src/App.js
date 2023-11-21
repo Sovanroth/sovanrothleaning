@@ -30,7 +30,7 @@ function App() {
         <Route path="/teacher-mode/create" element={<Create />}></Route>
         <Route path="/signup" element={<SignUpPage />}></Route>
         <Route path="/login" element={<LogInPage />}></Route>
-        <Route path="/edit-course" element={<EditCoursePage />}></Route>
+        <Route path="/teacher-mode/edit-course/:id" element={<EditCoursePage />}></Route>
         <Route path="*" element={<NotFoundPage />}></Route>
         <Route path="/browse/buy-course/:id" element={<PurchaseCourse/>}></Route>
         <Route path="/loading" element= {<LoadingScreen/>}> </Route>
