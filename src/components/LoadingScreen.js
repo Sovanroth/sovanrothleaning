@@ -10,10 +10,7 @@ const TRANSITION = {
 
 function LoadingScreen({ className, ...other }) {
   return (
-    <div
-      className={`h-full relative ${className}`}
-      {...other}
-    >
+    <div className={`h-full relative ${className}`} {...other}>
       <motion.div
         initial={{ rotateY: 0 }}
         animate={{ rotateY: 360 }}
@@ -23,14 +20,17 @@ function LoadingScreen({ className, ...other }) {
           flip: Infinity,
           repeatDelay: 1,
         }}
-        style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
       >
-        <img
-          src="/sovanroth.png"
-          className="h-20 mt-96"
-          alt="Sovanroth"
-          style={{ display: "block" }}
-        />
+        <img src="/sovanroth.png" className="h-20 mt-80" alt="Sovanroth" />
       </motion.div>
 
       <motion.div
