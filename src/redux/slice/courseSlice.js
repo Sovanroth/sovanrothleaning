@@ -35,6 +35,10 @@ const coursesSlice = createSlice({
       state.loading = false;
       state.oneData = actions.payload;
     },
+    updateCourseSuccess(state, actions) {
+      state.loading = false;
+      state.data = actions.payload;
+    },
   },
 });
 
@@ -89,6 +93,24 @@ export const deleteCourse = (param) => async (dispatch) => {
   }
 };
 
+export const updateCourse = (params, id) => async (dispatch) => {
+  dispatch(startLoading());
+
+  try {
+    const respone = await axios.patch(
+      `http://13.250.50.200:8000/course/update-course/${id}`,
+      params
+    );
+    if (respone?.data) {
+      dispatch(updateCourseSuccess(respone?.data));
+    }
+    console.log(respone);
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
 export const {
   startLoading,
   stopLoading,
@@ -96,6 +118,7 @@ export const {
   setFilterSuccess,
   getCourses,
   getCourseByone,
+  updateCourseSuccess,
 } = coursesSlice.actions;
 
 export default coursesSlice.reducer;
