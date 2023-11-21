@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -8,11 +8,14 @@ import {
 } from "../../src/redux/slice/courseSlice";
 import LoadingScreen from "./LoadingScreen";
 import { isEmpty } from "@firebase/util";
+import DeleteCourseModal from "./DeleteCourseModal";
 
 const Courses = () => {
   const course = useSelector((state) => state?.courses?.data);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const refreshData = () => {
     dispatch(getCoursesData());
@@ -30,6 +33,28 @@ const Courses = () => {
     }
     setLoading(false);
     return respone;
+  };
+
+  const handleChangeEditCoursePage = () => {
+    navigate("/teacher-mode/edit-course");
+  };
+
+  const handleDeleteClick = () => {
+    setShowDeleteModal(true);
+  };
+
+  const handleDeleteConfirm = (courseId) => {
+    // Handle the delete logic here
+    // You can call your deleteData function here
+    // deleteData(courseId);
+
+    // After handling delete, close the modal
+    setShowDeleteModal(false);
+  };
+
+  const handleDeleteCancel = () => {
+    // If the user cancels the delete operation, close the modal
+    setShowDeleteModal(false);
   };
 
   useEffect(() => {
@@ -114,18 +139,34 @@ const Courses = () => {
                               {person.active === "1" ? "Publish" : "Unpublish"}
                             </td>
                             <td>
-                              <button
-                                type="button"
-                                className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                              <Link
+                                to={`/teacher-mode/edit-course/${person.course_id}`}
                               >
-                                Edit
-                              </button>
+                                <button
+                                  type="button"
+                                  className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                >
+                                  Edit
+                                </button>
+                              </Link>
+
                               <button
                                 type="button"
                                 onClick={() => deleteData(person?.course_id)}
+                                // onClick={handleDeleteClick}
                                 className="ml-1 rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-red-100"
                               >
                                 Delete
+                                <span>
+                                  {showDeleteModal && (
+                                    <DeleteCourseModal
+                                      onConfirm={handleDeleteConfirm}
+                                      onCancel={handleDeleteCancel}
+                                      courseId={person?.course_id}
+                                      courseTitle={person?.courseTitle}
+                                    />
+                                  )}
+                                </span>
                               </button>
                             </td>
                           </tr>

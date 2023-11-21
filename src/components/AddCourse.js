@@ -1,59 +1,16 @@
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-import { getOneData } from "../redux/slice/courseSlice";
+import { FaTrash, FaThList, FaEdit } from "react-icons/fa";
+import Footer from "./Footer";
+import { Edit2, PlusCircle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-const categoryData = [
-  {
-    id: 1,
-    name: "Front End",
-  },
-  {
-    id: 2,
-    name: "Back End",
-  },
-  {
-    id: 3,
-    name: "Accounting",
-  },
-  {
-    id: 4,
-    name: "Engineering",
-  },
-  {
-    id: 5,
-    name: "Music",
-  },
-];
-
-export default function EditCourse() {
+export default function AddCourse() {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const oneData = useSelector((state) => state?.courses?.oneData);
-  const dispatch = useDispatch();
-  const { id } = useParams();
-
-  const initData = async () => {
-    setLoading(true);
-    let response = {};
-    try {
-      response = dispatch(getOneData(id));
-    } catch (error) {
-      response = error;
-    }
-    setLoading(false);
-    return response;
-  };
-
-  useEffect(() => {
-    console.log(oneData);
-    initData();
-  }, []);
 
   return (
     <>
-      {/* {JSON.stringify(oneData)} */}
-      <div className=" text-center m-5 font-bold text-xl">Edit Course</div>
+    <div className=" text-center m-5 font-bold text-xl">
+      Course Setup
+    </div>
       <div className="grid grid-cols-2 gap-4 max-w-7xl mx-auto pt-4">
         <div className="pl-8">
           <div className=" text-start">
@@ -70,62 +27,44 @@ export default function EditCourse() {
           </div>
 
           {/* Course Title */}
-          <div class="mt-10 border bg-slate-100 rounded-md p-4">
+          <div class="mt-6 border bg-slate-100 rounded-md p-4">
             <div class="font-medium text-sm flex items-center justify-between">
               Course Title
-              {/* <button className=" flex">
+              <button className=" flex">
                 <Edit2 size={14} className=" mt-0.5" />
                 <p className="ml-1 text-sm">Edit Title</p>
-              </button> */}
+              </button>
             </div>
-
-            <div className="mt-3">
-              <input
-                type="text"
-                name="courseTitle"
-                id="courseTitle"
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                placeholder={oneData?.course?.courseTitle}
-              />
-            </div>
+            <p className=" text-sm pt-5">Node JS Teaching</p>
           </div>
 
           {/* Course Description */}
           <div class="mt-6 border bg-slate-100 rounded-md p-4">
             <div class="font-medium text-sm flex items-center justify-between">
               Course Description
-              {/* <button className=" flex">
+              <button className=" flex">
                 <Edit2 size={14} className=" mt-0.5" />
                 <p className="ml-1 text-sm">Edit Description</p>
-              </button> */}
+              </button>
             </div>
-            <div className="mt-3">
-              <textarea
-                rows={4}
-                name="courseDescription"
-                id="courseDescription"
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                defaultValue={""}
-                placeholder={oneData?.course?.courseDescription}
-              />
-            </div>
+            <p className=" text-sm pt-5">Course Description Node JS</p>
           </div>
 
           {/* Course Category */}
           <div class="mt-6 border bg-slate-100 rounded-md p-4">
             <div class="font-medium text-sm flex items-center justify-between">
-              Course Cateogry
+              Course Description
             </div>
             <div className=" mt-5">
               <select
-                id="courseCategory"
-                name="courseCategory"
+                id="location"
+                name="location"
                 className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 defaultValue="Canada"
               >
-                {categoryData.map((category) => (
-                  <option>{category.name}</option>
-                ))}
+                <option>United States</option>
+                <option>Canada</option>
+                <option>Mexico</option>
               </select>
             </div>
           </div>
@@ -134,30 +73,28 @@ export default function EditCourse() {
           <div class="mt-6 border bg-slate-100 rounded-md p-4">
             <div class="font-medium text-sm flex items-center justify-between">
               Course Image
-              {/* <button className=" flex">
+              <button className=" flex">
                 <Edit2 size={14} className=" mt-0.5" />
                 <p className="ml-1 text-sm">Edit Image</p>
-              </button> */}
+              </button>
             </div>
-            <div className="mt-3">
-              <input
-                type="text"
-                name="courseImage"
-                id="courseImage"
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                placeholder={oneData?.course?.courseImage}
-              />
-            </div>
-            <img className=" w-full mt-3" src={oneData?.course?.courseImage}/>
+            <img
+              src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&q=80&w=3570&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              className="p-2 mt-2 rounded-3xl"
+            />
           </div>
 
           {/* Access Setting */}
-          {/* <div class="mt-6 border bg-slate-100 rounded-md p-4">
+          <div class="mt-6 border bg-slate-100 rounded-md p-4">
             <div class="font-medium text-sm flex items-center justify-between">
               Access Setting
+              <button className=" flex">
+                <Edit2 size={14} className=" mt-0.5" />
+                <p className="ml-1 text-sm">Edit Access Setting</p>
+              </button>
             </div>
             <p className=" text-sm pt-5">This Chapter is free for preview.</p>
-          </div> */}
+          </div>
         </div>
         <div className=" pt-4">
           <div className="flex justify-end">
@@ -182,10 +119,10 @@ export default function EditCourse() {
           <div class="mt-6 border bg-slate-100 rounded-md p-4">
             <div class="font-medium text-sm flex items-center justify-between">
               Course Chapters
-              {/* <button className=" flex">
+              <button className=" flex">
                 <PlusCircle size={14} className=" mt-0.5" />
                 <p className="ml-1 text-sm">Add Chapter</p>
-              </button> */}
+              </button>
             </div>
 
             <p className=" text-sm pt-5">
@@ -196,44 +133,29 @@ export default function EditCourse() {
           {/* Course Price */}
           <div class="mt-6 border bg-slate-100 rounded-md p-4">
             <div class="font-medium text-sm flex items-center justify-between">
-              Course Price
-              {/* <button className=" flex">
+              Course Price Setting
+              <button className=" flex">
                 <Edit2 size={14} className=" mt-0.5" />
                 <p className="ml-1 text-sm">Edit Price</p>
-              </button> */}
+              </button>
             </div>
-            <div className="mt-3">
-              <input
-                type="text"
-                name="coursePrice"
-                id="coursePrice"
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                placeholder={oneData?.course?.coursePrice}
-              />
-            </div>
+            <p className=" text-sm pt-5">10$</p>
           </div>
 
           {/* Resource */}
           <div class="mt-6 border bg-slate-100 rounded-md p-4">
             <div class="font-medium text-sm flex items-center justify-between">
               Resource and Attatchments
-              {/* <button className=" flex">
+              <button className=" flex">
                 <PlusCircle size={14} className=" mt-0.5" />
                 <p className="ml-1 text-sm">Add Resource</p>
-              </button> */}
+              </button>
             </div>
-            <div className="mt-3">
-              <input
-                type="text"
-                name="courseResource"
-                id="courseResource"
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                placeholder={oneData?.course?.courseResource}
-              />
-            </div>
+            <p className=" text-sm pt-5 italic">No Attatchments</p>
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }
