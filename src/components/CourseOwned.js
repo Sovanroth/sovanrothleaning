@@ -4,6 +4,8 @@ import { getCoursesData } from "../redux/slice/courseSlice";
 import Moment from "react-moment";
 import { Link } from "react-router-dom";
 import { AreaChart, Code2, DatabaseZap, Music, Settings } from "lucide-react";
+import LoadingScreen from "./LoadingScreen";
+import { isEmpty } from "@firebase/util";
 
 
 const list = [
@@ -60,96 +62,104 @@ export default function CourseOwned() {
   }, []);
 
   return (
-    <div className="bg-white ">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto mt-5 grid max-w-2xl">
-          <div className="hidden md:flex flex-row gap-2">
-            {list.map((data) => (
-              <button
-                type="button"
-                className="rounded-full bg-white px-3 py-1.5 text-xs text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-              >
-                <div className=" flex flex-row">
-                  {data.icon}
-                  <div className="ml-px align-middle">{data.category}</div>
-                </div>
-              </button>
-            ))}
+    <div>
+      {loading ? (
+        <LoadingScreen />
+      ) : isEmpty(activeCourses) ? (
+        <LoadingScreen />
+      ) : (
+        <div className="bg-white ">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="mx-auto mt-5 grid max-w-2xl">
+              <div className="hidden md:flex flex-row gap-2">
+                {list.map((data) => (
+                  <button
+                    type="button"
+                    className="rounded-full bg-white px-3 py-1.5 text-xs text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                  >
+                    <div className=" flex flex-row">
+                      {data.icon}
+                      <div className="ml-px align-middle">{data.category}</div>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="mx-auto mt-5 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-4 md:grid-cols-2">
+              {activeCourses?.map((post, index) => (
+                <Link to={`/browse/buy-course/${post.course_id}`}>
+                  <article
+                    key={post.id + index}
+                    className="flex flex-col items-start justify-between"
+                  >
+                    <div className="relative w-full">
+                      <img
+                        key={post.courseImage}
+                        src={post.courseImage}
+                        alt=""
+                        className="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]"
+                      />
+                      <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
+                    </div>
+                    <div className="max-w-xl">
+                      <div className="mt-2 flex items-center gap-x-4 text-xs">
+                        <Moment key={post?.create_at} format="DD-MMM-YYYY">
+                          {post.create_at}
+                        </Moment>
+                        {/* <time
+                      key={post.date}
+                      dateTime={post.datetime}
+                      className="text-gray-500"
+                    >
+                      {post.create_at}
+                    </time> */}
+                        <a
+                          // href={post.category}
+                          key={post.category}
+                          className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600"
+                        >
+                          {/* {post.category} */}
+                          {post?.category === "1"
+                            ? "Front-End"
+                            : post?.category === "2"
+                            ? "Back-End"
+                            : post?.category === "3"
+                            ? "Full-Stack Development"
+                            : post?.category === "4"
+                            ? "Mobile App Development"
+                            : post?.category === "5"
+                            ? "Web Development"
+                            : "Mogwarts"}
+                        </a>
+                        <p
+                          key={post.coursePrice}
+                          className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 "
+                        >
+                          {post.coursePrice}
+                        </p>
+                      </div>
+                      <div className="group relative">
+                        <h3 className="mt-1 font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
+                          <a href={post.href} key={post.courseTitle}>
+                            <span className="absolute inset-0" />
+                            {post.courseTitle}
+                          </a>
+                        </h3>
+                        <p
+                          key={post.courseDescription}
+                          className="mt-1 line-clamp-3 text-sm leading-6 text-gray-600"
+                        >
+                          {post.courseDescription}
+                        </p>
+                      </div>
+                    </div>
+                  </article>
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
-        <div className="mx-auto mt-5 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-4 md:grid-cols-2">
-          {activeCourses?.map((post, index) => (
-            <Link to={`/browse/buy-course/${post.course_id}`}>
-              <article
-                key={post.id + index}
-                className="flex flex-col items-start justify-between"
-              >
-                <div className="relative w-full">
-                  <img
-                    key={post.courseImage}
-                    src={post.courseImage}
-                    alt=""
-                    className="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]"
-                  />
-                  <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
-                </div>
-                <div className="max-w-xl">
-                  <div className="mt-2 flex items-center gap-x-4 text-xs">
-                    <Moment key={post?.create_at} format="DD-MMM-YYYY">
-                      {post.create_at}
-                    </Moment>
-                    {/* <time
-                    key={post.date}
-                    dateTime={post.datetime}
-                    className="text-gray-500"
-                  >
-                    {post.create_at}
-                  </time> */}
-                    <a
-                      // href={post.category}
-                      key={post.category}
-                      className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600"
-                    >
-                      {/* {post.category} */}
-                      {post?.category === "1"
-                        ? "Front-End"
-                        : post?.category === "2"
-                        ? "Back-End"
-                        : post?.category === "3"
-                        ? "Full-Stack Development"
-                        : post?.category === "4"
-                        ? "Mobile App Development"
-                        : post?.category === "5"
-                        ? "Web Development"
-                        : "Mogwarts"}
-                    </a>
-                    <p
-                      key={post.coursePrice}
-                      className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 "
-                    >
-                      {post.coursePrice}
-                    </p>
-                  </div>
-                  <div className="group relative">
-                    <h3 className="mt-1 font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-                      <a href={post.href} key={post.courseTitle}>
-                        <span className="absolute inset-0" />
-                        {post.courseTitle}
-                      </a>
-                    </h3>
-                    <p
-                      key={post.courseDescription}
-                      className="mt-1 line-clamp-3 text-sm leading-6 text-gray-600"
-                    >
-                      {post.courseDescription}
-                    </p>
-                  </div>
-                </div>
-              </article>
-            </Link>
-          ))}
-        </div>
-      </div>
+      )}
     </div>
   );
 }
