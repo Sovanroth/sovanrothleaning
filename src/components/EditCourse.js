@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { getOneData } from "../redux/slice/courseSlice";
-import CourseAddedModal from "./CourseAddedModal";
+import { getOneData, updateCourse } from "../redux/slice/courseSlice";
+import { useSnackbar } from "notistack";
 
 const categoryData = [
   {
@@ -82,6 +82,27 @@ export default function EditCourse() {
     return response;
   };
 
+  const handleUdpateCourse = async () => {
+    setLoading(true);
+    try {
+      const params = {
+        courseTitle: data?.courseTitle,
+        courseDescription: data?.courseDescription,
+        category: "10",
+        courseImage: data?.courseImage,
+        coursePrice: data?.coursePrice,
+        courseResource: data?.courseResource,
+        active: "1",
+      };
+      dispatch(updateCourse(params, id));
+      console.log(params);
+      navigate("/teacher-mode");
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  };
+
   useEffect(() => {
     console.log(oneData);
     initData();
@@ -122,7 +143,7 @@ export default function EditCourse() {
                 name="courseTitle"
                 id="courseTitle"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                value={oneData?.course?.courseTitle}
+                value={data.courseTitle}
                 onChange={(e) => handleChangeCourseTitle(e)}
               />
             </div>
@@ -144,7 +165,9 @@ export default function EditCourse() {
                 id="courseDescription"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 defaultValue={""}
-                placeholder={oneData?.course?.courseDescription}
+                // placeholder={oneData?.course?.courseDescription}
+                value={data.courseDescription}
+                onChange={(e) => handleChangeCourseDescriptin(e)}
               />
             </div>
           </div>
@@ -183,7 +206,9 @@ export default function EditCourse() {
                 name="courseImage"
                 id="courseImage"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                placeholder={oneData?.course?.courseImage}
+                // placeholder={oneData?.course?.courseImage}
+                value={data.courseImage}
+                onChange={(e) => handleChangeCourseImage(e)}
               />
             </div>
             <img className=" w-full mt-3" src={oneData?.course?.courseImage} />
@@ -201,9 +226,10 @@ export default function EditCourse() {
           <div className="flex justify-end">
             <button
               type="button"
+              onClick={handleUdpateCourse}
               className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
             >
-              Unpublish
+              POST
             </button>
             {/* <button
               type="button"
@@ -246,7 +272,9 @@ export default function EditCourse() {
                 name="coursePrice"
                 id="coursePrice"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                placeholder={oneData?.course?.coursePrice}
+                // placeholder={oneData?.course?.coursePrice}
+                value={data.coursePrice}
+                onChange={(e) => handleChangeCoursePrice(e)}
               />
             </div>
           </div>
@@ -266,7 +294,9 @@ export default function EditCourse() {
                 name="courseResource"
                 id="courseResource"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                placeholder={oneData?.course?.courseResource}
+                // placeholder={oneData?.course?.courseResource}
+                value={data.courseResource}
+                onChange={(e) => handleChangeCourseResrouce(e)}
               />
             </div>
           </div>
