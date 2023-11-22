@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { getOneData } from "../redux/slice/courseSlice";
+import CourseAddedModal from "./CourseAddedModal";
 
 const categoryData = [
   {
@@ -32,6 +33,42 @@ export default function EditCourse() {
   const oneData = useSelector((state) => state?.courses?.oneData);
   const dispatch = useDispatch();
   const { id } = useParams();
+  const [data, setData] = useState({
+    courseTitle: "",
+    courseDescription: "",
+    category: "",
+    courseImage: "",
+    coursePrice: "",
+    courseResource: " ",
+    active: "",
+  });
+
+  const handleChangeCourseTitle = (e) => {
+    const newVal = { ...data, courseTitle: e.target.value };
+    setData(newVal);
+  };
+
+  const handleChangeCourseDescriptin = (e) => {
+    const newVal = { ...data, courseDescription: e.target.value };
+    setData(newVal);
+  };
+
+  const handleChangeCourseImage = (e) => {
+    const newVal = { ...data, courseImage: e.target.value };
+    setData(newVal);
+  };
+  const handleChangeCoursePrice = (e) => {
+    const newVal = { ...data, coursePrice: e.target.value };
+    setData(newVal);
+  };
+  const handleChangeCourseResrouce = (e) => {
+    const newVal = { ...data, courseResource: e.target.value };
+    setData(newVal);
+  };
+  const handleChangeCourseActive = (e) => {
+    const newVal = { ...data, active: e.target.value };
+    setData(newVal);
+  };
 
   const initData = async () => {
     setLoading(true);
@@ -85,7 +122,8 @@ export default function EditCourse() {
                 name="courseTitle"
                 id="courseTitle"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                placeholder={oneData?.course?.courseTitle}
+                value={oneData?.course?.courseTitle}
+                onChange={(e) => handleChangeCourseTitle(e)}
               />
             </div>
           </div>
@@ -148,7 +186,7 @@ export default function EditCourse() {
                 placeholder={oneData?.course?.courseImage}
               />
             </div>
-            <img className=" w-full mt-3" src={oneData?.course?.courseImage}/>
+            <img className=" w-full mt-3" src={oneData?.course?.courseImage} />
           </div>
 
           {/* Access Setting */}

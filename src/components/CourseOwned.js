@@ -64,7 +64,7 @@ export default function CourseOwned() {
 
   useEffect(() => {
     const item = data?.data?.filter((course) => course.active === "1") || [];
-    console.log(item);
+    // console.log(item);
     setActiveCourse(item);
   }, [data]);
 
@@ -75,7 +75,7 @@ export default function CourseOwned() {
       {loading ? (
         <LoadingScreen />
       ) : isEmpty(activeCourses) ? (
-        <LoadingScreen />
+        <div/>
       ) : (
         <div className="bg-white ">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">

@@ -16,6 +16,7 @@ const BuyCourse = () => {
   const oneData = useSelector((state) => state?.courses?.oneData);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [videoData, setVideoData] = useState([])
 
   const initData = async () => {
     setLoading(true);
@@ -34,11 +35,16 @@ const BuyCourse = () => {
     initData();
   }, []);
 
+  // useEffect(() => {
+  //   const item = oneData?.course?.videos;
+  //   setVideoData(item)
+  // })
+
   return (
     <div>
       {loading ? (
         <LoadingScreen />
-      ) : isEmpty(oneData) ? (
+      ) : isEmpty(oneData?.course?.videos) ? (
         <LoadingScreen />
       ) : (
         <div className="mx-auto max-w-7xl px-6 lg:px-8 mt-5">
