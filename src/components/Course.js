@@ -18,7 +18,9 @@ const Courses = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const refreshData = () => {
+    setLoading(true);
     dispatch(getCoursesData());
+    setLoading(false)
   };
 
   const deleteData = async (param) => {
@@ -27,6 +29,7 @@ const Courses = () => {
     try {
       const response = dispatch(deleteCourse(param));
       refreshData();
+      console.log(respone)
     } catch (error) {
       console.log(error);
       respone = error;
@@ -58,13 +61,14 @@ const Courses = () => {
   };
 
   useEffect(() => {
-    dispatch(getCoursesData());
     console.log(course);
-  }, []);
+    dispatch(getCoursesData())
+    refreshData()
+  }, [getCoursesData]);
 
-  useEffect(() => {
-    refreshData();
-  }, [refreshData]);
+  // useEffect(() => {
+  //   refreshData();
+  // }, []);
 
   return (
     <div>

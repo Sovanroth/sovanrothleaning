@@ -133,11 +133,11 @@ export default function CourseOwned() {
                             : post?.category === "2"
                             ? "Back-End"
                             : post?.category === "3"
-                            ? "Full-Stack Development"
+                            ? "Accounting"
                             : post?.category === "4"
-                            ? "Mobile App Development"
+                            ? "Engineering"
                             : post?.category === "5"
-                            ? "Web Development"
+                            ? "Music"
                             : "Mogwarts"}
                         </a>
                         <p
