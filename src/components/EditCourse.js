@@ -119,7 +119,7 @@ export default function EditCourse() {
       {loading ? (
         <LoadingScreen />
       ) : isEmpty(oneData) ? (
-        <div />
+        <LoadingScreen/>
       ) : (
         <div>
           <div className=" text-center m-5 font-bold text-xl">Edit Course</div>

@@ -66,6 +66,9 @@ const Courses = () => {
     refreshData()
   }, [getCoursesData]);
 
+  useEffect(() => {
+  }, [])
+
   // useEffect(() => {
   //   refreshData();
   // }, []);
@@ -165,7 +168,7 @@ const Courses = () => {
                                 className="ml-1 rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-red-100"
                               >
                                 Delete
-                                <span>
+                                {/* <span>
                                   {showDeleteModal && (
                                     <DeleteCourseModal
                                       onConfirm={handleDeleteConfirm}
@@ -174,7 +177,7 @@ const Courses = () => {
                                       courseTitle={person?.courseTitle}
                                     />
                                   )}
-                                </span>
+                                </span> */}
                               </button>
                             </td>
                           </tr>
