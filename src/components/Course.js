@@ -87,7 +87,7 @@ const Courses = () => {
                 <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8 mx-auto">
                   <div className="flex justify-between items-center mb-4">
                     <div></div>
-                    <Link to="/teacher-mode/create">
+                    <Link to="/teacher-mode/create-course">
                       <button
                         to="/teachermode-courses/create"
                         className="block rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
