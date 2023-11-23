@@ -46,7 +46,7 @@ export const getCoursesData = () => async (dispatch) => {
   dispatch(startLoading());
   try {
     const response = await axios.get(
-      `http://52.77.218.254:8000/course/get-all-courses`
+      `http://54.179.248.23:8000/course/get-all-courses`
     );
     if (response?.data) {
       dispatch(getCourses(response?.data));
@@ -65,7 +65,7 @@ export const getOneData = (param) => async (dispatch) => {
 
   try {
     const respone = await axios.get(
-      `http://52.77.218.254:8000/course/get-course-with-video/${param}`
+      `http://54.179.248.23:8000/course/get-course-with-video/${param}`
     );
     if (respone?.data) {
       // dispatch(getone)
@@ -84,7 +84,7 @@ export const deleteCourse = (param) => async (dispatch) => {
   dispatch(startLoading());
   try {
     const response = await axios.delete(
-      `http://52.77.218.254.200:8000/course/delete-course/${param}`
+      `http://54.179.248.23:8000/course/delete-course/${param}`
     );
     return response;
   } catch (error) {
@@ -98,13 +98,27 @@ export const updateCourse = (params, id) => async (dispatch) => {
 
   try {
     const respone = await axios.patch(
-      `http://52.77.218.254:8000/course/update-course/${id}`,
+      `http://54.179.248.23:8000/course/update-course/${id}`,
       params
     );
     if (respone?.data) {
       dispatch(updateCourseSuccess(respone?.data));
     }
     console.log(respone);
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+export const deleteVideo = (id) => async (dispatch) => {
+  dispatch(startLoading);
+
+  try {
+    const respone = await axios.delete(
+      `http://54.179.248.23:8000/video/delete-video/${id}`
+    );
+    return respone;
   } catch (error) {
     console.log(error);
     return error;

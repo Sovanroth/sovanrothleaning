@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { getOneData, updateCourse } from "../redux/slice/courseSlice";
+import {
+  deleteVideo,
+  getOneData,
+  updateCourse,
+} from "../redux/slice/courseSlice";
 import { isEmpty } from "@firebase/util";
 import LoadingScreen from "./LoadingScreen";
+import { PlayCircle, Rss } from "lucide-react";
 
 const categoryData = [
   {
@@ -104,6 +109,27 @@ export default function EditCourse() {
       console.log(error);
       return error;
     }
+  };
+
+  const refreshData = async (param) => {
+    setLoading(true);
+    dispatch(getOneData(id));
+    setLoading(false);
+  };
+
+  const hanldeDeleteVideo = async (param) => {
+    setLoading(true);
+    let respone = {};
+    try {
+      respone = dispatch(deleteVideo(param));
+      refreshData();
+      console.log(respone);
+    } catch (error) {
+      console.log(error);
+      respone = error;
+    }
+    setLoading(false);
+    return respone;
   };
 
   useEffect(() => {
@@ -254,9 +280,9 @@ export default function EditCourse() {
                 <button
                   type="button"
                   onClick={handleUdpateCourse}
-                  className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                  className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-green-500 hover:bg-gray-50"
                 >
-                  POST
+                  UPDATE
                 </button>
                 {/* <button
               type="button"
@@ -273,10 +299,6 @@ export default function EditCourse() {
               <div class="mt-6 border bg-slate-100 rounded-md p-4">
                 <div class="font-medium text-sm flex items-center justify-between">
                   Course Chapters
-                  {/* <button className=" flex">
-                <PlusCircle size={14} className=" mt-0.5" />
-                <p className="ml-1 text-sm">Add Chapter</p>
-              </button> */}
                 </div>
 
                 <div class=" mt-3 flex items-center justify-center w-full">
@@ -312,8 +334,26 @@ export default function EditCourse() {
                   </label>
                 </div>
 
-                <p className=" text-sm pt-5">
-                  Videos List
+                <p className=" text-sm pt-5 ">
+                  {oneData?.course?.videos?.map((video) => (
+                    <div className="mt-3 flex flex-row">
+                      <div className="flex-grow text-start rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                        <div className="flex flex-row">
+                          <PlayCircle />
+                          <p className="content-center ml-2 mt-px rem align-middle">
+                            {video?.video_title}
+                          </p>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => hanldeDeleteVideo(video?.video_id)}
+                        className=" ml-3 text-start rounded-md bg-white px-3 py-2 text-sm font-semibold text-red-400 shadow-sm ring-1 ring-inset ring-red-400 hover:bg-white"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  ))}
                 </p>
               </div>
 
