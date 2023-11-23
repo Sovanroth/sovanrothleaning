@@ -63,6 +63,11 @@ export default function EditCourse() {
     setData(newVal);
   };
 
+  const handleChnageCategory = (e) => {
+    const newVal = { ...data, category: e.target.value };
+    setData(newVal);
+  };
+
   const initData = async () => {
     setLoading(true);
     let response = {};
@@ -81,12 +86,13 @@ export default function EditCourse() {
       const params = {
         courseTitle: data?.courseTitle,
         courseDescription: data?.courseDescription,
-        category: "10",
+        category: data?.category,
         courseImage: data?.courseImage,
         coursePrice: data?.coursePrice,
         courseResource: data?.courseResource,
         active: "1",
       };
+      console.log(params);
       dispatch(updateCourse(params, id));
       console.log(params);
       navigate("/teacher-mode");
@@ -105,13 +111,12 @@ export default function EditCourse() {
     setData({
       courseTitle: oneData?.course?.courseTitle,
       courseDescription: oneData?.course?.courseDescription,
-      category: "",
+      category: oneData?.course?.category,
       courseImage: oneData?.course?.courseImage,
       coursePrice: oneData?.course?.coursePrice,
       courseResource: oneData?.course?.courseResource,
-      active: "",
+      active: "1",
     });
-
   }, [oneData]);
 
   return (
@@ -119,7 +124,7 @@ export default function EditCourse() {
       {loading ? (
         <LoadingScreen />
       ) : isEmpty(oneData) ? (
-        <LoadingScreen/>
+        <LoadingScreen />
       ) : (
         <div>
           <div className=" text-center m-5 font-bold text-xl">Edit Course</div>
@@ -196,6 +201,8 @@ export default function EditCourse() {
                     name="courseCategory"
                     className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     defaultValue="Canada"
+                    value={data?.category}
+                    onChange={(e) => handleChnageCategory(e)}
                   >
                     {categoryData.map((category) => (
                       <option>{category.name}</option>
@@ -292,6 +299,22 @@ export default function EditCourse() {
                     value={data.coursePrice}
                     onChange={(e) => handleChangeCoursePrice(e)}
                   />
+                </div>
+              </div>
+
+              <div class="mt-6 border bg-slate-100 rounded-md p-4">
+                <div class="font-medium text-sm flex items-center justify-between">
+                  Acceess Privacy
+                  {/* <button className=" flex">
+                <PlusCircle size={14} className=" mt-0.5" />
+                <p className="ml-1 text-sm">Add Resource</p>
+              </button> */}
+                </div>
+                <div className="mt-3">
+                  <p className=" text-sm">
+                    You can click the button to change the privacy that user can
+                    see it or not.
+                  </p>
                 </div>
               </div>
 
