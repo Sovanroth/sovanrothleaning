@@ -127,18 +127,7 @@ export default function CourseOwned() {
                           key={post.category}
                           className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600"
                         >
-                          {/* {post.category} */}
-                          {post?.category === "1"
-                            ? "Front-End"
-                            : post?.category === "2"
-                            ? "Back-End"
-                            : post?.category === "3"
-                            ? "Accounting"
-                            : post?.category === "4"
-                            ? "Engineering"
-                            : post?.category === "5"
-                            ? "Music"
-                            : "Mogwarts"}
+                          {post.category}
                         </a>
                         <p
                           key={post.coursePrice}

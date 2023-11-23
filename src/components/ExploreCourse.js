@@ -126,30 +126,11 @@ export default function ExploreCourse() {
                         <Moment key={post?.create_at} format="DD-MMM-YYYY">
                           {post.create_at}
                         </Moment>
-                        {/* <time
-                      key={post.date}
-                      dateTime={post.datetime}
-                      className="text-gray-500"
-                    >
-                      {post.create_at}
-                    </time> */}
                         <a
-                          // href={post.category}
                           key={post.category}
                           className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 "
                         >
-                          {/* {post.category} */}
-                          {post?.category === "1"
-                            ? "Front-End"
-                            : post?.category === "2"
-                            ? "Back-End"
-                            : post?.category === "3"
-                            ? "Full-Stack Development"
-                            : post?.category === "4"
-                            ? "Mobile App Development"
-                            : post?.category === "5"
-                            ? "Web Development"
-                            : "Mogwarts"}
+                          {post.category}
                         </a>
                         <p
                           key={post.coursePrice}

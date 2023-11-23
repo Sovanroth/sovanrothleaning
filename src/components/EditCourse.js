@@ -8,23 +8,23 @@ import LoadingScreen from "./LoadingScreen";
 const categoryData = [
   {
     id: 1,
-    name: "Front End",
+    name: "FRONT END",
   },
   {
     id: 2,
-    name: "Back End",
+    name: "BACK END",
   },
   {
     id: 3,
-    name: "Accounting",
+    name: "ACCOUNTING",
   },
   {
     id: 4,
-    name: "Engineering",
+    name: "ENGINEERING",
   },
   {
     id: 5,
-    name: "Music",
+    name: "MUSIC",
   },
 ];
 
@@ -35,6 +35,14 @@ export default function EditCourse() {
   const dispatch = useDispatch();
   const { id } = useParams();
   const [data, setData] = useState({});
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleCheckboxChange = () => {
+    const newCheckedValue = data?.active === "1" ? "0" : "1";
+    setIsChecked(newCheckedValue === "1");
+    const newVal = { ...data, active: newCheckedValue };
+    setData(newVal);
+  };
 
   const handleChangeCourseTitle = (e) => {
     const newVal = { ...data, courseTitle: e.target.value };
@@ -56,10 +64,6 @@ export default function EditCourse() {
   };
   const handleChangeCourseResrouce = (e) => {
     const newVal = { ...data, courseResource: e.target.value };
-    setData(newVal);
-  };
-  const handleChangeCourseActive = (e) => {
-    const newVal = { ...data, active: e.target.value };
     setData(newVal);
   };
 
@@ -90,7 +94,7 @@ export default function EditCourse() {
         courseImage: data?.courseImage,
         coursePrice: data?.coursePrice,
         courseResource: data?.courseResource,
-        active: "1",
+        active: data?.active,
       };
       console.log(params);
       dispatch(updateCourse(params, id));
@@ -115,7 +119,7 @@ export default function EditCourse() {
       courseImage: oneData?.course?.courseImage,
       coursePrice: oneData?.course?.coursePrice,
       courseResource: oneData?.course?.courseResource,
-      active: "1",
+      active: oneData?.course?.active,
     });
   }, [oneData]);
 
@@ -310,11 +314,28 @@ export default function EditCourse() {
                 <p className="ml-1 text-sm">Add Resource</p>
               </button> */}
                 </div>
-                <div className="mt-3">
-                  <p className=" text-sm">
-                    You can click the button to change the privacy that user can
-                    see it or not.
-                  </p>
+
+                <div className="relative flex items-start mt-3">
+                  <div className="flex h-6 items-center">
+                    <input
+                      id="comments"
+                      aria-describedby="comments-description"
+                      name="comments"
+                      type="checkbox"
+                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                      checked={Boolean(data?.active === "1")}
+                      onChange={handleCheckboxChange}
+                    />
+                  </div>
+                  <div className="ml-3 text-sm leading-6">
+                    <label
+                      htmlFor="comments"
+                      className="font-medium text-gray-900"
+                    >
+                      Click this checkbox if you want everyone to see your
+                      course as public and buy it.
+                    </label>
+                  </div>
                 </div>
               </div>
 
