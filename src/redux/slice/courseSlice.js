@@ -111,6 +111,20 @@ export const updateCourse = (params, id) => async (dispatch) => {
   }
 };
 
+export const deleteVideo = (id) => async (dispatch) => {
+  dispatch(startLoading);
+
+  try {
+    const respone = await axios.delete(
+      `http://52.77.218.254.200:8000/video/delete-video/${id}`
+    );
+    return respone;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
 export const {
   startLoading,
   stopLoading,
