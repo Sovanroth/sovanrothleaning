@@ -117,11 +117,11 @@ export default function EditCourse() {
     setLoading(false);
   };
 
-  const hanldeDeleteVideo = async () => {
+  const hanldeDeleteVideo = async (param) => {
     setLoading(true);
     let respone = {};
     try {
-      respone = dispatch(deleteVideo(params));
+      respone = dispatch(deleteVideo(param));
       refreshData();
       console.log(respone);
     } catch (error) {
