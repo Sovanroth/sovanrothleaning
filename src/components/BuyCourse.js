@@ -16,7 +16,7 @@ const BuyCourse = () => {
   const oneData = useSelector((state) => state?.courses?.oneData);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [videoData, setVideoData] = useState([])
+  // const [videoData, setVideoData] = useState([])
 
   const initData = async () => {
     setLoading(true);

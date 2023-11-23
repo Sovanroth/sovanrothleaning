@@ -18,7 +18,9 @@ const Courses = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const refreshData = () => {
+    setLoading(true);
     dispatch(getCoursesData());
+    setLoading(false)
   };
 
   const deleteData = async (param) => {
@@ -27,6 +29,7 @@ const Courses = () => {
     try {
       const response = dispatch(deleteCourse(param));
       refreshData();
+      console.log(respone)
     } catch (error) {
       console.log(error);
       respone = error;
@@ -58,13 +61,17 @@ const Courses = () => {
   };
 
   useEffect(() => {
-    dispatch(getCoursesData());
     console.log(course);
-  }, []);
+    dispatch(getCoursesData())
+    refreshData()
+  }, [getCoursesData]);
 
   useEffect(() => {
-    refreshData();
-  }, [refreshData]);
+  }, [])
+
+  // useEffect(() => {
+  //   refreshData();
+  // }, []);
 
   return (
     <div>
@@ -161,7 +168,7 @@ const Courses = () => {
                                 className="ml-1 rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-red-100"
                               >
                                 Delete
-                                <span>
+                                {/* <span>
                                   {showDeleteModal && (
                                     <DeleteCourseModal
                                       onConfirm={handleDeleteConfirm}
@@ -170,7 +177,7 @@ const Courses = () => {
                                       courseTitle={person?.courseTitle}
                                     />
                                   )}
-                                </span>
+                                </span> */}
                               </button>
                             </td>
                           </tr>
