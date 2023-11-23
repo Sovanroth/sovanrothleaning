@@ -39,6 +39,10 @@ const coursesSlice = createSlice({
       state.loading = false;
       state.data = actions.payload;
     },
+    postVideoSuccess(state, actions){
+      state.loading = false;
+      state.data = actions.payload;
+    }
   },
 });
 
@@ -125,6 +129,23 @@ export const deleteVideo = (id) => async (dispatch) => {
   }
 };
 
+export const postVideo = (params) => async (dispatch) => {
+  dispatch(startLoading());
+
+  try {
+    const response = await axios.post(
+      `http://54.179.248.23:8000/video/post-video`,
+      params
+    );
+    if(response?.data) {
+      dispatch(postVideoSuccess())
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
 export const {
   startLoading,
   stopLoading,
@@ -133,6 +154,7 @@ export const {
   getCourses,
   getCourseByone,
   updateCourseSuccess,
+  postVideoSuccess,
 } = coursesSlice.actions;
 
 export default coursesSlice.reducer;
