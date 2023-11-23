@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { getOneData, updateCourse } from "../redux/slice/courseSlice";
+import {
+  deleteVideo,
+  getOneData,
+  updateCourse,
+} from "../redux/slice/courseSlice";
 import { isEmpty } from "@firebase/util";
 import LoadingScreen from "./LoadingScreen";
-import { PlayCircle } from "lucide-react";
+import { PlayCircle, Rss } from "lucide-react";
 
 const categoryData = [
   {
@@ -105,6 +109,27 @@ export default function EditCourse() {
       console.log(error);
       return error;
     }
+  };
+
+  const refreshData = async (param) => {
+    setLoading(true);
+    dispatch(getOneData(id));
+    setLoading(false);
+  };
+
+  const hanldeDeleteVideo = async () => {
+    setLoading(true);
+    let respone = {};
+    try {
+      respone = dispatch(deleteVideo(params));
+      refreshData();
+      console.log(respone);
+    } catch (error) {
+      console.log(error);
+      respone = error;
+    }
+    setLoading(false);
+    return respone;
   };
 
   useEffect(() => {
@@ -312,9 +337,7 @@ export default function EditCourse() {
                 <p className=" text-sm pt-5 ">
                   {oneData?.course?.videos?.map((video) => (
                     <div className="mt-3 flex flex-row">
-                      <div
-                        className="flex-grow text-start rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                      >
+                      <div className="flex-grow text-start rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
                         <div className="flex flex-row">
                           <PlayCircle />
                           <p className="content-center ml-2 mt-px rem align-middle">
@@ -324,6 +347,7 @@ export default function EditCourse() {
                       </div>
                       <button
                         type="button"
+                        onClick={() => hanldeDeleteVideo(video?.video_id)}
                         className=" ml-3 text-start rounded-md bg-white px-3 py-2 text-sm font-semibold text-red-400 shadow-sm ring-1 ring-inset ring-red-400 hover:bg-white"
                       >
                         Delete

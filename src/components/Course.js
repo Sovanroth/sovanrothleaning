@@ -27,7 +27,7 @@ const Courses = () => {
     setLoading(true);
     let respone = {};
     try {
-      const response = dispatch(deleteCourse(param));
+      respone = dispatch(deleteCourse(param));
       refreshData();
       console.log(respone)
     } catch (error) {
