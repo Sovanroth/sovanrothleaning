@@ -28,13 +28,13 @@ const Courses = () => {
     let respone = {};
     try {
       respone = dispatch(deleteCourse(param));
-      refreshData();
       console.log(respone)
     } catch (error) {
       console.log(error);
       respone = error;
     }
     setLoading(false);
+    refreshData();
     return respone;
   };
 
