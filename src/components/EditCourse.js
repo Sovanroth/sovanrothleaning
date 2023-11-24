@@ -31,6 +31,10 @@ const categoryData = [
     id: 5,
     name: "MUSIC",
   },
+  {
+    id: 6,
+    name: "MOGWARTS",
+  },
 ];
 
 export default function EditCourse() {
@@ -122,7 +126,6 @@ export default function EditCourse() {
     let respone = {};
     try {
       respone = dispatch(deleteVideo(param));
-      refreshData();
       console.log(respone);
     } catch (error) {
       console.log(error);

@@ -75,7 +75,16 @@ export default function CourseOwned() {
       {loading ? (
         <LoadingScreen />
       ) : isEmpty(activeCourses) ? (
-        <div/>
+        <div class="flex items-center justify-center">
+          <div>
+            <div class="flex justify-center items-center">
+              <img src="/13.svg" width="400" alt="No Content" />
+            </div>
+            <h1 class="text-center text-xl font-bold">
+              You haven't bought any courses yet.
+            </h1>
+          </div>
+        </div>
       ) : (
         <div className="bg-white ">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
