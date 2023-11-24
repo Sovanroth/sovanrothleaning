@@ -1,5 +1,6 @@
 import { FaTrash, FaThList, FaEdit } from "react-icons/fa";
 import Footer from "./Footer";
+import { useDispatch } from "react-redux";
 import {
   Blocks,
   CircleDollarSign,
@@ -10,6 +11,8 @@ import {
   PlusCircle,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { createCourse, postVideo } from "../redux/slice/courseSlice";
 
 const categoryData = [
   {
@@ -40,6 +43,76 @@ const categoryData = [
 
 export default function AddCourse() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState({
+    courseTitle: "",
+    courseDescription: "",
+    category: "",
+    courseImage: "",
+    coursePrice: "",
+    active: "",
+    courseResource: "",
+  });
+  const dispatch = useDispatch();
+  const [courseActive, setCourseActive] = useState(0);
+
+  const handleChangeCourseTitle = (e) => {
+    const newVal = { ...data, courseTitle: e.target.value };
+    setData(newVal);
+  };
+
+  const handleChangeCourseDescription = (e) => {
+    const newVal = { ...data, courseDescription: e.target.value };
+    setData(newVal);
+  };
+
+  const handleChnageCategory = (e) => {
+    const newVal = { ...data, category: e.target.value };
+    setData(newVal);
+  };
+
+  const handleChangeCourseImage = (e) => {
+    const newVal = { ...data, courseImage: e.target.value };
+    setData(newVal);
+  };
+
+  const handleChnageCoursePrice = (e) => {
+    const newVal = { ...data, coursePrice: e.target.value };
+    setData(newVal);
+  };
+
+  const handleChangeCoruseResource = (e) => {
+    const newVal = { ...data, courseResource: e.target.value };
+    setData(newVal);
+  };
+
+  const handleChangeCourseActive = (e) => {
+    const newVal = { ...data, active: e.target.checked ? "1" : "0" };
+    setData(newVal);
+  };
+
+
+
+  const handleCreatePost = async () => {
+    setLoading(true);
+    try {
+      const params = {
+        courseTitle: data?.courseTitle,
+        courseDescription: data?.courseDescription,
+        category: data?.category,
+        courseImage: data?.courseImage,
+        coursePrice: data?.coursePrice,
+        active: data?.active,
+        courseResource: data?.courseResource,
+      };
+      dispatch(createCourse(params));
+      navigate("/teacher-mode")
+      console.log(params);
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  };
 
   return (
     <>
@@ -82,8 +155,9 @@ export default function AddCourse() {
                 name="courseTitle"
                 id="courseTitle"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                // value={data.courseTitle}
-                // onChange={(e) => handleChangeCourseTitle(e)}
+                placeholder="Example"
+                value={data.courseTitle}
+                onChange={(e) => handleChangeCourseTitle(e)}
               />
             </div>
           </div>
@@ -104,10 +178,9 @@ export default function AddCourse() {
                 name="courseDescription"
                 id="courseDescription"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                defaultValue={""}
-                // placeholder={oneData?.course?.courseDescription}
-                // value={data.courseDescription}
-                // onChange={(e) => handleChangeCourseDescriptin(e)}
+                placeholder="Example"
+                value={data.courseDescription}
+                onChange={(e) => handleChangeCourseDescription(e)}
               />
             </div>
           </div>
@@ -122,9 +195,8 @@ export default function AddCourse() {
                 id="courseCategory"
                 name="courseCategory"
                 className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                // defaultValue="null"
-                // value={data?.category}
-                // onChange={(e) => handleChnageCategory(e)}
+                value={data?.category}
+                onChange={(e) => handleChnageCategory(e)}
               >
                 {categoryData.map((category) => (
                   <option>{category.name}</option>
@@ -148,8 +220,9 @@ export default function AddCourse() {
                 name="courseImage"
                 id="courseImage"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                // value={data.courseTitle}
-                // onChange={(e) => handleChangeCourseTitle(e)}
+                placeholder="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&q=80&w=3570&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                value={data.courseImage}
+                onChange={(e) => handleChangeCourseImage(e)}
               />
             </div>
             {/* <img
@@ -162,6 +235,7 @@ export default function AddCourse() {
           <div className="flex justify-end">
             <button
               type="button"
+              onClick={handleCreatePost}
               className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-green-500 hover:bg-gray-50"
             >
               Post
@@ -249,8 +323,8 @@ export default function AddCourse() {
                 name="coursePrice"
                 id="coursePrice"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                // value={data.courseTitle}
-                // onChange={(e) => handleChangeCourseTitle(e)}
+                value={data.coursePrice}
+                onChange={(e) => handleChnageCoursePrice(e)}
               />
             </div>
           </div>
@@ -279,8 +353,9 @@ export default function AddCourse() {
                   name="comments"
                   type="checkbox"
                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                  // checked={Boolean(data?.active === "1")}
-                  // onChange={handleCheckboxChange}
+                  // defaultChecked=""
+                  defaultValue="0"
+                  onChange={handleChangeCourseActive}
                 />
               </div>
               <div className="ml-3 text-sm leading-6">
@@ -317,8 +392,8 @@ export default function AddCourse() {
                 name="courseResource"
                 id="courseResource"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                // value={data.courseTitle}
-                // onChange={(e) => handleChangeCourseTitle(e)}
+                value={data.courseResource}
+                onChange={(e) => handleChangeCoruseResource(e)}
               />
             </div>
           </div>

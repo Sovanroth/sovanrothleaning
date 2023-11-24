@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createSlice } from "@reduxjs/toolkit";
+import { async } from "@firebase/util";
 
 const initialState = {
   loading: false,
@@ -7,6 +8,7 @@ const initialState = {
   filter: {},
   data: [],
   oneData: [],
+  videoData: []
 };
 
 const coursesSlice = createSlice({
@@ -39,7 +41,11 @@ const coursesSlice = createSlice({
       state.loading = false;
       state.data = actions.payload;
     },
-    postVideoSuccess(state, actions){
+    postVideoSuccess(state, actions) {
+      state.loading = false;
+      state.videoData = actions.payload;
+    },
+    createCourseSuccess(state, actions) {
       state.loading = false;
       state.data = actions.payload;
     }
@@ -137,8 +143,25 @@ export const postVideo = (params) => async (dispatch) => {
       `http://54.179.248.23:8000/video/post-video`,
       params
     );
-    if(response?.data) {
-      dispatch(postVideoSuccess())
+    if (response?.data) {
+      dispatch(postVideoSuccess());
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+export const createCourse = (params) => async (dispatch) => {
+  dispatch(startLoading);
+
+  try {
+    const response = await axios.post(
+      `http://54.179.248.23:8000/course/create-course`,
+      params
+    );
+    if (response?.data) {
+      dispatch(createCourseSuccess());
     }
   } catch (error) {
     console.log(error);
@@ -154,6 +177,7 @@ export const {
   getCourses,
   getCourseByone,
   updateCourseSuccess,
+  createCourseSuccess,
   postVideoSuccess,
 } = coursesSlice.actions;
 
