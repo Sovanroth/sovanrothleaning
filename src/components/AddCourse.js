@@ -54,7 +54,7 @@ export default function AddCourse() {
     courseResource: "",
   });
   const dispatch = useDispatch();
-  const [courseActive, setCourseActive] = useState(0);
+  // const [courseActive, setCourseActive] = useState(0);
 
   const handleChangeCourseTitle = (e) => {
     const newVal = { ...data, courseTitle: e.target.value };
