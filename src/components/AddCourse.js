@@ -155,7 +155,7 @@ export default function AddCourse() {
                 name="courseTitle"
                 id="courseTitle"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                placeholder="Example"
+                placeholder="Course Title"
                 value={data.courseTitle}
                 onChange={(e) => handleChangeCourseTitle(e)}
               />
@@ -178,7 +178,7 @@ export default function AddCourse() {
                 name="courseDescription"
                 id="courseDescription"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                placeholder="Example"
+                placeholder="Course Description"
                 value={data.courseDescription}
                 onChange={(e) => handleChangeCourseDescription(e)}
               />
@@ -220,7 +220,7 @@ export default function AddCourse() {
                 name="courseImage"
                 id="courseImage"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                placeholder="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&q=80&w=3570&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                placeholder="Image URL"
                 value={data.courseImage}
                 onChange={(e) => handleChangeCourseImage(e)}
               />
@@ -322,6 +322,7 @@ export default function AddCourse() {
                 type="text"
                 name="coursePrice"
                 id="coursePrice"
+                placeholder="Course Price"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 value={data.coursePrice}
                 onChange={(e) => handleChnageCoursePrice(e)}
@@ -390,6 +391,7 @@ export default function AddCourse() {
               <input
                 type="text"
                 name="courseResource"
+                placeholder="Course Resource"
                 id="courseResource"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 value={data.courseResource}
