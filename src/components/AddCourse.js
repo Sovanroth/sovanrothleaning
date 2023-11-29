@@ -91,8 +91,6 @@ export default function AddCourse() {
     setData(newVal);
   };
 
-
-
   const handleCreatePost = async () => {
     setLoading(true);
     try {
@@ -106,7 +104,7 @@ export default function AddCourse() {
         courseResource: data?.courseResource,
       };
       dispatch(createCourse(params));
-      navigate("/teacher-mode")
+      navigate("/teacher-mode");
       console.log(params);
     } catch (error) {
       console.log(error);

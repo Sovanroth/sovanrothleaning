@@ -16,7 +16,6 @@ function App() {
   //   return <LogInPage setToken={setToken} />
   // }
 
-
   // document.addEventListener("contextmenu", function (e) {
   //   e.preventDefault();
   // });
@@ -52,12 +51,12 @@ function App() {
           path="/teacher-mode/edit-course/:id"
           element={<EditCoursePage />}
         ></Route>
-        <Route path="*" element={<NotFoundPage />}></Route>
         <Route
           path="/browse/buy-course/:id"
           element={<PurchaseCourse />}
         ></Route>
         <Route path="/teacher-mode/create-course" element={<Create />}></Route>
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
   );

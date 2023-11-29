@@ -8,6 +8,9 @@ import MuxPlayer from "@mux/mux-player-react";
 import FAQ from "./FAQ";
 import { isEmpty } from "@firebase/util";
 import LoadingScreen from "./LoadingScreen";
+import { Media, Video } from "@vidstack/player-react";
+import { Player, ControlBar } from 'video-react';
+import 'video-react/dist/video-react.css';
 
 const BuyCourse = () => {
   const { id } = useParams();
@@ -96,14 +99,33 @@ const BuyCourse = () => {
             <div className="w-2/3">
               {/* Your content for the second column goes here */}
               <div className="p-4">
-                <MuxPlayer
+                {/* <MuxPlayer
                   streamType="on-demand"
                   playbackId="p6ONh8T3gJ89jEX1JOlMZJzXNlB6FMFTCVsskQfnY6Q"
                   metadataVideoTitle="Placeholder (optional)"
                   metadataViewerUserId="Placeholder (optional)"
                   primaryColor="#FFFFFF"
                   secondaryColor="#000000"
-                />
+                /> */}
+                <Media>
+                  <Video
+                    loading="visible"
+                    poster="https://media-files.vidstack.io/poster.png"
+                    controls
+                    preload="true"
+                  >
+                    <video
+                      loading="visible"
+                      poster="https://media-files.vidstack.io/poster-seo.png"
+                      src="https://media-files.vidstack.io/720p.mp4"
+                      preload="none"
+                      data-video="0"
+                      controls
+                    />
+                  </Video>
+                </Media>
+
+
                 <div class="mt-6 border bg-slate-100 rounded-md p-4">
                   <div class="font-medium text-sm flex items-center justify-between">
                     Resource and Attatchments
@@ -111,7 +133,7 @@ const BuyCourse = () => {
                   {/* <p className=" text-sm pt-5 italic">No Attatchments</p> */}
                   <a
                     className=" text-sm pt-10 italic text-blue-400 underline"
-                    href={oneData?.course?.courseResource}
+                    href={`resource/{oneData?.course?.courseResource}`}
                     target="_blank"
                   >
                     {oneData?.course?.courseResource}
