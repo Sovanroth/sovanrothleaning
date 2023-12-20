@@ -9,8 +9,8 @@ import FAQ from "./FAQ";
 import { isEmpty } from "@firebase/util";
 import LoadingScreen from "./LoadingScreen";
 import { Media, Video } from "@vidstack/player-react";
-import { Player, ControlBar } from 'video-react';
-import 'video-react/dist/video-react.css';
+import { Player, ControlBar } from "video-react";
+import "video-react/dist/video-react.css";
 
 const BuyCourse = () => {
   const { id } = useParams();
@@ -101,7 +101,7 @@ const BuyCourse = () => {
               <div className="p-4">
                 {/* <MuxPlayer
                   streamType="on-demand"
-                  playbackId="p6ONh8T3gJ89jEX1JOlMZJzXNlB6FMFTCVsskQfnY6Q"
+                  playbackId="W87dTsEW82XvURKSCoopHQGxdwHTya1wrAVBLwN2vug"
                   metadataVideoTitle="Placeholder (optional)"
                   metadataViewerUserId="Placeholder (optional)"
                   primaryColor="#FFFFFF"
@@ -124,7 +124,6 @@ const BuyCourse = () => {
                     />
                   </Video>
                 </Media>
-
 
                 <div class="mt-6 border bg-slate-100 rounded-md p-4">
                   <div class="font-medium text-sm flex items-center justify-between">

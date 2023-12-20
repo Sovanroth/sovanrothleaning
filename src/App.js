@@ -9,6 +9,7 @@ import NotFoundPage from "./components/NotFoundPage";
 import LogInPage from "./view/Auth/LogInPage";
 import EditCoursePage from "./view/Teacher/EditCoursePage";
 import PurchaseCourse from "./view/Student/PurchaseCourse";
+import LoadingScreen from "./components/LoadingScreen";
 
 function App() {
   // const { token, setToken } = useToken();
@@ -56,6 +57,7 @@ function App() {
           element={<PurchaseCourse />}
         ></Route>
         <Route path="/teacher-mode/create-course" element={<Create />}></Route>
+        <Route path="loading" element={<LoadingScreen/>}></Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
