@@ -8,7 +8,7 @@ const initialState = {
   filter: {},
   data: [],
   oneData: [],
-  videoData: []
+  videoData: [],
 };
 
 const coursesSlice = createSlice({
@@ -48,16 +48,14 @@ const coursesSlice = createSlice({
     createCourseSuccess(state, actions) {
       state.loading = false;
       state.data = actions.payload;
-    }
+    },
   },
 });
 
 export const getCoursesData = () => async (dispatch) => {
   dispatch(startLoading());
   try {
-    const response = await axiosInstance.get(
-      `/course/get-all-courses`
-    );
+    const response = await axiosInstance.get(`/course/get-all-courses`);
     if (response?.data) {
       dispatch(getCourses(response?.data));
       // console.log("course", response);
@@ -66,8 +64,9 @@ export const getCoursesData = () => async (dispatch) => {
   } catch (error) {
     console.log(error);
     return error;
+  } finally {
+    dispatch(stopLoading());
   }
-  dispatch(stopLoading());
 };
 
 export const getOneData = (param) => async (dispatch) => {
@@ -85,9 +84,9 @@ export const getOneData = (param) => async (dispatch) => {
   } catch (error) {
     console.log(error);
     return error;
+  } finally {
+    dispatch(stopLoading);
   }
-
-  dispatch(stopLoading);
 };
 
 export const deleteCourse = (param) => async (dispatch) => {
@@ -100,6 +99,8 @@ export const deleteCourse = (param) => async (dispatch) => {
   } catch (error) {
     console.log(error);
     return error;
+  } finally {
+    dispatch(stopLoading);
   }
 };
 
@@ -118,6 +119,8 @@ export const updateCourse = (params, id) => async (dispatch) => {
   } catch (error) {
     console.log(error);
     return error;
+  } finally {
+    dispatch(stopLoading());
   }
 };
 
@@ -125,13 +128,13 @@ export const deleteVideo = (id) => async (dispatch) => {
   dispatch(startLoading);
 
   try {
-    const respone = await axiosInstance.delete(
-      `/video/delete-video/${id}`
-    );
+    const respone = await axiosInstance.delete(`/video/delete-video/${id}`);
     return respone;
   } catch (error) {
     console.log(error);
     return error;
+  } finally {
+    dispatch(stopLoading());
   }
 };
 
@@ -139,16 +142,15 @@ export const postVideo = (params) => async (dispatch) => {
   dispatch(startLoading());
 
   try {
-    const response = await axiosInstance.post(
-      `/video/post-video`,
-      params
-    );
+    const response = await axiosInstance.post(`/video/post-video`, params);
     if (response?.data) {
       dispatch(postVideoSuccess());
     }
   } catch (error) {
     console.log(error);
     return error;
+  } finally {
+    dispatch(stopLoading);
   }
 };
 
@@ -156,16 +158,15 @@ export const createCourse = (params) => async (dispatch) => {
   dispatch(startLoading);
 
   try {
-    const response = await axiosInstance.post(
-      `/course/create-course`,
-      params
-    );
+    const response = await axiosInstance.post(`/course/create-course`, params);
     if (response?.data) {
       dispatch(createCourseSuccess());
     }
   } catch (error) {
     console.log(error);
     return error;
+  } finally {
+    dispatch(stopLoading);
   }
 };
 
