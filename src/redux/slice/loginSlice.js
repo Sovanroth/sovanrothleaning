@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import axiosInstance from "../../utils/axios";
 import axios from "axios";
 
 const initialState = {
@@ -8,7 +9,7 @@ const initialState = {
     email: "",
     password: "",
   },
-  user: [],
+  user: {},
 };
 
 const logInSlice = createSlice({
@@ -29,7 +30,7 @@ const logInSlice = createSlice({
       state.isLoading = false;
       state.filter = actions.payload;
     },
-    login(state, actions) {sc
+    login(state, actions) {
       state.isLoading = false;
       state.user = actions.payload;
     },
@@ -39,18 +40,23 @@ const logInSlice = createSlice({
 export const { startLoading, stopLoading, hasError, setFilterSuccess, login } =
   logInSlice.actions;
 
-export const createUser = (params) => async (dispatch) => {
+export const loginUser = (params) => async (dispatch) => {
   dispatch(startLoading());
 
   try {
-    const response = await axios.post(
-      `http://54.179.248.23:8000/auth/login`,
+    const response = await axiosInstance.post(
+      `/auth/login`,
       params
     );
+    // const response = await axios.post(
+    //   `http://localhost:8000/auth/login`,
+    //   params
+    // );
     if (response?.data) {
       dispatch(login(response?.data));
     }
-    console.log("login", params);
+    // console.log("login", params);
+    console.log("response", response);
     return response;
   } catch (error) {
     console.log(error);
@@ -58,4 +64,4 @@ export const createUser = (params) => async (dispatch) => {
   }
 };
 
-export default signUpSlice.reducer;
+export default logInSlice.reducer;

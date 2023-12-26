@@ -50,6 +50,7 @@ export default function ExploreCourse() {
 
     try {
       const response = await dispatch(getCoursesData());
+      console.log(response)
     } catch (error) {
       console.log(error);
       response = error;
