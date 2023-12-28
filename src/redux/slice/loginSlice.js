@@ -37,31 +37,35 @@ const logInSlice = createSlice({
   },
 });
 
-export const { startLoading, stopLoading, hasError, setFilterSuccess, login } =
-  logInSlice.actions;
-
 export const loginUser = (params) => async (dispatch) => {
   dispatch(startLoading());
 
   try {
-    const response = await axiosInstance.post(
-      `/auth/login`,
-      params
-    );
-    // const response = await axios.post(
-    //   `http://localhost:8000/auth/login`,
-    //   params
-    // );
+    const response = await axiosInstance.post(`/auth/login`, params);
     if (response?.data) {
       dispatch(login(response?.data));
     }
-    // console.log("login", params);
-    console.log("response", response);
+
+    sessionStorage.setItem("token", response?.data?.user?.token);
+    localStorage.removeItem("locked");
+    
+    console.log(sessionStorage.getItem("token"));
+
     return response;
   } catch (error) {
     console.log(error);
     return error;
+  } finally {
+    dispatch(stopLoading());
   }
 };
 
+export const logOut = async (dispatch) => {
+  sessionStorage.clear();
+  localStorage.removeItem("locked");
+  console.log("loggedout");
+};
+
+export const { startLoading, stopLoading, hasError, setFilterSuccess, login } =
+  logInSlice.actions;
 export default logInSlice.reducer;
