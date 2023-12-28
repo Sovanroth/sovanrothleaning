@@ -46,10 +46,8 @@ export const loginUser = (params) => async (dispatch) => {
       dispatch(login(response?.data));
     }
 
-    sessionStorage.setItem("token", response?.data?.user?.token);
-    localStorage.removeItem("locked");
-    
-    console.log(sessionStorage.getItem("token"));
+    localStorage.setItem("token", response?.data?.user?.token);
+    console.log(localStorage.getItem("token"));
 
     return response;
   } catch (error) {
@@ -60,10 +58,9 @@ export const loginUser = (params) => async (dispatch) => {
   }
 };
 
-export const logOut = async (dispatch) => {
-  sessionStorage.clear();
-  localStorage.removeItem("locked");
-  console.log("loggedout");
+export const logOut = async () => {
+  localStorage.clear();
+  console.log(localStorage.getItem("token"));
 };
 
 export const { startLoading, stopLoading, hasError, setFilterSuccess, login } =

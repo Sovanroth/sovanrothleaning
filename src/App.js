@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import "./App.css";
 import Home from "./view/Student/Home";
 import Browse from "./view/Student/Browse";
@@ -10,6 +15,7 @@ import LogInPage from "./view/Auth/LogInPage";
 import EditCoursePage from "./view/Teacher/EditCoursePage";
 import PurchaseCourse from "./view/Student/PurchaseCourse";
 import LoadingScreen from "./components/LoadingScreen";
+import PrivateRoute from "./view/Auth/PrivateRoute";
 
 function App() {
   // const { token, setToken } = useToken();
@@ -42,7 +48,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />}></Route>
+        <PrivateRoute path="/" element={<Home />} />
+        {/* <Route path="/" element={<Home />}></Route> */}
         <Route path="/browse" element={<Browse />}></Route>
         <Route path="/teacher-mode" element={<TeacherHome />}></Route>
         <Route path="/teacher-mode/create" element={<Create />}></Route>
@@ -57,7 +64,7 @@ function App() {
           element={<PurchaseCourse />}
         ></Route>
         <Route path="/teacher-mode/create-course" element={<Create />}></Route>
-        <Route path="loading" element={<LoadingScreen/>}></Route>
+        <Route path="loading" element={<LoadingScreen />}></Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
