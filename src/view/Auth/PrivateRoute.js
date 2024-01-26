@@ -1,13 +1,13 @@
 import React from 'react';
 import { Route, Navigate } from 'react-router-dom';
 
-const PrivateRoute = ({ element, ...props }) => {
+const PrivateRoute = ({ element, path }) => {
   const hasToken = localStorage.getItem('token');
 
   return hasToken ? (
-    <Route {...props} element={element} />
+    <Route path={path} element={element} />
   ) : (
-    <Navigate to="/login" replace />
+    <Navigate to="/login" replace state={{ from: path }} />
   );
 };
 

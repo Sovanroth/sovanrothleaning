@@ -50,7 +50,7 @@ export default function ExploreCourse() {
 
     try {
       const response = await dispatch(getCoursesData());
-      console.log(response)
+      // console.log(response)
     } catch (error) {
       console.log(error);
       response = error;
@@ -78,7 +78,7 @@ export default function ExploreCourse() {
   // };
 
   useEffect(() => {
-    console.log(data);
+    // console.log(data);
     initData();
   }, []);
 

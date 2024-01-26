@@ -15,7 +15,8 @@ import LogInPage from "./view/Auth/LogInPage";
 import EditCoursePage from "./view/Teacher/EditCoursePage";
 import PurchaseCourse from "./view/Student/PurchaseCourse";
 import LoadingScreen from "./components/LoadingScreen";
-import PrivateRoute from "./view/Auth/PrivateRoute";
+import DeleteCourseModal from "./components/DeleteCourseModal";
+// import PrivateRoute from "./view/Auth/PrivateRoute";
 
 function App() {
   // const { token, setToken } = useToken();
@@ -48,8 +49,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <PrivateRoute path="/" element={<Home />} />
-        {/* <Route path="/" element={<Home />}></Route> */}
+
+        <Route path="/" element={<Home />}></Route>
         <Route path="/browse" element={<Browse />}></Route>
         <Route path="/teacher-mode" element={<TeacherHome />}></Route>
         <Route path="/teacher-mode/create" element={<Create />}></Route>
@@ -66,6 +67,7 @@ function App() {
         <Route path="/teacher-mode/create-course" element={<Create />}></Route>
         <Route path="loading" element={<LoadingScreen />}></Route>
         <Route path="*" element={<NotFoundPage />} />
+        <Route path="/delete-course" element={<DeleteCourseModal />} />
       </Routes>
     </Router>
   );

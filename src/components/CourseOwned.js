@@ -58,7 +58,6 @@ export default function CourseOwned() {
   //   data?.data?.filter((course) => course.active === "1") || [];
 
   useEffect(() => {
-    console.log(data);
     initData();
   }, []);
 
@@ -68,7 +67,6 @@ export default function CourseOwned() {
     setActiveCourse(item);
   }, [data]);
 
-  console.log(activeCourses);
   return (
     <div>
       {/* {JSON.stringify(activeCourses)} */}
