@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { AreaChart, Code2, DatabaseZap, Music, Settings } from "lucide-react";
 import LoadingScreen from "./LoadingScreen";
 import { isEmpty } from "@firebase/util";
+import { motion } from "framer-motion";
 
 const list = [
   {
@@ -103,7 +104,12 @@ export default function CourseOwned() {
             </div>
             <div className="mx-auto mt-5 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-4 md:grid-cols-2">
               {activeCourses?.map((post, index) => (
-                <Link to={`/browse/buy-course/${post.course_id}`}>
+                <motion.article
+                  key={post.id + index}
+                  className="flex flex-col items-start justify-between"
+                  whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
+                >
+                  {/* <Link to={`/browse/buy-course/${post.course_id}`}> */}
                   <article
                     key={post.id + index}
                     className="flex flex-col items-start justify-between"
@@ -143,23 +149,26 @@ export default function CourseOwned() {
                           {post.coursePrice}$
                         </p>
                       </div>
-                      <div className="group relative">
-                        <h3 className="mt-1 font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-                          <a href={post.href} key={post.courseTitle}>
-                            <span className="absolute inset-0" />
-                            {post.courseTitle}
-                          </a>
-                        </h3>
-                        <p
-                          key={post.courseDescription}
-                          className="mt-1 line-clamp-3 text-sm leading-6 text-gray-600"
-                        >
-                          {post.courseDescription}
-                        </p>
-                      </div>
+                      <Link to={`/browse/buy-course/${post.course_id}`}>
+                        <div className="group relative">
+                          <h3 className="mt-1 font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
+                            <a href={post.href} key={post.courseTitle}>
+                              <span className="absolute inset-0" />
+                              {post.courseTitle}
+                            </a>
+                          </h3>
+                          <p
+                            key={post.courseDescription}
+                            className="mt-1 line-clamp-3 text-sm leading-6 text-gray-600"
+                          >
+                            {post.courseDescription}
+                          </p>
+                        </div>
+                      </Link>
                     </div>
                   </article>
-                </Link>
+                  {/* </Link> */}
+                </motion.article>
               ))}
             </div>
           </div>

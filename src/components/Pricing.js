@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { CheckIcon } from "@heroicons/react/20/solid";
 import NavBar from "./NavBar";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const includedFeatures = [
   "ស្វែងយល់ពីអ្វីជា Unix",
@@ -12,6 +12,7 @@ const includedFeatures = [
 
 export default function Pricing() {
   const oneData = useSelector((state) => state?.courses?.oneData);
+  const [data, SetData] = useState(oneData);
   //   console.log(oneData);
 
   return (
@@ -35,14 +36,14 @@ export default function Pricing() {
           <div className="mx-auto mt-16 max-w-2xl rounded-3xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
             <div className="p-8 sm:p-10 lg:flex-auto">
               <h3 className="text-2xl font-bold tracking-tight text-gray-900">
-                {oneData?.course?.courseTitle}
+                {data?.course?.courseTitle}
               </h3>
               <p className="mt-6 text-base leading-7 text-gray-600">
                 {/* នៅក្នុងវគ្គសិក្សានេះ សិស្សនឹងរៀនពីរបៀបប្រើប្រាស់ពាក្យបញ្ជា UNIX
                 ប្រកបដោយប្រសិទ្ធភាពសម្រាប់ការគ្រប់គ្រងឯកសារ រៀបចំទិន្នន័យ បង្កើត
                 និងកែសម្រួលឯកសារអត្ថបទ និងអនុវត្តការងាររដ្ឋបាលប្រព័ន្ធ (System
                 Administration) ។ */}
-                {oneData?.course?.courseDescription}
+                {data?.course?.courseDescription}
               </p>
               <div className="mt-10 flex items-center gap-x-4">
                 <h4 className="flex-none text-sm font-semibold leading-6 text-indigo-600">
@@ -73,7 +74,7 @@ export default function Pricing() {
                   </p>
                   <p className="mt-6 flex items-baseline justify-center gap-x-2">
                     <span className="text-5xl font-bold tracking-tight text-gray-900">
-                      {oneData?.course?.coursePrice}
+                      {data?.course?.coursePrice}
                     </span>
                     <span className="text-sm font-semibold leading-6 tracking-wide text-gray-600">
                       USD
