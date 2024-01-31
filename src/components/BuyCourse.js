@@ -1,6 +1,6 @@
 import { Play, PlayCircle, PlayIcon } from "lucide-react";
 import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getOneData } from "../redux/slice/courseSlice";
@@ -138,14 +138,14 @@ const BuyCourse = () => {
                     {oneData?.course?.courseResource}
                   </a>
                 </div>
-                <div className="flex justify-end">
+                <Link className="flex justify-end" to="../buy-course">
                   <button
                     type="button"
                     className="rounded-full mt-5 bg-indigo-600 px-3.5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
                     Buy Course
                   </button>
-                </div>
+                </Link>
               </div>
             </div>
           </div>

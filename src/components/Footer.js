@@ -74,7 +74,7 @@ export default function Footer() {
           ))}
         </div> */}
       <p className="mt-5 text-center text-xs leading-5 text-gray-500">
-        &copy; 2023 Nath Sovanroth. All rights reserved.
+        &copy; 2024 Nath Sovanroth. All rights reserved.
       </p>
     </footer>
   );

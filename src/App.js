@@ -16,6 +16,8 @@ import EditCoursePage from "./view/Teacher/EditCoursePage";
 import PurchaseCourse from "./view/Student/PurchaseCourse";
 import LoadingScreen from "./components/LoadingScreen";
 import DeleteCourseModal from "./components/DeleteCourseModal";
+import BuyCourse from "./components/BuyCourse";
+import Pricing from "./components/Pricing";
 // import PrivateRoute from "./view/Auth/PrivateRoute";
 
 function App() {
@@ -68,6 +70,7 @@ function App() {
         <Route path="loading" element={<LoadingScreen />}></Route>
         <Route path="*" element={<NotFoundPage />} />
         <Route path="/delete-course" element={<DeleteCourseModal />} />
+        <Route path="/buy-course" element={<Pricing />} />
       </Routes>
     </Router>
   );
