@@ -8,7 +8,15 @@ import {
 } from "../redux/slice/courseSlice";
 import { isEmpty } from "@firebase/util";
 import LoadingScreen from "./LoadingScreen";
-import { PlayCircle, Rss } from "lucide-react";
+import {
+  Blocks,
+  CircleDollarSign,
+  File,
+  Hand,
+  ListChecks,
+  PlayCircle,
+  Rss,
+} from "lucide-react";
 
 const categoryData = [
   {
@@ -178,8 +186,17 @@ export default function EditCourse() {
                 </div>
               </div>
 
+              <div className="mt-5 flex-grow text-start rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300">
+                <div className="flex flex-row justify-center">
+                  <Blocks size={35} className=" text-indigo-600" />
+                  <h1 className="ml-2 mt-2 text-center">
+                    Customize Your Course
+                  </h1>
+                </div>
+              </div>
+
               {/* Course Title */}
-              <div class="mt-10 border bg-slate-100 rounded-md p-4">
+              <div class="mt-5 border bg-slate-100 rounded-md p-4">
                 <div class="font-medium text-sm flex items-center justify-between">
                   Course Title
                   {/* <button className=" flex">
@@ -233,7 +250,7 @@ export default function EditCourse() {
                     id="courseCategory"
                     name="courseCategory"
                     className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    defaultValue="Canada"
+                    // defaultValue="Canada"
                     value={data?.category}
                     onChange={(e) => handleChnageCategory(e)}
                   >
@@ -298,6 +315,12 @@ export default function EditCourse() {
             <FaThList color="#CCCCCC" size={30} />
             <div className="pt-1 pl-1.5">Course Chapters</div>
           </div> */}
+              <div className="mt-5 flex-grow text-start rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300">
+                <div className="flex flex-row justify-center">
+                  <ListChecks size={35} className=" text-indigo-600" />
+                  <h1 className="ml-2 mt-2 text-center">Course Chapter</h1>
+                </div>
+              </div>
 
               <div class="mt-6 border bg-slate-100 rounded-md p-4">
                 <div class="font-medium text-sm flex items-center justify-between">
@@ -361,6 +384,13 @@ export default function EditCourse() {
               </div>
 
               {/* Course Price */}
+
+              <div className="mt-5 flex-grow text-start rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300">
+                <div className="flex flex-row justify-center">
+                  <CircleDollarSign size={35} className=" text-indigo-600" />
+                  <h1 className="ml-2 mt-2 text-center">Course Price</h1>
+                </div>
+              </div>
               <div class="mt-6 border bg-slate-100 rounded-md p-4">
                 <div class="font-medium text-sm flex items-center justify-between">
                   Course Price
@@ -379,6 +409,13 @@ export default function EditCourse() {
                     value={data.coursePrice}
                     onChange={(e) => handleChangeCoursePrice(e)}
                   />
+                </div>
+              </div>
+
+              <div className="mt-5 flex-grow text-start rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300">
+                <div className="flex flex-row justify-center">
+                  <Hand size={35} className=" text-indigo-600" />
+                  <h1 className="ml-2 mt-2 text-center">Acceess Privacy</h1>
                 </div>
               </div>
 
@@ -416,6 +453,12 @@ export default function EditCourse() {
               </div>
 
               {/* Resource */}
+              <div className="mt-5 flex-grow text-start rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300">
+                <div className="flex flex-row justify-center">
+                  <File size={35} className=" text-indigo-600" />
+                  <h1 className="ml-2 mt-2 text-center">Resource and Attatchments</h1>
+                </div>
+              </div>
               <div class="mt-6 border bg-slate-100 rounded-md p-4">
                 <div class="font-medium text-sm flex items-center justify-between">
                   Resource and Attatchments

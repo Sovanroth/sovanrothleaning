@@ -1,14 +1,13 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { loginUser } from "../redux/slice/loginSlice";
 
 export default function Login() {
+  const user = useSelector((state) => state.logIn.user);
+
   function handleFormSubmit(event) {
-    event.preventDefault(); // prevent the default form submission
-
-    // Perform any necessary form processing here
-
-    // Redirect to another route
+    event.preventDefault();
     window.location.href = "/";
   }
 
@@ -31,14 +30,15 @@ export default function Login() {
 
   const handleLoginUser = async () => {
     setLoading(true);
-
     try {
       const params = {
         email: data?.email,
         password: data?.password,
       };
+      // console.log("login", params);
+      dispatch(loginUser(params));
+      console.log(user)
       // dispatch(createUser(params));
-      console.log("login", params);
     } catch (error) {
       console.log(true);
     }
@@ -47,6 +47,7 @@ export default function Login() {
 
   return (
     <>
+    {/* {JSON.stringify(user)} */}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img className="mx-auto h-10 w-auto" src="sovanroth.png" />
@@ -56,7 +57,7 @@ export default function Login() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" onSubmit={handleFormSubmit} method="POST">
+          <form className="space-y-6" method="POST">
             <div>
               <label
                 htmlFor="email"
@@ -108,27 +109,27 @@ export default function Login() {
                 />
               </div>
             </div>
-            <div>
-              {/* <Link to="/"> */}
-              <button
-                onClick={handleLoginUser}
-                type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                Log in
-              </button>
-              {/* </Link> */}
-            </div>
-            <p className="mt-10 text-center text-sm text-gray-500">
-              No account?{" "}
-              <Link
-                to="/signup"
-                className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-              >
-                Sign up
-              </Link>
-            </p>
           </form>
+          <div >
+            {/* <Link to="/"> */}
+            <button
+              onClick={handleLoginUser}
+              // type="submit"
+              className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-5"
+            >
+              Log in
+            </button>
+            {/* </Link> */}
+          </div>
+          <p className="mt-5 text-center text-sm text-gray-500">
+            No account?{" "}
+            <Link
+              to="/signup"
+              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+            >
+              Sign up
+            </Link>
+          </p>
         </div>
       </div>
     </>

@@ -138,7 +138,7 @@ const Courses = () => {
                               {person.courseTitle}
                             </td>
                             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                              {person.coursePrice}
+                              {person.coursePrice}$
                             </td>
                             <td
                               className={`whitespace-nowrap px-3 py-4 text-sm font-bold ${
@@ -165,10 +165,10 @@ const Courses = () => {
                                 type="button"
                                 onClick={() => deleteData(person?.course_id)}
                                 // onClick={handleDeleteClick}
-                                className="ml-1 rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-red-100"
+                                className="ml-1 rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-red-400 shadow-sm ring-1 ring-inset ring-red-400 hover:bg-red-100"
                               >
                                 Delete
-                                {/* <span>
+                                <span>
                                   {showDeleteModal && (
                                     <DeleteCourseModal
                                       onConfirm={handleDeleteConfirm}
@@ -177,7 +177,7 @@ const Courses = () => {
                                       courseTitle={person?.courseTitle}
                                     />
                                   )}
-                                </span> */}
+                                </span>
                               </button>
                             </td>
                           </tr>

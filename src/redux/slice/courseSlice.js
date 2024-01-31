@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createSlice } from "@reduxjs/toolkit";
+import axiosInstance from "../../utils/axios";
 
 const initialState = {
   loading: false,
@@ -7,6 +8,7 @@ const initialState = {
   filter: {},
   data: [],
   oneData: [],
+  videoData: [],
 };
 
 const coursesSlice = createSlice({
@@ -39,19 +41,21 @@ const coursesSlice = createSlice({
       state.loading = false;
       state.data = actions.payload;
     },
-    postVideoSuccess(state, actions){
+    postVideoSuccess(state, actions) {
+      state.loading = false;
+      state.videoData = actions.payload;
+    },
+    createCourseSuccess(state, actions) {
       state.loading = false;
       state.data = actions.payload;
-    }
+    },
   },
 });
 
 export const getCoursesData = () => async (dispatch) => {
   dispatch(startLoading());
   try {
-    const response = await axios.get(
-      `http://54.179.248.23:8000/course/get-all-courses`
-    );
+    const response = await axiosInstance.get(`/course/get-all-courses`);
     if (response?.data) {
       dispatch(getCourses(response?.data));
       // console.log("course", response);
@@ -60,16 +64,17 @@ export const getCoursesData = () => async (dispatch) => {
   } catch (error) {
     console.log(error);
     return error;
+  } finally {
+    dispatch(stopLoading());
   }
-  dispatch(stopLoading());
 };
 
 export const getOneData = (param) => async (dispatch) => {
   dispatch(startLoading());
 
   try {
-    const respone = await axios.get(
-      `http://54.179.248.23:8000/course/get-course-with-video/${param}`
+    const respone = await axiosInstance.get(
+      `/course/get-course-with-video/${param}`
     );
     if (respone?.data) {
       // dispatch(getone)
@@ -79,21 +84,23 @@ export const getOneData = (param) => async (dispatch) => {
   } catch (error) {
     console.log(error);
     return error;
+  } finally {
+    dispatch(stopLoading);
   }
-
-  dispatch(stopLoading);
 };
 
 export const deleteCourse = (param) => async (dispatch) => {
   dispatch(startLoading());
   try {
-    const response = await axios.delete(
-      `http://54.179.248.23:8000/course/delete-course/${param}`
+    const response = await axiosInstance.delete(
+      `/course/delete-course/${param}`
     );
     return response;
   } catch (error) {
     console.log(error);
     return error;
+  } finally {
+    dispatch(stopLoading);
   }
 };
 
@@ -101,8 +108,8 @@ export const updateCourse = (params, id) => async (dispatch) => {
   dispatch(startLoading());
 
   try {
-    const respone = await axios.patch(
-      `http://54.179.248.23:8000/course/update-course/${id}`,
+    const respone = await axiosInstance.patch(
+      `/course/update-course/${id}`,
       params
     );
     if (respone?.data) {
@@ -112,6 +119,8 @@ export const updateCourse = (params, id) => async (dispatch) => {
   } catch (error) {
     console.log(error);
     return error;
+  } finally {
+    dispatch(stopLoading());
   }
 };
 
@@ -119,13 +128,13 @@ export const deleteVideo = (id) => async (dispatch) => {
   dispatch(startLoading);
 
   try {
-    const respone = await axios.delete(
-      `http://54.179.248.23:8000/video/delete-video/${id}`
-    );
+    const respone = await axiosInstance.delete(`/video/delete-video/${id}`);
     return respone;
   } catch (error) {
     console.log(error);
     return error;
+  } finally {
+    dispatch(stopLoading());
   }
 };
 
@@ -133,16 +142,31 @@ export const postVideo = (params) => async (dispatch) => {
   dispatch(startLoading());
 
   try {
-    const response = await axios.post(
-      `http://54.179.248.23:8000/video/post-video`,
-      params
-    );
-    if(response?.data) {
-      dispatch(postVideoSuccess())
+    const response = await axiosInstance.post(`/video/post-video`, params);
+    if (response?.data) {
+      dispatch(postVideoSuccess());
     }
   } catch (error) {
     console.log(error);
     return error;
+  } finally {
+    dispatch(stopLoading);
+  }
+};
+
+export const createCourse = (params) => async (dispatch) => {
+  dispatch(startLoading);
+
+  try {
+    const response = await axiosInstance.post(`/course/create-course`, params);
+    if (response?.data) {
+      dispatch(createCourseSuccess());
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
+  } finally {
+    dispatch(stopLoading);
   }
 };
 
@@ -154,6 +178,7 @@ export const {
   getCourses,
   getCourseByone,
   updateCourseSuccess,
+  createCourseSuccess,
   postVideoSuccess,
 } = coursesSlice.actions;
 

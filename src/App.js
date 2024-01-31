@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import "./App.css";
 import Home from "./view/Student/Home";
 import Browse from "./view/Student/Browse";
@@ -9,13 +14,17 @@ import NotFoundPage from "./components/NotFoundPage";
 import LogInPage from "./view/Auth/LogInPage";
 import EditCoursePage from "./view/Teacher/EditCoursePage";
 import PurchaseCourse from "./view/Student/PurchaseCourse";
+import LoadingScreen from "./components/LoadingScreen";
+import DeleteCourseModal from "./components/DeleteCourseModal";
+import BuyCourse from "./components/BuyCourse";
+import Pricing from "./components/Pricing";
+// import PrivateRoute from "./view/Auth/PrivateRoute";
 
 function App() {
   // const { token, setToken } = useToken();
   // if(!token) {
   //   return <LogInPage setToken={setToken} />
   // }
-
 
   // document.addEventListener("contextmenu", function (e) {
   //   e.preventDefault();
@@ -42,6 +51,7 @@ function App() {
   return (
     <Router>
       <Routes>
+
         <Route path="/" element={<Home />}></Route>
         <Route path="/browse" element={<Browse />}></Route>
         <Route path="/teacher-mode" element={<TeacherHome />}></Route>
@@ -52,12 +62,15 @@ function App() {
           path="/teacher-mode/edit-course/:id"
           element={<EditCoursePage />}
         ></Route>
-        <Route path="*" element={<NotFoundPage />}></Route>
         <Route
           path="/browse/buy-course/:id"
           element={<PurchaseCourse />}
         ></Route>
         <Route path="/teacher-mode/create-course" element={<Create />}></Route>
+        <Route path="loading" element={<LoadingScreen />}></Route>
+        <Route path="*" element={<NotFoundPage />} />
+        <Route path="/delete-course" element={<DeleteCourseModal />} />
+        <Route path="/buy-course" element={<Pricing />} />
       </Routes>
     </Router>
   );

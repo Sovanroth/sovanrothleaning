@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import axiosInstance from "../../utils/axios";
 
 const initialState = {
   isLoading: false,
@@ -42,8 +43,8 @@ export const createUser = (params) => async (dispatch) => {
   dispatch(startLoading());
 
   try {
-    const response = await axios.post(
-      `http://54.179.248.23:8000/auth/signup`,
+    const response = await axiosInstance.post(
+      `/auth/signup`,
       params
     );
     if (response?.data) {

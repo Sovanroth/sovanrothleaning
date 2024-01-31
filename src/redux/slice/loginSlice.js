@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import axiosInstance from "../../utils/axios";
 import axios from "axios";
 
 const initialState = {
@@ -8,7 +9,7 @@ const initialState = {
     email: "",
     password: "",
   },
-  user: [],
+  user: {},
 };
 
 const logInSlice = createSlice({
@@ -29,33 +30,39 @@ const logInSlice = createSlice({
       state.isLoading = false;
       state.filter = actions.payload;
     },
-    login(state, actions) {sc
+    login(state, actions) {
       state.isLoading = false;
       state.user = actions.payload;
     },
   },
 });
 
-export const { startLoading, stopLoading, hasError, setFilterSuccess, login } =
-  logInSlice.actions;
-
-export const createUser = (params) => async (dispatch) => {
+export const loginUser = (params) => async (dispatch) => {
   dispatch(startLoading());
 
   try {
-    const response = await axios.post(
-      `http://54.179.248.23:8000/auth/login`,
-      params
-    );
+    const response = await axiosInstance.post(`/auth/login`, params);
     if (response?.data) {
       dispatch(login(response?.data));
     }
-    console.log("login", params);
+
+    localStorage.setItem("token", response?.data?.user?.token);
+    console.log(localStorage.getItem("token"));
+
     return response;
   } catch (error) {
     console.log(error);
     return error;
+  } finally {
+    dispatch(stopLoading());
   }
 };
 
-export default signUpSlice.reducer;
+export const logOut = async () => {
+  localStorage.clear();
+  console.log(localStorage.getItem("token"));
+};
+
+export const { startLoading, stopLoading, hasError, setFilterSuccess, login } =
+  logInSlice.actions;
+export default logInSlice.reducer;

@@ -1,8 +1,10 @@
 import { Fragment, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { logOut } from "../redux/slice/loginSlice";
 
 const navigation = [
   { name: "Dashboard", href: "/", current: false },
@@ -18,6 +20,19 @@ function classNames(...classes) {
 export default function NavBar() {
   const location = useLocation();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+
+  const hanndleLogout = (e) => {
+    setLoading(true);
+
+    try {
+      dispatch(logOut());
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
+  };
 
   return (
     <Disclosure as="header" className="bg-white shadow">
@@ -49,11 +64,9 @@ export default function NavBar() {
                       />
                     </div>
                     <input
-                      id="search"
-                      name="search"
+                      // id="search"
+                      // name="search"
                       className="block w-full rounded-md border-0 bg-white py-1.5 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      placeholder="Search"
-                      type="search"
                     />
                   </div>
                 </div>
@@ -114,6 +127,7 @@ export default function NavBar() {
                           {({ active }) => (
                             <Link
                               // {item.href === "/" ? }
+                              onClick={hanndleLogout}
                               to={item.href}
                               className={classNames(
                                 active ? "bg-gray-100" : "",

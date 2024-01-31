@@ -10,19 +10,19 @@ export default function SignUp() {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
-  const getMessage = () => {
-    try {
-      const status = user.status;
+  // const getMessage = () => {
+  //   try {
+  //     const status = user.status;
 
-      if (status === 0) {
-        setErrorMessage(user.message);
-      } else if (status === 1) {
-        setErrorMessage("");
-      }
-    } catch (error) {
-      setErrorMessage("An error occurred. Please try again later.");
-    }
-  };
+  //     if (status === 0) {
+  //       setErrorMessage(user.message);
+  //     } else if (status === 1) {
+  //       setErrorMessage("");
+  //     }
+  //   } catch (error) {
+  //     setErrorMessage("An error occurred. Please try again later.");
+  //   }
+  // };
 
   const dispatch = useDispatch();
   const [data, setData] = useState({
@@ -38,7 +38,7 @@ export default function SignUp() {
     if (user.status === 1) {
       window.location.href = "/login";
     } else {
-      getMessage();
+      // getMessage();
       window.location.href = "/signup";
     }
   }
@@ -73,7 +73,7 @@ export default function SignUp() {
     } catch (error) {
       console.log(true);
     }
-    getMessage();
+    // getMessage();
     setLoading(false);
   };
 
@@ -156,11 +156,11 @@ export default function SignUp() {
               </div>
             </div>
             <div>
-              {errorMessage && (
+              {/* {errorMessage && (
                 <p className=" text-xs text-end text-red-600 font-bold">
                   {errorMessage}
                 </p>
-              )}
+              )} */}
               <button
                 onClick={handleCreateUser}
                 disabled={!data.username || !data?.email || !data.password}
