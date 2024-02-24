@@ -20,6 +20,20 @@ import BuyCourse from "./components/BuyCourse";
 import Pricing from "./components/Pricing";
 // import PrivateRoute from "./view/Auth/PrivateRoute";
 
+const PrivateRoute = ({
+  redirectPath = "/login",
+  element: Element,
+  ...rest
+}) => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    return <Navigate to={redirectPath} replace />;
+  }
+
+  return <Route {...rest} element={<Element />} />;
+};
+
 function App() {
   // const { token, setToken } = useToken();
   // if(!token) {
@@ -51,23 +65,21 @@ function App() {
   return (
     <Router>
       <Routes>
+        {/* <Route path="/" element={<Home />} /}  */}
+        <Route path="/" element={<Home />} />
 
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/browse" element={<Browse />}></Route>
-        <Route path="/teacher-mode" element={<TeacherHome />}></Route>
-        <Route path="/teacher-mode/create" element={<Create />}></Route>
-        <Route path="/signup" element={<SignUpPage />}></Route>
-        <Route path="/login" element={<LogInPage />}></Route>
+        <Route path="/browse" element={<Browse />} />
+        <Route path="/teacher-mode" element={<TeacherHome />} />
+        <Route path="/teacher-mode/create" element={<Create />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/login" element={<LogInPage />} />
         <Route
           path="/teacher-mode/edit-course/:id"
           element={<EditCoursePage />}
-        ></Route>
-        <Route
-          path="/browse/buy-course/:id"
-          element={<PurchaseCourse />}
-        ></Route>
-        <Route path="/teacher-mode/create-course" element={<Create />}></Route>
-        <Route path="loading" element={<LoadingScreen />}></Route>
+        />
+        <Route path="/browse/buy-course/:id" element={<PurchaseCourse />} />
+        <Route path="/teacher-mode/create-course" element={<Create />} />
+        <Route path="loading" element={<LoadingScreen />} />
         <Route path="*" element={<NotFoundPage />} />
         <Route path="/delete-course" element={<DeleteCourseModal />} />
         <Route path="/buy-course" element={<Pricing />} />

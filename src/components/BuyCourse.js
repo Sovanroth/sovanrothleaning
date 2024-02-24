@@ -25,16 +25,17 @@ const BuyCourse = () => {
     setLoading(true);
     let response = {};
     try {
-      response = dispatch(getOneData(id));
+      // Await the dispatch call to resolve
+      response = await dispatch(getOneData(id));
     } catch (error) {
       response = error;
     }
     setLoading(false);
+    console.log(response);
     return response;
   };
 
   useEffect(() => {
-    console.log(oneData);
     initData();
   }, []);
 
@@ -47,7 +48,7 @@ const BuyCourse = () => {
     <div>
       {loading ? (
         <LoadingScreen />
-      ) : isEmpty(oneData?.course?.videos) ? (
+      ) : isEmpty(oneData?.data?.videos) ? (
         <LoadingScreen />
       ) : (
         <div className="mx-auto max-w-7xl px-6 lg:px-8 mt-5">
@@ -68,16 +69,16 @@ const BuyCourse = () => {
               <div className=" p-4">
                 {/* {oneData?.map((data) => ( */}
                 <h1 className="text-xl font-bold">
-                  {oneData?.course?.courseTitle}
+                  {oneData?.data?.courseTitle}
                 </h1>
                 <p className=" text-sm mt-2">
-                  {oneData?.course?.courseDescription}
+                  {oneData?.data?.courseDescription}
                 </p>
                 {/* ))} */}
 
                 <div class="border-t border-gray-500 my-4"></div>
                 {/* {JSON.stringify(oneData)} */}
-                {oneData?.course?.videos.map((video) => (
+                {oneData?.data?.videos.map((video) => (
                   <div className="flex flex-row mt-2">
                     <button
                       type="button"
@@ -135,7 +136,7 @@ const BuyCourse = () => {
                     href={`resource/{oneData?.course?.courseResource}`}
                     target="_blank"
                   >
-                    {oneData?.course?.courseResource}
+                    {oneData?.data?.courseResource}
                   </a>
                 </div>
 

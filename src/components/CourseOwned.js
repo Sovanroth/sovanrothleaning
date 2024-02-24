@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getCoursesData } from "../redux/slice/courseSlice";
+import { getCourseByUserID, getCoursesData } from "../redux/slice/courseSlice";
 import Moment from "react-moment";
 import { Link } from "react-router-dom";
 import { AreaChart, Code2, DatabaseZap, Music, Settings } from "lucide-react";
@@ -38,15 +38,14 @@ const list = [
 
 export default function CourseOwned() {
   const [loading, setLoading] = useState(false);
-  const data = useSelector((state) => state?.courses?.data);
+  const data = useSelector((state) => state?.courses?.getCourseByUser);
   const dispatch = useDispatch();
-  const [activeCourses, setActiveCourse] = useState([]);
 
   const initData = async () => {
     setLoading(true);
     let response = {};
     try {
-      const response = await dispatch(getCoursesData());
+      const response = await dispatch(getCourseByUserID());
     } catch (error) {
       console.log(error);
       response = error;
@@ -63,9 +62,8 @@ export default function CourseOwned() {
   }, []);
 
   useEffect(() => {
-    const item = data?.data?.filter((course) => course.active === "1") || [];
     // console.log(item);
-    setActiveCourse(item);
+    // setActiveCourse(item);
   }, [data]);
 
   return (
@@ -73,7 +71,7 @@ export default function CourseOwned() {
       {/* {JSON.stringify(activeCourses)} */}
       {loading ? (
         <LoadingScreen />
-      ) : isEmpty(activeCourses) ? (
+      ) : isEmpty(data?.data?.courses) ? (
         <div class="flex items-center justify-center">
           <div>
             <div class="flex justify-center items-center">
@@ -103,7 +101,7 @@ export default function CourseOwned() {
               </div>
             </div>
             <div className="mx-auto mt-5 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-4 md:grid-cols-2">
-              {activeCourses?.map((post, index) => (
+              {data?.data?.courses?.map((post, index) => (
                 <motion.article
                   key={post.id + index}
                   className="flex flex-col items-start justify-between"

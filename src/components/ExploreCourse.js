@@ -108,7 +108,7 @@ export default function ExploreCourse() {
             </div>
             <div className="mx-auto mt-5 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-4 md:grid-cols-2">
               {data?.data?.map((post, index) => (
-                <Link to={`/browse/buy-course/${post.course_id}`}>
+                <Link to={`/browse/buy-course/${post.id}`}>
                   <article
                     key={post.id + index}
                     className="flex flex-col items-start justify-between"
@@ -137,7 +137,7 @@ export default function ExploreCourse() {
                           key={post.coursePrice}
                           className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 "
                         >
-                          {post.coursePrice}$
+                          {post.coursePrice}
                         </p>
                       </div>
                       <div className="group relative">
