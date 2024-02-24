@@ -81,7 +81,7 @@ function App() {
         <Route path="loading" element={<LoadingScreen />} />
         <Route path="*" element={<NotFoundPage />} />
         <Route path="/delete-course" element={<DeleteCourseModal />} />
-        <Route path="/buy-course" element={<Pricing />} />
+        <Route path="/browse/buy-course/pricing" element={<Pricing />} />
       </Routes>
     </Router>
   );

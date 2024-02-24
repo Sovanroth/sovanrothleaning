@@ -172,7 +172,7 @@ const BuyCourse = () => {
                 <Link
                   className="flex justify-end"
                   to={{
-                    pathname: "../buy-course",
+                    pathname: "../browse/buy-course/pricing",
                   }}
                 >
                   <button

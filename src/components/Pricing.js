@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { buyCourse } from "../redux/slice/courseSlice";
 import { useNavigate } from "react-router-dom";
+import Footer from "./Footer";
 
 const includedFeatures = [
   "ស្វែងយល់ពីអ្វីជា Unix",
@@ -26,7 +27,7 @@ export default function Pricing() {
 
     try {
       dispatch(buyCourse(data?.data?.id));
-      navigate('/')
+      navigate("/");
     } catch (error) {
       console.log(error);
       return error;
@@ -36,20 +37,11 @@ export default function Pricing() {
   return (
     <>
       <NavBar />
-      {/* {JSON.stringify(oneData)} */}
       <div className="bg-white py-10 sm:py10">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl sm:text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-              {/* {oneData?.course?.courseTitle} */}
-            </h2>
-            <p className="mt-6 text-lg leading-8 text-gray-600">
-              {/* នៅក្នុងវគ្គសិក្សានេះ សិស្សនឹងរៀនពីរបៀបប្រើប្រាស់ពាក្យបញ្ជា UNIX
-              ប្រកបដោយប្រសិទ្ធភាពសម្រាប់ការគ្រប់គ្រងឯកសារ រៀបចំទិន្នន័យ បង្កើត
-              និងកែសម្រួលឯកសារអត្ថបទ និងអនុវត្តការងាររដ្ឋបាលប្រព័ន្ធ (System
-              Administration) ។ */}
-              {/* {oneData?.course?.courseDescription} */}
-            </p>
+            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"></h2>
+            <p className="mt-6 text-lg leading-8 text-gray-600"></p>
           </div>
           <div className="mx-auto mt-16 max-w-2xl rounded-3xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
             <div className="p-8 sm:p-10 lg:flex-auto">
@@ -57,10 +49,6 @@ export default function Pricing() {
                 {data?.data?.courseTitle}
               </h3>
               <p className="mt-6 text-base leading-7 text-gray-600">
-                {/* នៅក្នុងវគ្គសិក្សានេះ សិស្សនឹងរៀនពីរបៀបប្រើប្រាស់ពាក្យបញ្ជា UNIX
-                ប្រកបដោយប្រសិទ្ធភាពសម្រាប់ការគ្រប់គ្រងឯកសារ រៀបចំទិន្នន័យ បង្កើត
-                និងកែសម្រួលឯកសារអត្ថបទ និងអនុវត្តការងាររដ្ឋបាលប្រព័ន្ធ (System
-                Administration) ។ */}
                 {data?.data?.courseDescription}
               </p>
               <div className="mt-10 flex items-center gap-x-4">
