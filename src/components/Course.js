@@ -163,7 +163,7 @@ const Courses = () => {
 
                               <button
                                 type="button"
-                                onClick={() => deleteData(person?.course_id)}
+                                onClick={() => deleteData(person?.id)}
                                 // onClick={handleDeleteClick}
                                 className="ml-1 rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-red-400 shadow-sm ring-1 ring-inset ring-red-400 hover:bg-red-100"
                               >
@@ -173,7 +173,7 @@ const Courses = () => {
                                     <DeleteCourseModal
                                       onConfirm={handleDeleteConfirm}
                                       onCancel={handleDeleteCancel}
-                                      courseId={person?.course_id}
+                                      courseId={person?.id}
                                       courseTitle={person?.courseTitle}
                                     />
                                   )}

@@ -79,3 +79,20 @@ export default function Example() {
     )
   }
   
+
+
+///recourse
+
+  <div class="mt-6 border bg-slate-100 rounded-md p-4">
+  <div class="font-medium text-sm flex items-center justify-between">
+    Resource and Attatchments
+  </div>
+  {/* <p className=" text-sm pt-5 italic">No Attatchments</p> */}
+  <a
+    className=" text-sm pt-10 italic text-blue-400 underline"
+    href={`resource/{oneData?.course?.courseResource}`}
+    target="_blank"
+  >
+    {oneData?.data?.courseResource}
+  </a>
+</div>

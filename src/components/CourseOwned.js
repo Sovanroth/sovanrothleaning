@@ -41,6 +41,11 @@ export default function CourseOwned() {
   const data = useSelector((state) => state?.courses?.getCourseByUser);
   const dispatch = useDispatch();
 
+  const getCategoryName = (categoryNumber) => {
+    const category = list.find((item) => item.id === categoryNumber);
+    return category ? category.category : "Unknown";
+  };
+
   const initData = async () => {
     setLoading(true);
     let response = {};
@@ -54,21 +59,12 @@ export default function CourseOwned() {
     return response;
   };
 
-  // const activeCourses =
-  //   data?.data?.filter((course) => course.active === "1") || [];
-
   useEffect(() => {
     initData();
   }, []);
 
-  useEffect(() => {
-    // console.log(item);
-    // setActiveCourse(item);
-  }, [data]);
-
   return (
     <div>
-      {/* {JSON.stringify(activeCourses)} */}
       {loading ? (
         <LoadingScreen />
       ) : isEmpty(data?.data?.courses) ? (
@@ -107,7 +103,6 @@ export default function CourseOwned() {
                   className="flex flex-col items-start justify-between"
                   whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
                 >
-                  {/* <Link to={`/browse/buy-course/${post.course_id}`}> */}
                   <article
                     key={post.id + index}
                     className="flex flex-col items-start justify-between"
@@ -126,25 +121,17 @@ export default function CourseOwned() {
                         <Moment key={post?.create_at} format="DD-MMM-YYYY">
                           {post.create_at}
                         </Moment>
-                        {/* <time
-                      key={post.date}
-                      dateTime={post.datetime}
-                      className="text-gray-500"
-                    >
-                      {post.create_at}
-                    </time> */}
                         <a
-                          // href={post.category}
                           key={post.category}
                           className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600"
                         >
-                          {post.category}
+                          {getCategoryName(post.category)}
                         </a>
                         <p
                           key={post.coursePrice}
                           className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 "
                         >
-                          {post.coursePrice}$
+                          {post.coursePrice}
                         </p>
                       </div>
                       <Link to={`/browse/buy-course/${post.course_id}`}>

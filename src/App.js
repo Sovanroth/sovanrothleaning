@@ -67,7 +67,6 @@ function App() {
       <Routes>
         {/* <Route path="/" element={<Home />} /}  */}
         <Route path="/" element={<Home />} />
-
         <Route path="/browse" element={<Browse />} />
         <Route path="/teacher-mode" element={<TeacherHome />} />
         <Route path="/teacher-mode/create" element={<Create />} />
