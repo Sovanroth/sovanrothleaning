@@ -55,8 +55,8 @@ export default function EditCourse() {
   const [isChecked, setIsChecked] = useState(false);
 
   const handleCheckboxChange = () => {
-    const newCheckedValue = data?.active === "1" ? "0" : "1";
-    setIsChecked(newCheckedValue === "1");
+    const newCheckedValue = data?.active === 1 ? 0 : 1;
+    setIsChecked(newCheckedValue === 1);
     const newVal = { ...data, active: newCheckedValue };
     setData(newVal);
   };
@@ -94,6 +94,7 @@ export default function EditCourse() {
     let response = {};
     try {
       response = dispatch(getOneData(id));
+      console.log(response);
     } catch (error) {
       response = error;
     }
@@ -150,13 +151,13 @@ export default function EditCourse() {
 
   useEffect(() => {
     setData({
-      courseTitle: oneData?.course?.courseTitle,
-      courseDescription: oneData?.course?.courseDescription,
-      category: oneData?.course?.category,
-      courseImage: oneData?.course?.courseImage,
-      coursePrice: oneData?.course?.coursePrice,
-      courseResource: oneData?.course?.courseResource,
-      active: oneData?.course?.active,
+      courseTitle: oneData?.data?.courseTitle,
+      courseDescription: oneData?.data?.courseDescription,
+      category: oneData?.data?.category,
+      courseImage: oneData?.data?.courseImage,
+      coursePrice: oneData?.data?.coursePrice,
+      courseResource: oneData?.data?.courseResource,
+      active: oneData?.data?.active,
     });
   }, [oneData]);
 
@@ -436,7 +437,7 @@ export default function EditCourse() {
                       name="comments"
                       type="checkbox"
                       className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                      checked={Boolean(data?.active === "1")}
+                      checked={Boolean(data?.active === 1)}
                       onChange={handleCheckboxChange}
                     />
                   </div>
@@ -456,7 +457,9 @@ export default function EditCourse() {
               <div className="mt-5 flex-grow text-start rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300">
                 <div className="flex flex-row justify-center">
                   <File size={35} className=" text-indigo-600" />
-                  <h1 className="ml-2 mt-2 text-center">Resource and Attatchments</h1>
+                  <h1 className="ml-2 mt-2 text-center">
+                    Resource and Attatchments
+                  </h1>
                 </div>
               </div>
               <div class="mt-6 border bg-slate-100 rounded-md p-4">

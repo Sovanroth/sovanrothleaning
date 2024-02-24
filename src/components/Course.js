@@ -138,20 +138,20 @@ const Courses = () => {
                               {person.courseTitle}
                             </td>
                             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                              {person.coursePrice}$
+                              {person.coursePrice}
                             </td>
                             <td
                               className={`whitespace-nowrap px-3 py-4 text-sm font-bold ${
-                                person.active === "1"
+                                person.active === 1
                                   ? "text-green"
                                   : "text-red"
                               }`}
                             >
-                              {person.active === "1" ? "Publish" : "Unpublish"}
+                              {person.active === 1 ? "Publish" : "Unpublish"}
                             </td>
                             <td>
                               <Link
-                                to={`/teacher-mode/edit-course/${person.course_id}`}
+                                to={`/teacher-mode/edit-course/${person.id}`}
                               >
                                 <button
                                   type="button"

@@ -9,6 +9,7 @@ const initialState = {
   data: [],
   oneData: [],
   videoData: [],
+  getCourseByUser: [],
 };
 
 const coursesSlice = createSlice({
@@ -49,16 +50,20 @@ const coursesSlice = createSlice({
       state.loading = false;
       state.data = actions.payload;
     },
+    getCourseByUserIDSuccess(state, action) {
+      state.loading = false;
+      state.getCourseByUser = action.payload;
+    },
   },
 });
 
 export const getCoursesData = () => async (dispatch) => {
   dispatch(startLoading());
   try {
-    const response = await axiosInstance.get(`/course/get-all-courses`);
+    const response = await axiosInstance.get(`/courses/get-all-course`);
     if (response?.data) {
       dispatch(getCourses(response?.data));
-      // console.log("course", response);
+      console.log("course", response);
       return response;
     }
   } catch (error) {
@@ -74,11 +79,13 @@ export const getOneData = (param) => async (dispatch) => {
 
   try {
     const respone = await axiosInstance.get(
-      `/course/get-course-with-video/${param}`
+      `/courses/get-course-by-id/${param}`
     );
     if (respone?.data) {
       // dispatch(getone)
       dispatch(getCourseByone(respone?.data));
+      console.log(respone);
+      console.log(param);
       return respone;
     }
   } catch (error) {
@@ -108,8 +115,8 @@ export const updateCourse = (params, id) => async (dispatch) => {
   dispatch(startLoading());
 
   try {
-    const respone = await axiosInstance.patch(
-      `/course/update-course/${id}`,
+    const respone = await axiosInstance.put(
+      `/courses/update-course/${id}`,
       params
     );
     if (respone?.data) {
@@ -170,6 +177,25 @@ export const createCourse = (params) => async (dispatch) => {
   }
 };
 
+export const getCourseByUserID = () => async (dispatch) => {
+  dispatch(startLoading());
+  try {
+    const respone = await axiosInstance.get(
+      `/users/auth/get-user-by-id/${localStorage.getItem("userId")}`
+    );
+    if (respone?.data) {
+      dispatch(getCourseByUserIDSuccess(respone?.data));
+    }
+    console.log(respone);
+    return respone;
+  } catch (error) {
+    console.log(error);
+    return error;
+  } finally {
+    dispatch(stopLoading());
+  }
+};
+
 export const {
   startLoading,
   stopLoading,
@@ -179,6 +205,7 @@ export const {
   getCourseByone,
   updateCourseSuccess,
   createCourseSuccess,
+  getCourseByUserIDSuccess,
   postVideoSuccess,
 } = coursesSlice.actions;
 

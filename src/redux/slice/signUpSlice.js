@@ -44,7 +44,7 @@ export const createUser = (params) => async (dispatch) => {
 
   try {
     const response = await axiosInstance.post(
-      `/auth/signup`,
+      `/users/auth/signup`,
       params
     );
     if (response?.data) {

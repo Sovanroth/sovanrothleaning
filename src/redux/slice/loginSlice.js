@@ -41,12 +41,14 @@ export const loginUser = (params) => async (dispatch) => {
   dispatch(startLoading());
 
   try {
-    const response = await axiosInstance.post(`/auth/login`, params);
+    const response = await axiosInstance.post(`/users/auth/login`, params);
     if (response?.data) {
       dispatch(login(response?.data));
     }
 
     localStorage.setItem("token", response?.data?.user?.token);
+    localStorage.setItem("userId", response?.data?.user?.id);
+    console.log(localStorage.getItem("userId"));
     console.log(localStorage.getItem("token"));
 
     return response;
