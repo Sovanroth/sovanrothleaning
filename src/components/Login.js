@@ -28,6 +28,21 @@ export default function Login() {
     setData(newVal);
   };
 
+  // const handleLoginUser = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const params = {
+  //       email: data?.email,
+  //       password: data?.password,
+  //     };
+  //     // console.log("login", params);
+  //     dispatch(loginUser(params));
+  //   } catch (error) {
+  //     console.log(true);
+  //   }
+  //   setLoading(false);
+  // };
+
   const handleLoginUser = async () => {
     setLoading(true);
     try {
@@ -35,19 +50,30 @@ export default function Login() {
         email: data?.email,
         password: data?.password,
       };
-      // console.log("login", params);
-      dispatch(loginUser(params));
-      console.log(user)
-      // dispatch(createUser(params));
+      // Dispatch loginUser action
+      await dispatch(loginUser(params));
+
+      // After login action is completed, check for user data and redirect if necessary
+      if (!(user && user.error)) {
+        // Redirect to "/"
+        window.location.href = "/";
+      } else {
+        window.location.href = "/login";
+      }
     } catch (error) {
-      console.log(true);
+      console.log(error);
     }
     setLoading(false);
   };
 
+  const handleClickLogin = () => {
+    // Call handleLoginUser to initiate the login process
+    handleLoginUser();
+  };
+
   return (
     <>
-    {/* {JSON.stringify(user)} */}
+      {/* {JSON.stringify(user)} */}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img className="mx-auto h-10 w-auto" src="sovanroth.png" />
@@ -110,10 +136,10 @@ export default function Login() {
               </div>
             </div>
           </form>
-          <div >
+          <div>
             {/* <Link to="/"> */}
             <button
-              onClick={handleLoginUser}
+              onClick={handleClickLogin}
               // type="submit"
               className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-5"
             >

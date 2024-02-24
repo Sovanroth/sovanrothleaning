@@ -50,6 +50,7 @@ export const loginUser = (params) => async (dispatch) => {
     localStorage.setItem("userId", response?.data?.user?.id);
     console.log(localStorage.getItem("userId"));
     console.log(localStorage.getItem("token"));
+    console.log(response)
 
     return response;
   } catch (error) {

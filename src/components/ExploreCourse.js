@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AreaChart, Code2, DatabaseZap, Music, Settings } from "lucide-react";
 import LoadingScreen from "./LoadingScreen";
 import { isEmpty } from "@firebase/util";
+import { motion } from "framer-motion";
 
 const list = [
   {
@@ -40,9 +41,11 @@ export default function ExploreCourse() {
   const data = useSelector((state) => state?.courses?.data);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const originalCourse = data?.data;
-  // const [course, setCourse] = useState(originalCourse);
-  // const course = data?.data;
+
+  const getCategoryName = (categoryNumber) => {
+    const category = list.find((item) => item.id === categoryNumber);
+    return category ? category.category : "Unknown";
+  };
 
   const initData = async () => {
     setLoading(true);
@@ -59,26 +62,7 @@ export default function ExploreCourse() {
     return response;
   };
 
-  // const initDataByOne = async () => {
-  //   setLoading(true);
-  //   try {
-  //     const respone = await dispatch(getOneData());
-  //     console.log("onedata", respone);
-  //     return respone;
-  //   } catch (error) {
-  //     console.log(error);
-  //     return error;
-  //   }
-  // };
-
-  // const handleClickBackend = () => {
-  //   const category1 =
-  //     data?.data?.filter((course) => course.category === "1") || [];
-  //   setCourse(category1);
-  // };
-
   useEffect(() => {
-    // console.log(data);
     initData();
   }, []);
 
@@ -109,53 +93,59 @@ export default function ExploreCourse() {
             <div className="mx-auto mt-5 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-4 md:grid-cols-2">
               {data?.data?.map((post, index) => (
                 <Link to={`/browse/buy-course/${post.id}`}>
-                  <article
+                  <motion.article
                     key={post.id + index}
                     className="flex flex-col items-start justify-between"
+                    whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
                   >
-                    <div className="relative w-full">
-                      <img
-                        key={post.courseImage}
-                        src={post.courseImage}
-                        alt=""
-                        className="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]"
-                      />
-                      <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
-                    </div>
-                    <div className="max-w-xl">
-                      <div className="mt-2 flex items-center gap-x-4 text-xs">
-                        <Moment key={post?.create_at} format="DD-MMM-YYYY">
-                          {post.create_at}
-                        </Moment>
-                        <a
-                          key={post.category}
-                          className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 "
-                        >
-                          {post.category}
-                        </a>
-                        <p
-                          key={post.coursePrice}
-                          className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 "
-                        >
-                          {post.coursePrice}
-                        </p>
+                    <article
+                      key={post.id + index}
+                      className="flex flex-col items-start justify-between"
+                    >
+                      <div className="relative w-full">
+                        <img
+                          key={post.courseImage}
+                          src={post.courseImage}
+                          alt=""
+                          className="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]"
+                        />
+                        <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
                       </div>
-                      <div className="group relative">
-                        <h3 className="mt-1 font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-                          <a href={post.href} key={post.courseTitle}>
-                            <span className="absolute inset-0" />
-                            {post.courseTitle}
+                      <div className="max-w-xl">
+                        <div className="mt-2 flex items-center gap-x-4 text-xs">
+                          <Moment key={post?.create_at} format="DD-MMM-YYYY">
+                            {post.create_at}
+                          </Moment>
+                          <a
+                            key={post.category}
+                            className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600"
+                          >
+                            {getCategoryName(post.category)}
                           </a>
-                        </h3>
-                        <p
-                          key={post.courseDescription}
-                          className="mt-1 line-clamp-3 text-sm leading-6 text-gray-600"
-                        >
-                          {post.courseDescription}
-                        </p>
+                          <p
+                            key={post.coursePrice}
+                            className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 "
+                          >
+                            {post.coursePrice}
+                          </p>
+                        </div>
+                        <div className="group relative">
+                          <h3 className="mt-1 font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
+                            <a href={post.href} key={post.courseTitle}>
+                              <span className="absolute inset-0" />
+                              {post.courseTitle}
+                            </a>
+                          </h3>
+                          <p
+                            key={post.courseDescription}
+                            className="mt-1 line-clamp-3 text-sm leading-6 text-gray-600"
+                          >
+                            {post.courseDescription}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  </article>
+                    </article>
+                  </motion.article>
                 </Link>
               ))}
             </div>

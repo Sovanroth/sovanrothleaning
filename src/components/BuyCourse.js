@@ -1,4 +1,4 @@
-import { Play, PlayCircle, PlayIcon } from "lucide-react";
+import { Play, PlayCircle, PlayIcon, LockKeyhole } from "lucide-react";
 import React from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -11,6 +11,8 @@ import LoadingScreen from "./LoadingScreen";
 import { Media, Video } from "@vidstack/player-react";
 import { Player, ControlBar } from "video-react";
 import "video-react/dist/video-react.css";
+import ReactPlayer from "react-player";
+import { Tooltip } from "react-tooltip";
 
 const BuyCourse = () => {
   const { id } = useParams();
@@ -78,7 +80,7 @@ const BuyCourse = () => {
 
                 <div class="border-t border-gray-500 my-4"></div>
                 {/* {JSON.stringify(oneData)} */}
-                {oneData?.data?.videos.map((video) => (
+                {/* {oneData?.data?.videos.map((video) => (
                   <div className="flex flex-row mt-2">
                     <button
                       type="button"
@@ -91,6 +93,47 @@ const BuyCourse = () => {
                         </p>
                       </div>
                     </button>
+                  </div>
+                ))} */}
+                {oneData?.data?.videos.map((video, index) => (
+                  <div className="flex flex-row mt-2" key={index}>
+                    <button
+                      type="button"
+                      className={`w-screen text-start rounded-md px-3 py-2 text-sm font-semibold ${
+                        index === 0
+                          ? "bg-white text-gray-900"
+                          : "bg-gray-100 text-gray-500 pointer-events-none"
+                      } shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50`}
+                      onClick={() => {
+                        if (index === 0) {
+                          // Handle click action for the first video
+                        }
+                      }}
+                      data-tip={
+                        index !== 0
+                          ? "Please purchase the course to unlock the video"
+                          : ""
+                      }
+                      data-for={`tooltip-${index}`} // Unique data-for attribute for each tooltip
+                    >
+                      <div className="flex flex-row">
+                        {index === 0 ? (
+                          <PlayCircle size={24} />
+                        ) : (
+                          <LockKeyhole size={22} />
+                        )}
+                        <p className="content-center ml-2 mt-px align-middle">
+                          {video.video_title}
+                        </p>
+                      </div>
+                    </button>
+                    {index !== 0 && (
+                      <Tooltip
+                        id={`tooltip-${index}`}
+                        effect="solid"
+                        place="top"
+                      />
+                    )}
                   </div>
                 ))}
               </div>
@@ -125,20 +168,6 @@ const BuyCourse = () => {
                     />
                   </Video>
                 </Media>
-
-                <div class="mt-6 border bg-slate-100 rounded-md p-4">
-                  <div class="font-medium text-sm flex items-center justify-between">
-                    Resource and Attatchments
-                  </div>
-                  {/* <p className=" text-sm pt-5 italic">No Attatchments</p> */}
-                  <a
-                    className=" text-sm pt-10 italic text-blue-400 underline"
-                    href={`resource/{oneData?.course?.courseResource}`}
-                    target="_blank"
-                  >
-                    {oneData?.data?.courseResource}
-                  </a>
-                </div>
 
                 <Link
                   className="flex justify-end"

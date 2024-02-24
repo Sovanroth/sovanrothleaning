@@ -50,6 +50,10 @@ const coursesSlice = createSlice({
       state.loading = false;
       state.data = actions.payload;
     },
+    buyCourseSuccess(state, actions) {
+      state.loading = false;
+      state.filter = actions.payload;
+    },
     getCourseByUserIDSuccess(state, action) {
       state.loading = false;
       state.getCourseByUser = action.payload;
@@ -100,7 +104,7 @@ export const deleteCourse = (param) => async (dispatch) => {
   dispatch(startLoading());
   try {
     const response = await axiosInstance.delete(
-      `/course/delete-course/${param}`
+      `/courses/delete-course/${param}`
     );
     return response;
   } catch (error) {
@@ -177,6 +181,26 @@ export const createCourse = (params) => async (dispatch) => {
   }
 };
 
+export const buyCourse = (courseId) => async (dispatch) => {
+  dispatch(startLoading());
+
+  try {
+    const response = await axiosInstance.post(
+      `/users/buy-course?userId=${localStorage.getItem(
+        "userId"
+      )}&courseId=${courseId}`
+    );
+    if (response?.data) {
+      dispatch(buyCourseSuccess());
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
+  } finally {
+    dispatch(stopLoading());
+  }
+};
+
 export const getCourseByUserID = () => async (dispatch) => {
   dispatch(startLoading());
   try {
@@ -207,6 +231,7 @@ export const {
   createCourseSuccess,
   getCourseByUserIDSuccess,
   postVideoSuccess,
+  buyCourseSuccess,
 } = coursesSlice.actions;
 
 export default coursesSlice.reducer;
