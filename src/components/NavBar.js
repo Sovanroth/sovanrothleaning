@@ -22,6 +22,7 @@ export default function NavBar() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const role = parseInt(localStorage.getItem("role"));
 
   const hanndleLogout = (e) => {
     setLoading(true);
@@ -84,23 +85,17 @@ export default function NavBar() {
                 </Disclosure.Button>
               </div>
               <div className="hidden lg:relative lg:z-10 lg:ml-4 lg:flex lg:items-center">
-                <Link to="/teacher-mode">
-                  <button
-                    type="button"
-                    className="rounded-full bg-white px-3.5 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                  >
-                    Teacher Mode
-                  </button>
-                </Link>
+                {role !== 0 && (
+                  <Link to="/teacher-mode">
+                    <button
+                      type="button"
+                      className="rounded-full bg-white px-3.5 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                    >
+                      Teacher Mode
+                    </button>
+                  </Link>
+                )}
 
-                {/* <Link
-                  className="relative inline-flex items-center gap-x-1.5 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  to="/"
-                >
-                  Student Mode
-                </Link> */}
-
-                {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-4 flex-shrink-0">
                   <div>
                     <Menu.Button className="relative flex rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">

@@ -18,21 +18,7 @@ import LoadingScreen from "./components/LoadingScreen";
 import DeleteCourseModal from "./components/DeleteCourseModal";
 import BuyCourse from "./components/BuyCourse";
 import Pricing from "./components/Pricing";
-// import PrivateRoute from "./view/Auth/PrivateRoute";
-
-const PrivateRoute = ({
-  redirectPath = "/login",
-  element: Element,
-  ...rest
-}) => {
-  const token = localStorage.getItem("token");
-
-  if (!token) {
-    return <Navigate to={redirectPath} replace />;
-  }
-
-  return <Route {...rest} element={<Element />} />;
-};
+import PrivateRoute from "./view/Auth/PrivateRoute";
 
 function App() {
   // const { token, setToken } = useToken();
@@ -65,9 +51,13 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* <Route path="/" element={<Home />} /}  */}
-        <Route path="/" element={<Home />} />
-        <Route path="/browse" element={<Browse />} />
+        {/* <Route path="/" element={<Home />} /> */}
+        <Route element={<PrivateRoute />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/browse" element={<Browse />} />
+          <Route path="/browse/buy-course/:id" element={<PurchaseCourse />} />
+          <Route path="/browse/buy-course/pricing" element={<Pricing />} />
+        </Route>
         <Route path="/teacher-mode" element={<TeacherHome />} />
         <Route path="/teacher-mode/create" element={<Create />} />
         <Route path="/signup" element={<SignUpPage />} />
@@ -76,12 +66,10 @@ function App() {
           path="/teacher-mode/edit-course/:id"
           element={<EditCoursePage />}
         />
-        <Route path="/browse/buy-course/:id" element={<PurchaseCourse />} />
         <Route path="/teacher-mode/create-course" element={<Create />} />
         <Route path="loading" element={<LoadingScreen />} />
         <Route path="*" element={<NotFoundPage />} />
         <Route path="/delete-course" element={<DeleteCourseModal />} />
-        <Route path="/buy-course" element={<Pricing />} />
       </Routes>
     </Router>
   );
