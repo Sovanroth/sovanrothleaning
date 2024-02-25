@@ -42,6 +42,7 @@ export const loginUser = (params) => async (dispatch) => {
 
   try {
     const response = await axiosInstance.post(`/users/auth/login`, params);
+    
     if (response?.data) {
       dispatch(login(response?.data));
     }

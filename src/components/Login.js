@@ -17,6 +17,7 @@ export default function Login() {
     email: "",
     password: "",
   });
+  const [loginError, setLoginError] = useState(null);
 
   const handleChangeEmail = (e) => {
     const newVal = { ...data, email: e.target.value };
@@ -35,10 +36,15 @@ export default function Login() {
   //       email: data?.email,
   //       password: data?.password,
   //     };
-  //     // console.log("login", params);
-  //     dispatch(loginUser(params));
+  //     await dispatch(loginUser(params));
+
+  //     if (!(user && user.error)) {
+  //       window.location.href = "/";
+  //     } else {
+  //       window.location.href = "/login";
+  //     }
   //   } catch (error) {
-  //     console.log(true);
+  //     console.log(error);
   //   }
   //   setLoading(false);
   // };
@@ -50,15 +56,14 @@ export default function Login() {
         email: data?.email,
         password: data?.password,
       };
-      // Dispatch loginUser action
-      await dispatch(loginUser(params));
+      const response = await dispatch(loginUser(params));
 
-      // After login action is completed, check for user data and redirect if necessary
-      if (!(user && user.error)) {
-        // Redirect to "/"
-        window.location.href = "/";
+      // console.log("data", response?.data?.message);
+
+      if (response.data.error) {
+        setLoginError(response.data.message); // Set the error message
       } else {
-        window.location.href = "/login";
+        window.location.href = "/";
       }
     } catch (error) {
       console.log(error);
@@ -67,8 +72,8 @@ export default function Login() {
   };
 
   const handleClickLogin = () => {
-    // Call handleLoginUser to initiate the login process
     handleLoginUser();
+    setLoginError(null)
   };
 
   return (
@@ -136,6 +141,7 @@ export default function Login() {
               </div>
             </div>
           </form>
+          {loginError && <div className="text-red-400 text-sm text-end mt-2">{loginError}</div>}
           <div>
             {/* <Link to="/"> */}
             <button
