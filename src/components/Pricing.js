@@ -3,7 +3,7 @@ import { CheckIcon } from "@heroicons/react/20/solid";
 import NavBar from "./NavBar";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { buyCourse } from "../redux/slice/courseSlice";
+import { buyCourse, getOneData } from "../redux/slice/courseSlice";
 import { useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 
@@ -21,6 +21,21 @@ export default function Pricing() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // console.log(data?.data?.id);
+  const id = data?.data?.id;
+
+  // const initData = async () => {
+  //   setLoading(true);
+  //   let response = {};
+  //   try {
+  //     // Await the dispatch call to resolve
+  //     response = await dispatch(getOneData(data?.data?.id));
+  //   } catch (error) {
+  //     response = error;
+  //   }
+  //   setLoading(false);
+  //   console.log(response);
+  //   return response;
+  // };
 
   const handleBuyCourse = async () => {
     setLoading(true);
