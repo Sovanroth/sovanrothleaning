@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 import { loginUser } from "../redux/slice/loginSlice";
 import { useSnackbar } from "notistack";
 import Notification from "./Notification";
+import { Eye, EyeOff } from "lucide-react";
+// import { EyeIcon, EyeOffIcon } from '@heroicons/react/solid';
 
 export default function Login() {
   const user = useSelector((state) => state.logIn.user);
-  const { enqueueSnackbar } = useSnackbar();
+  const [showPassword, setShowPassword] = useState(false);
 
   function handleFormSubmit(event) {
     event.preventDefault();
@@ -32,25 +34,9 @@ export default function Login() {
     setData(newVal);
   };
 
-  // const handleLoginUser = async () => {
-  //   setLoading(true);
-  //   try {
-  //     const params = {
-  //       email: data?.email,
-  //       password: data?.password,
-  //     };
-  //     await dispatch(loginUser(params));
-
-  //     if (!(user && user.error)) {
-  //       window.location.href = "/";
-  //     } else {
-  //       window.location.href = "/login";
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  //   setLoading(false);
-  // };
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const handleLoginUser = async () => {
     setLoading(true);
@@ -134,17 +120,28 @@ export default function Login() {
                   </a>
                 </div>
               </div>
-              <div className="mt-2">
+              <div className="mt-2 relative">
                 <input
                   value={data?.password}
                   onChange={(e) => handleChangePassword(e)}
                   id="password"
                   name="password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   autoComplete="current-password"
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+                <button
+                  type="button"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                  onClick={togglePasswordVisibility}
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-5 w-5 text-gray-500" size={8} />
+                  ) : (
+                    <Eye className="h-5 w-5 text-gray-500" size={8} />
+                  )}
+                </button>
               </div>
             </div>
             <div>
