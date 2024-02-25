@@ -22,11 +22,6 @@ import PrivateRoute from "./view/Auth/PrivateRoute";
 import TeacherPrivateRoute from "./view/Auth/TeacherPrivateRoute";
 
 function App() {
-  // const { token, setToken } = useToken();
-  // if(!token) {
-  //   return <LogInPage setToken={setToken} />
-  // }
-
   // document.addEventListener("contextmenu", function (e) {
   //   e.preventDefault();
   // });
