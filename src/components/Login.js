@@ -2,9 +2,12 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { loginUser } from "../redux/slice/loginSlice";
+import { useSnackbar } from "notistack";
+import Notification from "./Notification";
 
 export default function Login() {
   const user = useSelector((state) => state.logIn.user);
+  const { enqueueSnackbar } = useSnackbar();
 
   function handleFormSubmit(event) {
     event.preventDefault();
@@ -61,7 +64,7 @@ export default function Login() {
       // console.log("data", response?.data?.message);
 
       if (response.data.error) {
-        setLoginError(response.data.message); // Set the error message
+        setLoginError(response.data.message);
       } else {
         window.location.href = "/";
       }
@@ -71,15 +74,19 @@ export default function Login() {
     setLoading(false);
   };
 
-  const handleClickLogin = () => {
-    handleLoginUser();
-    setLoginError(null)
+  const handleClickLogin = async (event) => {
+    event.preventDefault(); // Prevent default form submission behavior
+    handleLoginUser(); // Handle login logic
+    setLoginError(null);
   };
 
   return (
     <>
       {/* {JSON.stringify(user)} */}
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+      {loginError && (
+        <Notification headerMessage="Login Error" infoMessage={loginError} />
+      )}
+      <div className="flex min-h-full flex-1 flex-col justify-center px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img className="mx-auto h-10 w-auto" src="sovanroth.png" />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
@@ -88,7 +95,7 @@ export default function Login() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" method="POST">
+          <form className="space-y-6" method="POST" onSubmit={handleClickLogin}>
             <div>
               <label
                 htmlFor="email"
@@ -140,20 +147,21 @@ export default function Login() {
                 />
               </div>
             </div>
+            <div>
+              {/* <Link to="/"> */}
+              <button
+                // onClick={handleClickLogin}
+                type="submit"
+                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-8"
+              >
+                Log in
+              </button>
+              {/* </Link> */}
+            </div>
           </form>
-          {loginError && <div className="text-red-400 text-sm text-end mt-2">{loginError}</div>}
-          <div>
-            {/* <Link to="/"> */}
-            <button
-              onClick={handleClickLogin}
-              // type="submit"
-              className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-5"
-            >
-              Log in
-            </button>
-            {/* </Link> */}
-          </div>
-          <p className="mt-5 text-center text-sm text-gray-500">
+          {/* {loginError && <div className="text-red-400 text-sm text-end mt-2">{loginError}</div>} */}
+
+          <p className="mt-5 text-center text-sm text-black">
             No account?{" "}
             <Link
               to="/signup"
