@@ -46,12 +46,15 @@ export const loginUser = (params) => async (dispatch) => {
       dispatch(login(response?.data));
     }
 
-    localStorage.setItem("token", response?.data?.user?.token);
-    localStorage.setItem("userId", response?.data?.user?.id);
-    localStorage.setItem("role", response?.data?.user?.role);
-    // console.log(localStorage.getItem("userId"));
-    // console.log(localStorage.getItem("token"));
-    // console.log(localStorage.getItem("role"));
+    if (response?.data?.user?.token) {
+      localStorage.setItem("token", response?.data?.user?.token);
+      localStorage.setItem("userId", response?.data?.user?.id);
+      localStorage.setItem("role", response?.data?.user?.role);
+      // console.log(localStorage.getItem("userId"));
+      // console.log(localStorage.getItem("token"));
+      // console.log(localStorage.getItem("role"));
+    }
+
     console.log(response);
 
     return response;

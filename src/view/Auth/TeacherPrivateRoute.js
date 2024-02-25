@@ -1,14 +1,12 @@
+// TeacherPrivateRoute.js
 import React from "react";
 import { Route, Navigate, Outlet } from "react-router-dom";
 
-const TeacherPrivateRoute = ({ element, ...rest }) => {
+const TeacherPrivateRoute = ({ element: Element, ...rest }) => {
   const token = localStorage.getItem("token");
   const role = localStorage.getItem("role");
-  console.log(localStorage.getItem("role"));
-  console.log(localStorage.getItem("token"));
 
-
-  if (token && role === 1) {
+  if (token && parseInt(role) === 1) {
     return <Outlet />;
   } else {
     return <Navigate to="/" />;

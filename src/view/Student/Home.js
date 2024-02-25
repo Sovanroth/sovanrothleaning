@@ -4,6 +4,9 @@ import Footer from "../../components/Footer";
 import CourseOwned from "../../components/CourseOwned";
 
 const Home = () => {
+  console.log(localStorage.getItem("userId"));
+  console.log(localStorage.getItem("token"));
+  console.log(localStorage.getItem("role"));
   return (
     <div className="flex flex-col min-h-screen">
       <NavBar />
