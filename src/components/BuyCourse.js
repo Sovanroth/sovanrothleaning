@@ -151,7 +151,7 @@ const BuyCourse = () => {
                   primaryColor="#FFFFFF"
                   secondaryColor="#000000"
                 /> */}
-                <Media>
+                {/* <Media>
                   <Video
                     loading="visible"
                     poster="https://media-files.vidstack.io/poster.png"
@@ -167,7 +167,16 @@ const BuyCourse = () => {
                       controls
                     />
                   </Video>
-                </Media>
+                </Media> */}
+
+                <MuxPlayer
+                  streamType="on-demand"
+                  playbackId="NZIkna4ZmzsBWJkcqZRZZRjcGeQMMr5nqBRb7Rsu4fA"
+                  metadataVideoTitle="Placeholder (optional)"
+                  metadataViewerUserId="Placeholder (optional)"
+                  primaryColor="#FFFFFF"
+                  secondaryColor="#000000"
+                />
 
                 <Link
                   className="flex justify-end"
