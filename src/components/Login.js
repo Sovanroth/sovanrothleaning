@@ -73,6 +73,7 @@ export default function Login() {
 
   const handleClickLogin = () => {
     handleLoginUser();
+    setLoginError(null)
   };
 
   return (
