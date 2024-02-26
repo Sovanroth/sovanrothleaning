@@ -16,6 +16,7 @@
     "@vidstack/player": "^1.6.5",
     "@vidstack/player-react": "^1.6.5",
     "axios": "^1.6.0",
+    "crypto-js": "^4.2.0",
     "framer-motion": "^11.0.3",
     "lit": "^2.8.0",
     "lucide-react": "^0.290.0",

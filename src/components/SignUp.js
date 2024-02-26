@@ -1,28 +1,15 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { createUser } from "../../src/redux/slice/signUpSlice";
+import Notification from "./Notification";
 
 export default function SignUp() {
   const [loading, setLoading] = useState(false);
   const user = useSelector((state) => state.signUp.user);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
-
-  // const getMessage = () => {
-  //   try {
-  //     const status = user.status;
-
-  //     if (status === 0) {
-  //       setErrorMessage(user.message);
-  //     } else if (status === 1) {
-  //       setErrorMessage("");
-  //     }
-  //   } catch (error) {
-  //     setErrorMessage("An error occurred. Please try again later.");
-  //   }
-  // };
 
   const dispatch = useDispatch();
   const [data, setData] = useState({
@@ -31,17 +18,6 @@ export default function SignUp() {
     username: "",
     password: "",
   });
-
-  function handleFormSubmit(event) {
-    // event.preventDefault(); // Move the preventDefault call to the beginning of the function
-
-    if (user.status === 1) {
-      window.location.href = "/login";
-    } else {
-      // getMessage();
-      window.location.href = "/signup";
-    }
-  }
 
   const handleChangeUserName = (e) => {
     const newVal = { ...data, username: e.target.value };
@@ -67,9 +43,15 @@ export default function SignUp() {
         username: data?.username,
         password: data?.password,
       };
-      dispatch(createUser(params));
-      console.log("dataSignup", params);
-      navigate('/login');
+
+      const response = await dispatch(createUser(params));
+      console.log(response.data.error);
+
+      if (response.data.error) {
+        setErrorMessage(response.data.message);
+      } else {
+        window.location.href = "/login";
+      }
     } catch (error) {
       console.log(true);
     }
@@ -77,9 +59,21 @@ export default function SignUp() {
     setLoading(false);
   };
 
+  const handleClickSignUp = async (event) => {
+    event.preventDefault();
+    handleCreateUser();
+    setErrorMessage(null);
+  };
+
   return (
     <>
       {/* {JSON.stringify(user.status)} */}
+      {errorMessage && (
+        <Notification
+          headerMessage="Sign Up Error"
+          infoMessage={errorMessage}
+        />
+      )}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img className="mx-auto h-10 w-auto" src="sovanroth.png" />
@@ -88,7 +82,11 @@ export default function SignUp() {
           </h2>
         </div>
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm space-y-6">
-          <form className="space-y-6" method="POST">
+          <form
+            className="space-y-6"
+            method="POST"
+            onSubmit={handleClickSignUp}
+          >
             <div>
               <label
                 htmlFor="text"
@@ -117,7 +115,7 @@ export default function SignUp() {
               >
                 Email address
               </label>
-              <div >
+              <div>
                 <input
                   onClick={handleChangEmail}
                   value={data?.email}
@@ -162,24 +160,23 @@ export default function SignUp() {
                 </p>
               )} */}
               <button
-                onClick={handleCreateUser}
-                disabled={!data.username || !data?.email || !data.password}
+                // onClick={handleClickSignUp}
                 type="submit"
                 className="mt-4 flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Sign up
               </button>
             </div>
-            <p className=" text-center text-sm text-gray-500">
-              Have an account?{" "}
-              <Link
-                to="../login"
-                className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-              >
-                Sign in
-              </Link>
-            </p>
           </form>
+          <p className=" text-center text-sm text-gray-500">
+            Have an account?{" "}
+            <Link
+              to="../login"
+              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+            >
+              Sign in
+            </Link>
+          </p>
         </div>
       </div>
     </>
