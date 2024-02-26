@@ -20,29 +20,30 @@ import BuyCourse from "./components/BuyCourse";
 import Pricing from "./components/Pricing";
 import PrivateRoute from "./view/Auth/PrivateRoute";
 import TeacherPrivateRoute from "./view/Auth/TeacherPrivateRoute";
+import NoTokenRoute from "./view/Auth/NoTokenRoute";
 
 function App() {
-  document.addEventListener("contextmenu", function (e) {
-    e.preventDefault();
-  });
+  // document.addEventListener("contextmenu", function (e) {
+  //   e.preventDefault();
+  // });
 
-  document.onkeydown = function (e) {
-    if (e.keyCode === 123) {
-      return false;
-    }
-    if (e.ctrlKey && e.shiftKey && e.keyCode == "I".charCodeAt(0)) {
-      return false;
-    }
-    if (e.ctrlKey && e.shiftKey && e.keyCode == "C".charCodeAt(0)) {
-      return false;
-    }
-    if (e.ctrlKey && e.shiftKey && e.keyCode == "J".charCodeAt(0)) {
-      return false;
-    }
-    if (e.ctrlKey && e.shiftKey && e.keyCode == "U".charCodeAt(0)) {
-      return false;
-    }
-  };
+  // document.onkeydown = function (e) {
+  //   if (e.keyCode === 123) {
+  //     return false;
+  //   }
+  //   if (e.ctrlKey && e.shiftKey && e.keyCode == "I".charCodeAt(0)) {
+  //     return false;
+  //   }
+  //   if (e.ctrlKey && e.shiftKey && e.keyCode == "C".charCodeAt(0)) {
+  //     return false;
+  //   }
+  //   if (e.ctrlKey && e.shiftKey && e.keyCode == "J".charCodeAt(0)) {
+  //     return false;
+  //   }
+  //   if (e.ctrlKey && e.shiftKey && e.keyCode == "U".charCodeAt(0)) {
+  //     return false;
+  //   }
+  // };
 
   return (
     <Router>
@@ -65,8 +66,11 @@ function App() {
           <Route path="/delete-course" element={<DeleteCourseModal />} />
         </Route>
 
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/login" element={<LogInPage />} />
+        <Route element={<NoTokenRoute />}>
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/login" element={<LogInPage />} />
+        </Route>
+
         <Route path="loading" element={<LoadingScreen />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
