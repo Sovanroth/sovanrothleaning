@@ -61,8 +61,8 @@ export default function Login() {
   };
 
   const handleClickLogin = async (event) => {
-    event.preventDefault(); // Prevent default form submission behavior
-    handleLoginUser(); // Handle login logic
+    event.preventDefault();
+    handleLoginUser();
     setLoginError(null);
   };
 
