@@ -16,11 +16,11 @@ import EditCoursePage from "./view/Teacher/EditCoursePage";
 import PurchaseCourse from "./view/Student/PurchaseCourse";
 import LoadingScreen from "./components/LoadingScreen";
 import DeleteCourseModal from "./components/DeleteCourseModal";
-import BuyCourse from "./components/BuyCourse";
 import Pricing from "./components/Pricing";
 import PrivateRoute from "./view/Auth/PrivateRoute";
 import TeacherPrivateRoute from "./view/Auth/TeacherPrivateRoute";
 import NoTokenRoute from "./view/Auth/NoTokenRoute";
+import ForgotPasswordPage from "./view/Auth/ForgotPasswordPage";
 
 function App() {
   // document.addEventListener("contextmenu", function (e) {
@@ -69,6 +69,7 @@ function App() {
         <Route element={<NoTokenRoute />}>
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/login" element={<LogInPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage/>}/>
         </Route>
 
         <Route path="loading" element={<LoadingScreen />} />
