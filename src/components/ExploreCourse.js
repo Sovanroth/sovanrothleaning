@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getActiveData, getCoursesData } from "../redux/slice/courseSlice";
+import { getActiveData } from "../redux/slice/courseSlice";
 import Moment from "react-moment";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   AreaChart,
   Code2,
   DatabaseZap,
   Music,
   Settings,
-  Snowflake,
 } from "lucide-react";
 import LoadingScreen from "./LoadingScreen";
 import { isEmpty } from "@firebase/util";
@@ -45,7 +44,6 @@ const list = [
 
 export default function ExploreCourse() {
   const [loading, setLoading] = useState(false);
-  const data = useSelector((state) => state?.courses?.data);
   const activeData = useSelector((state) => state?.courses?.activeCourse);
   const dispatch = useDispatch();
 

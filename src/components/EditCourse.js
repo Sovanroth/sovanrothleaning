@@ -15,7 +15,6 @@ import {
   Hand,
   ListChecks,
   PlayCircle,
-  Rss,
 } from "lucide-react";
 
 const categoryData = [
@@ -171,7 +170,6 @@ export default function EditCourse() {
         <div>
           <div className=" text-center m-5 font-bold text-xl">Edit Course</div>
 
-          {/* {JSON.stringify(oneData)} */}
           <div className="grid grid-cols-2 gap-4 max-w-7xl mx-auto pt-4">
             <div className="pl-8">
               <div className=" text-start">
@@ -200,10 +198,6 @@ export default function EditCourse() {
               <div class="mt-5 border bg-slate-100 rounded-md p-4">
                 <div class="font-medium text-sm flex items-center justify-between">
                   Course Title
-                  {/* <button className=" flex">
-                <Edit2 size={14} className=" mt-0.5" />
-                <p className="ml-1 text-sm">Edit Title</p>
-              </button> */}
                 </div>
 
                 <div className="mt-3">
@@ -222,10 +216,6 @@ export default function EditCourse() {
               <div class="mt-6 border bg-slate-100 rounded-md p-4">
                 <div class="font-medium text-sm flex items-center justify-between">
                   Course Description
-                  {/* <button className=" flex">
-                <Edit2 size={14} className=" mt-0.5" />
-                <p className="ml-1 text-sm">Edit Description</p>
-              </button> */}
                 </div>
                 <div className="mt-3">
                   <textarea
@@ -234,7 +224,6 @@ export default function EditCourse() {
                     id="courseDescription"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     defaultValue={""}
-                    // placeholder={oneData?.course?.courseDescription}
                     value={data.courseDescription}
                     onChange={(e) => handleChangeCourseDescriptin(e)}
                   />
@@ -266,10 +255,6 @@ export default function EditCourse() {
               <div class="mt-6 border bg-slate-100 rounded-md p-4">
                 <div class="font-medium text-sm flex items-center justify-between">
                   Course Image
-                  {/* <button className=" flex">
-                <Edit2 size={14} className=" mt-0.5" />
-                <p className="ml-1 text-sm">Edit Image</p>
-              </button> */}
                 </div>
                 <div className="mt-3">
                   <input
@@ -277,7 +262,6 @@ export default function EditCourse() {
                     name="courseImage"
                     id="courseImage"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    // placeholder={oneData?.course?.courseImage}
                     value={data.courseImage}
                     onChange={(e) => handleChangeCourseImage(e)}
                   />
@@ -287,14 +271,6 @@ export default function EditCourse() {
                   src={oneData?.course?.courseImage}
                 />
               </div>
-
-              {/* Access Setting */}
-              {/* <div class="mt-6 border bg-slate-100 rounded-md p-4">
-            <div class="font-medium text-sm flex items-center justify-between">
-              Access Setting
-            </div>
-            <p className=" text-sm pt-5">This Chapter is free for preview.</p>
-          </div> */}
             </div>
             <div className=" pt-4">
               <div className="flex justify-end">
@@ -305,17 +281,7 @@ export default function EditCourse() {
                 >
                   UPDATE
                 </button>
-                {/* <button
-              type="button"
-              className="ml-2 rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-red-500"
-            >
-              Delete
-            </button> */}
               </div>
-              {/* <div className=" mt-12 flex">
-            <FaThList color="#CCCCCC" size={30} />
-            <div className="pt-1 pl-1.5">Course Chapters</div>
-          </div> */}
               <div className="mt-5 flex-grow text-start rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300">
                 <div className="flex flex-row justify-center">
                   <ListChecks size={35} className=" text-indigo-600" />
@@ -395,10 +361,6 @@ export default function EditCourse() {
               <div class="mt-6 border bg-slate-100 rounded-md p-4">
                 <div class="font-medium text-sm flex items-center justify-between">
                   Course Price
-                  {/* <button className=" flex">
-                <Edit2 size={14} className=" mt-0.5" />
-                <p className="ml-1 text-sm">Edit Price</p>
-              </button> */}
                 </div>
                 <div className="mt-3">
                   <input
@@ -406,7 +368,6 @@ export default function EditCourse() {
                     name="coursePrice"
                     id="coursePrice"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    // placeholder={oneData?.course?.coursePrice}
                     value={data.coursePrice}
                     onChange={(e) => handleChangeCoursePrice(e)}
                   />
@@ -423,10 +384,6 @@ export default function EditCourse() {
               <div class="mt-6 border bg-slate-100 rounded-md p-4">
                 <div class="font-medium text-sm flex items-center justify-between">
                   Acceess Privacy
-                  {/* <button className=" flex">
-                <PlusCircle size={14} className=" mt-0.5" />
-                <p className="ml-1 text-sm">Add Resource</p>
-              </button> */}
                 </div>
 
                 <div className="relative flex items-start mt-3">
@@ -465,10 +422,6 @@ export default function EditCourse() {
               <div class="mt-6 border bg-slate-100 rounded-md p-4">
                 <div class="font-medium text-sm flex items-center justify-between">
                   Resource and Attatchments
-                  {/* <button className=" flex">
-                <PlusCircle size={14} className=" mt-0.5" />
-                <p className="ml-1 text-sm">Add Resource</p>
-              </button> */}
                 </div>
                 <div className="mt-3">
                   <input
@@ -476,7 +429,6 @@ export default function EditCourse() {
                     name="courseResource"
                     id="courseResource"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    // placeholder={oneData?.course?.courseResource}
                     value={data.courseResource}
                     onChange={(e) => handleChangeCourseResrouce(e)}
                   />

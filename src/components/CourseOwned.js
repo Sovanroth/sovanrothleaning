@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getCourseByUserID, getCoursesData } from "../redux/slice/courseSlice";
+import { getCourseByUserID } from "../redux/slice/courseSlice";
 import Moment from "react-moment";
 import { Link } from "react-router-dom";
 import { AreaChart, Code2, DatabaseZap, Music, Settings } from "lucide-react";
