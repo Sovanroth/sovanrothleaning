@@ -60,19 +60,6 @@ export default function Footer() {
         className="mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12"
         aria-label="Footer"
       ></nav>
-      {/* <div className="flex justify-center space-x-10">
-          {footerNavigation.social.map((item) => (
-            <a
-              target="_blank"
-              key={item.name}
-              href={item.href}
-              className="text-gray-400 hover:text-gray-500"
-            >
-              <span className="sr-only">{item.name}</span>
-              <item.icon className="h-6 w-6" aria-hidden="true" />
-            </a>
-          ))}
-        </div> */}
       <p className="mt-5 text-center text-xs leading-5 text-gray-500">
         &copy; 2024 Nath Sovanroth. All rights reserved.
       </p>

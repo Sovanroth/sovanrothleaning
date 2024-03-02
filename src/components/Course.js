@@ -69,10 +69,6 @@ const Courses = () => {
   useEffect(() => {
   }, [])
 
-  // useEffect(() => {
-  //   refreshData();
-  // }, []);
-
   return (
     <div>
       {loading ? (

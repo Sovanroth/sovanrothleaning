@@ -55,7 +55,6 @@ export default function SignUp() {
     } catch (error) {
       console.log(true);
     }
-    // getMessage();
     setLoading(false);
   };
 
@@ -67,7 +66,6 @@ export default function SignUp() {
 
   return (
     <>
-      {/* {JSON.stringify(user.status)} */}
       {errorMessage && (
         <Notification
           headerMessage="Sign Up Error"
@@ -99,8 +97,6 @@ export default function SignUp() {
                   onClick={handleChangeUserName}
                   value={data?.username}
                   onChange={(e) => handleChangeUserName(e)}
-                  // id="username"
-                  // name="username"
                   type="text"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -154,13 +150,7 @@ export default function SignUp() {
               </div>
             </div>
             <div>
-              {/* {errorMessage && (
-                <p className=" text-xs text-end text-red-600 font-bold">
-                  {errorMessage}
-                </p>
-              )} */}
               <button
-                // onClick={handleClickSignUp}
                 type="submit"
                 className="mt-4 flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
