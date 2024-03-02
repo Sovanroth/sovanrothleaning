@@ -12,16 +12,12 @@ export default function DeleteCourseModal({
   const cancelButtonRef = useRef(null);
 
   const handleConfirm = () => {
-    // Call the onConfirm callback with the courseId
     onConfirm(courseId);
-    // Close the modal
     setOpen(false);
   };
 
   const handleCancel = () => {
-    // Call the onCancel callback
     onCancel();
-    // Close the modal
     setOpen(false);
   };
 
