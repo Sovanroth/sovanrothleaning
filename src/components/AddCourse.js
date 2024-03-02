@@ -126,7 +126,6 @@ export default function AddCourse() {
               >
                 Back
               </button>
-              {/* <p className=" text-xl font-bold">Course Setup</p> */}
             </div>
           </div>
 
@@ -141,12 +140,7 @@ export default function AddCourse() {
           <div class="mt-6 border bg-slate-100 rounded-md p-4">
             <div class="font-medium text-sm flex items-center justify-between">
               Course Title
-              {/* <button className=" flex">
-                <Edit2 size={14} className=" mt-0.5" />
-                <p className="ml-1 text-sm">Edit Title</p>
-              </button> */}
             </div>
-            {/* <p className=" text-sm pt-5">Node JS Teaching</p> */}
             <div className="mt-3">
               <input
                 type="text"
@@ -160,16 +154,10 @@ export default function AddCourse() {
             </div>
           </div>
 
-          {/* Course Description */}
           <div class="mt-6 border bg-slate-100 rounded-md p-4">
             <div class="font-medium text-sm flex items-center justify-between">
               Course Description
-              {/* <button className=" flex">
-                <Edit2 size={14} className=" mt-0.5" />
-                <p className="ml-1 text-sm">Edit Description</p>
-              </button> */}
             </div>
-            {/* <p className=" text-sm pt-5">Course Description Node JS</p> */}
             <div className="mt-3">
               <textarea
                 rows={4}
@@ -207,10 +195,6 @@ export default function AddCourse() {
           <div class="mt-6 border bg-slate-100 rounded-md p-4">
             <div class="font-medium text-sm flex items-center justify-between">
               Course Image
-              {/* <button className=" flex">
-                <Edit2 size={14} className=" mt-0.5" />
-                <p className="ml-1 text-sm">Edit Image</p>
-              </button> */}
             </div>
             <div className="mt-3">
               <input
@@ -223,10 +207,6 @@ export default function AddCourse() {
                 onChange={(e) => handleChangeCourseImage(e)}
               />
             </div>
-            {/* <img
-              src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&q=80&w=3570&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              className="p-2 mt-2 rounded-3xl"
-            /> */}
           </div>
         </div>
         <div className=" pt-4">
@@ -238,17 +218,7 @@ export default function AddCourse() {
             >
               Post
             </button>
-            {/* <button
-              type="button"
-              className="ml-2 rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-red-500"
-            >
-              Delete
-            </button> */}
           </div>
-          {/* <div className=" mt-12 flex">
-            <FaThList color="#CCCCCC" size={30} />
-            <div className="pt-1 pl-1.5">Course Chapters</div>
-          </div> */}
 
           <div className="mt-5 flex-grow text-start rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300">
             <div className="flex flex-row justify-center">
@@ -260,10 +230,6 @@ export default function AddCourse() {
           <div class="mt-6 border bg-slate-100 rounded-md p-4">
             <div class="font-medium text-sm flex items-center justify-between">
               Course Chapters
-              {/* <button className=" flex">
-                <PlusCircle size={14} className=" mt-0.5" />
-                <p className="ml-1 text-sm">Add Chapter</p>
-              </button> */}
             </div>
 
             <div class=" mt-3 flex items-center justify-center w-full">
@@ -310,10 +276,6 @@ export default function AddCourse() {
           <div class="mt-6 border bg-slate-100 rounded-md p-4">
             <div class="font-medium text-sm flex items-center justify-between">
               Course Price Setting
-              {/* <button className=" flex">
-                <Edit2 size={14} className=" mt-0.5" />
-                <p className="ml-1 text-sm">Edit Price</p>
-              </button> */}
             </div>
             <div className="mt-3">
               <input
@@ -338,10 +300,6 @@ export default function AddCourse() {
           <div class="mt-6 border bg-slate-100 rounded-md p-4">
             <div class="font-medium text-sm flex items-center justify-between">
               Acceess Privacy
-              {/* <button className=" flex">
-                <PlusCircle size={14} className=" mt-0.5" />
-                <p className="ml-1 text-sm">Add Resource</p>
-              </button> */}
             </div>
 
             <div className="relative flex items-start mt-3">
@@ -352,7 +310,6 @@ export default function AddCourse() {
                   name="comments"
                   type="checkbox"
                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                  // defaultChecked=""
                   defaultValue="0"
                   onChange={handleChangeCourseActive}
                 />

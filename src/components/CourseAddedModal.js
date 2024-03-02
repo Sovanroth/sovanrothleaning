@@ -9,7 +9,7 @@ export default function CourseAddedModal() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShow(false);
-    }, 2000); // 3 minutes in milliseconds
+    }, 2000);
     return () => clearTimeout(timer);
   }, []);
 
