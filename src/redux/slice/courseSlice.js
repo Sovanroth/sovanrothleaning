@@ -10,6 +10,7 @@ const initialState = {
   oneData: [],
   videoData: [],
   getCourseByUser: [],
+  activeCourse: [],
 };
 
 const coursesSlice = createSlice({
@@ -33,6 +34,10 @@ const coursesSlice = createSlice({
     getCourses(state, actions) {
       state.loading = false;
       state.data = actions.payload;
+    },
+    getActiveCourse(state, actions) {
+      state.loading = false;
+      state.activeCourse = actions.payload;
     },
     getCourseByone(state, actions) {
       state.loading = false;
@@ -68,6 +73,24 @@ export const getCoursesData = () => async (dispatch) => {
     if (response?.data) {
       dispatch(getCourses(response?.data));
       console.log("course", response);
+      return response;
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
+  } finally {
+    dispatch(stopLoading());
+  }
+};
+
+export const getActiveData = () => async (dispatch) => {
+  dispatch(startLoading());
+
+  try {
+    const response = await axiosInstance.get(`/courses/get-course-by-active`);
+    if (response?.data) {
+      dispatch(getActiveCourse(response?.data));
+      // console.log("active course", response);
       return response;
     }
   } catch (error) {
@@ -232,6 +255,7 @@ export const {
   getCourseByUserIDSuccess,
   postVideoSuccess,
   buyCourseSuccess,
+  getActiveCourse,
 } = coursesSlice.actions;
 
 export default coursesSlice.reducer;
