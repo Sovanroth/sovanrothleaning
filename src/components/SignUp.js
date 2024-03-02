@@ -1,16 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { createUser } from "../../src/redux/slice/signUpSlice";
 import Notification from "./Notification";
+import { Eye, EyeOff } from "lucide-react";
+import { createUser } from "../../src/redux/slice/signUpSlice";
 
 export default function SignUp() {
   const [loading, setLoading] = useState(false);
   const user = useSelector((state) => state.signUp.user);
   const [errorMessage, setErrorMessage] = useState(null);
-  const navigate = useNavigate();
-
   const dispatch = useDispatch();
   const [data, setData] = useState({
     email: "",
@@ -45,7 +43,6 @@ export default function SignUp() {
       };
 
       const response = await dispatch(createUser(params));
-      console.log(response.data.error);
 
       if (response.data.error) {
         setErrorMessage(response.data.message);
@@ -53,7 +50,7 @@ export default function SignUp() {
         window.location.href = "/login";
       }
     } catch (error) {
-      console.log(true);
+      console.log(error);
     }
     setLoading(false);
   };
@@ -62,6 +59,12 @@ export default function SignUp() {
     event.preventDefault();
     handleCreateUser();
     setErrorMessage(null);
+  };
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -74,7 +77,7 @@ export default function SignUp() {
       )}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img className="mx-auto h-10 w-auto" src="sovanroth.png" />
+          <img className="mx-auto h-10 w-auto" src="sovanroth.png" alt="Logo" />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Create your Account
           </h2>
@@ -94,9 +97,8 @@ export default function SignUp() {
               </label>
               <div>
                 <input
-                  onClick={handleChangeUserName}
                   value={data?.username}
-                  onChange={(e) => handleChangeUserName(e)}
+                  onChange={handleChangeUserName}
                   type="text"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -113,9 +115,8 @@ export default function SignUp() {
               </label>
               <div>
                 <input
-                  onClick={handleChangEmail}
                   value={data?.email}
-                  onChange={(e) => handleChangEmail(e)}
+                  onChange={handleChangEmail}
                   id="email"
                   name="email"
                   type="email"
@@ -135,18 +136,28 @@ export default function SignUp() {
                   Password
                 </label>
               </div>
-              <div>
+              <div className="relative">
                 <input
-                  onClick={handleChangePassword}
                   value={data?.password}
-                  onChange={(e) => handleChangePassword(e)}
+                  onChange={handleChangePassword}
                   id="password"
                   name="password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   autoComplete="current-password"
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+                <button
+                  type="button"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                  onClick={togglePasswordVisibility}
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-5 w-5 text-gray-500" size={8} />
+                  ) : (
+                    <Eye className="h-5 w-5 text-gray-500" size={8} />
+                  )}
+                </button>
               </div>
             </div>
             <div>
@@ -154,7 +165,7 @@ export default function SignUp() {
                 type="submit"
                 className="mt-4 flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Sign up
+                {loading ? "Loading..." : "Sign up"}
               </button>
             </div>
           </form>

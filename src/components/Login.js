@@ -5,7 +5,6 @@ import { loginUser } from "../redux/slice/loginSlice";
 import { useSnackbar } from "notistack";
 import Notification from "./Notification";
 import { Eye, EyeOff } from "lucide-react";
-// import { EyeIcon, EyeOffIcon } from '@heroicons/react/solid';
 
 export default function Login() {
   const user = useSelector((state) => state.logIn.user);
@@ -46,8 +45,6 @@ export default function Login() {
         password: data?.password,
       };
       const response = await dispatch(loginUser(params));
-
-      // console.log("data", response?.data?.message);
 
       if (response.data.error) {
         setLoginError(response.data.message);
