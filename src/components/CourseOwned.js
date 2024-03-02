@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getCourseByUserID } from "../redux/slice/courseSlice";
 import Moment from "react-moment";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AreaChart, Code2, DatabaseZap, Music, Settings } from "lucide-react";
 import LoadingScreen from "./LoadingScreen";
 import { isEmpty } from "@firebase/util";
@@ -40,6 +40,7 @@ export default function CourseOwned() {
   const [loading, setLoading] = useState(false);
   const data = useSelector((state) => state?.courses?.getCourseByUser);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const getCategoryName = (categoryNumber) => {
     const category = list.find((item) => item.id === categoryNumber);

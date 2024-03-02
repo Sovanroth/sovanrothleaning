@@ -11,7 +11,10 @@ const navigation = [
   { name: "Browse", href: "/browse", current: false },
 ];
 
-const userNavigation = [{ name: "Sign out", href: "/login" }];
+const userNavigation = [
+  { name: "Account Setting", href: "/setting" },
+  { name: "Sign out", href: "/login" },
+];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -64,16 +67,11 @@ export default function NavBar() {
                         aria-hidden="true"
                       />
                     </div>
-                    <input
-                      // id="search"
-                      // name="search"
-                      className="block w-full rounded-md border-0 bg-white py-1.5 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
+                    <input className="block w-full rounded-md border-0 bg-white py-1.5 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                   </div>
                 </div>
               </div>
               <div className="relative z-10 flex items-center lg:hidden">
-                {/* Mobile menu button */}
                 <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
                   <span className="absolute -inset-0.5" />
                   <span className="sr-only">Open menu</span>
@@ -103,7 +101,7 @@ export default function NavBar() {
                       <span className="sr-only">Open user menu</span>
                       <img
                         className="h-8 w-8 rounded-full"
-                        src="https://i.pinimg.com/originals/9d/1c/5f/9d1c5ff00cf4a679e9a80c29ee6cf6e6.jpg"
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTP_7kx3ebJTZsdZlXOG72pEqqV-qCopHlurQ&usqp=CAU"
                       />
                     </Menu.Button>
                   </div>
@@ -121,13 +119,16 @@ export default function NavBar() {
                         <Menu.Item key={item.name}>
                           {({ active }) => (
                             <Link
-                              // {item.href === "/" ? }
-                              onClick={hanndleLogout}
                               to={item.href}
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
                               )}
+                              onClick={
+                                item.name === "Sign out"
+                                  ? hanndleLogout
+                                  : undefined
+                              }
                             >
                               {item.name}
                             </Link>
