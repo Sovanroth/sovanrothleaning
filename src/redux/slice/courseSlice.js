@@ -68,7 +68,11 @@ const coursesSlice = createSlice({
 export const getCoursesData = () => async (dispatch) => {
   dispatch(startLoading());
   try {
-    const response = await axiosInstance.get(`/courses/get-all-course`);
+    const response = await axiosInstance.get(`/courses/get-all-course`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     if (response?.data) {
       dispatch(getCourses(response?.data));
       console.log("course", response);
@@ -86,7 +90,11 @@ export const getActiveData = () => async (dispatch) => {
   dispatch(startLoading());
 
   try {
-    const response = await axiosInstance.get(`/courses/get-course-by-active`);
+    const response = await axiosInstance.get(`/courses/get-course-by-active`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     if (response?.data) {
       dispatch(getActiveCourse(response?.data));
       // console.log("active course", response);
@@ -105,7 +113,12 @@ export const getOneData = (param) => async (dispatch) => {
 
   try {
     const respone = await axiosInstance.get(
-      `/courses/get-course-by-id/${param}`
+      `/courses/get-course-by-id/${param}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
     );
     if (respone?.data) {
       // dispatch(getone)
@@ -126,7 +139,12 @@ export const deleteCourse = (param) => async (dispatch) => {
   dispatch(startLoading());
   try {
     const response = await axiosInstance.delete(
-      `/courses/delete-course/${param}`
+      `/courses/delete-course/${param}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
     );
     return response;
   } catch (error) {
@@ -143,7 +161,12 @@ export const updateCourse = (params, id) => async (dispatch) => {
   try {
     const respone = await axiosInstance.put(
       `/courses/update-course/${id}`,
-      params
+      params,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
     );
     if (respone?.data) {
       dispatch(updateCourseSuccess(respone?.data));
@@ -161,7 +184,11 @@ export const deleteVideo = (id) => async (dispatch) => {
   dispatch(startLoading);
 
   try {
-    const respone = await axiosInstance.delete(`/video/delete-video/${id}`);
+    const respone = await axiosInstance.delete(`/video/delete-video/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     return respone;
   } catch (error) {
     console.log(error);
@@ -175,7 +202,11 @@ export const postVideo = (params) => async (dispatch) => {
   dispatch(startLoading());
 
   try {
-    const response = await axiosInstance.post(`/video/post-video`, params);
+    const response = await axiosInstance.post(`/video/post-video`, params, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     if (response?.data) {
       dispatch(postVideoSuccess());
     }
@@ -191,7 +222,11 @@ export const createCourse = (params) => async (dispatch) => {
   dispatch(startLoading);
 
   try {
-    const response = await axiosInstance.post(`/course/create-course`, params);
+    const response = await axiosInstance.post(`/course/create-course`, params, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     if (response?.data) {
       dispatch(createCourseSuccess());
     }
@@ -210,7 +245,12 @@ export const buyCourse = (courseId) => async (dispatch) => {
     const response = await axiosInstance.post(
       `/users/buy-course?userId=${localStorage.getItem(
         "userId"
-      )}&courseId=${courseId}`
+      )}&courseId=${courseId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
     );
     if (response?.data) {
       dispatch(buyCourseSuccess());
@@ -227,7 +267,12 @@ export const getCourseByUserID = () => async (dispatch) => {
   dispatch(startLoading());
   try {
     const respone = await axiosInstance.get(
-      `/users/auth/get-user-by-id/${localStorage.getItem("userId")}`
+      `/users/auth/get-user-by-id/${localStorage.getItem("userId")}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
     );
     if (respone?.data) {
       dispatch(getCourseByUserIDSuccess(respone?.data));
