@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getCoursesData, getOneData } from "../redux/slice/courseSlice";
+import { getActiveData, getCoursesData } from "../redux/slice/courseSlice";
 import Moment from "react-moment";
 import { Link, useNavigate } from "react-router-dom";
-import { AreaChart, Code2, DatabaseZap, Music, Settings } from "lucide-react";
+import {
+  AreaChart,
+  Code2,
+  DatabaseZap,
+  Music,
+  Settings,
+  Snowflake,
+} from "lucide-react";
 import LoadingScreen from "./LoadingScreen";
 import { isEmpty } from "@firebase/util";
 import { motion } from "framer-motion";
@@ -39,38 +46,54 @@ const list = [
 export default function ExploreCourse() {
   const [loading, setLoading] = useState(false);
   const data = useSelector((state) => state?.courses?.data);
+  const activeData = useSelector((state) => state?.courses?.activeCourse);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const getCategoryName = (categoryNumber) => {
     const category = list.find((item) => item.id === categoryNumber);
     return category ? category.category : "Unknown";
   };
 
-  const initData = async () => {
+  // const initData = async () => {
+  //   setLoading(true);
+  //   let response = {};
+
+  //   try {
+  //     const response = await dispatch(getCoursesData());
+  //     console.log("asdsad", response)
+  //   } catch (error) {
+  //     console.log(error);
+  //     response = error;
+  //   }
+  //   setLoading(false);
+  //   return response;
+  // };
+
+  const initActiveData = async () => {
     setLoading(true);
     let response = {};
 
     try {
-      const response = await dispatch(getCoursesData());
-      // console.log(response)
+      response = await dispatch(getActiveData());
     } catch (error) {
-      console.log(error);
+      response = error;
       response = error;
     }
+
     setLoading(false);
+    console.log(activeData);
     return response;
   };
 
   useEffect(() => {
-    initData();
+    initActiveData();
   }, []);
 
   return (
     <div>
       {loading ? (
         <LoadingScreen />
-      ) : isEmpty(data) ? (
+      ) : isEmpty(activeData) ? (
         <LoadingScreen />
       ) : (
         <div className="bg-white ">
@@ -91,7 +114,7 @@ export default function ExploreCourse() {
               </div>
             </div>
             <div className="mx-auto mt-5 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-4 md:grid-cols-2">
-              {data?.data?.map((post, index) => (
+              {activeData?.data.map((post, index) => (
                 <Link to={`/browse/buy-course/${post.id}`}>
                   <motion.article
                     key={post.id + index}
