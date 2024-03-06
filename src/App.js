@@ -22,6 +22,7 @@ import TeacherPrivateRoute from "./view/Auth/TeacherPrivateRoute";
 import NoTokenRoute from "./view/Auth/NoTokenRoute";
 import ForgotPasswordPage from "./view/Auth/ForgotPasswordPage";
 import SettingPage from "./view/SettingPage";
+import WatchVideos from "./view/Student/WatchVideos";
 
 function App() {
   // document.addEventListener("contextmenu", function (e) {
@@ -55,6 +56,7 @@ function App() {
           <Route path="/browse/buy-course/:id" element={<PurchaseCourse />} />
           <Route path="/browse/buy-course/pricing" element={<Pricing />} />
           <Route path="/setting" element={<SettingPage />} />
+          <Route path="/dashboard/course/:id" element={<WatchVideos />} />
         </Route>
 
         <Route element={<TeacherPrivateRoute />}>

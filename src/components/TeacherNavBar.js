@@ -1,19 +1,15 @@
 import { Fragment, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link, useNavigate } from "react-router-dom";
+import { logOut } from "../redux/slice/loginSlice";
 
-const user = {
-  name: "Tom Cook",
-  email: "tom@example.com",
-  imageUrl:
-    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-};
 const navigation = [
   { name: "Dashboard", href: "/teacher-mode", current: true },
 ];
-const userNavigation = [{ name: "Sign out", href: "#" }];
+const userNavigation = [{ name: "Sign out", href: "/login" }];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -21,6 +17,15 @@ function classNames(...classes) {
 
 export default function TeacherNavBar() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const hanndleLogout = (e) => {
+    try {
+      dispatch(logOut());
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Disclosure as="header" className="bg-white shadow">
@@ -66,13 +71,6 @@ export default function TeacherNavBar() {
                   </button>
                 </Link>
 
-                {/* <Link
-                  className="relative inline-flex items-center gap-x-1.5 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  to="/"
-                >
-                  Student Mode
-                </Link> */}
-
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-4 flex-shrink-0">
                   <div>
@@ -81,7 +79,7 @@ export default function TeacherNavBar() {
                       <span className="sr-only">Open user menu</span>
                       <img
                         className="h-8 w-8 rounded-full"
-                        src="https://i.pinimg.com/originals/9d/1c/5f/9d1c5ff00cf4a679e9a80c29ee6cf6e6.jpg"
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTP_7kx3ebJTZsdZlXOG72pEqqV-qCopHlurQ&usqp=CAU"
                       />
                     </Menu.Button>
                   </div>
