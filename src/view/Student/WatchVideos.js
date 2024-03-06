@@ -1,11 +1,11 @@
-import { Navbar } from "@material-tailwind/react";
 import React from "react";
 import ViewsCourse from "../../components/ViewsCourse";
+import NavBar from "../../components/NavBar";
 
 const WatchVideos = () => {
   return (
     <div>
-      <Navbar />
+      <NavBar />
       <ViewsCourse />
     </div>
   );
