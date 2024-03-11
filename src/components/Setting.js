@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getCourseByUserID } from "../redux/slice/courseSlice";
 import { isEmpty } from "@firebase/util";
+import UpdateProfileModal from "./UpdateProfileModal";
 
 export default function Setting() {
   const data = useSelector((state) => state?.courses?.getCourseByUser);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const initData = async () => {
     setLoading(true);
@@ -19,6 +21,14 @@ export default function Setting() {
     }
     setLoading(false);
     return response;
+  };
+
+  const handleUpdateClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
   };
 
   useEffect(() => {
@@ -56,7 +66,7 @@ export default function Setting() {
                         type="button"
                         className="font-semibold text-indigo-600 hover:text-indigo-500"
                       >
-                        Update
+                        Select Profile Picture
                       </button>
                     </dd>
                   </div>
@@ -82,20 +92,34 @@ export default function Setting() {
                   </div>
                 )}
 
-                <div className="pt-6 sm:flex">
-                  <dt className="font-medium text-gray-900 sm:w-64 sm:flex-none sm:pr-6">
-                    Full name
-                  </dt>
-                  <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
-                    <div className="text-gray-900">{data?.data?.username}</div>
-                    <button
-                      type="button"
-                      className="font-semibold text-indigo-600 hover:text-indigo-500"
-                    >
-                      Update
-                    </button>
-                  </dd>
+                <div>
+                  <div className="pt-6 sm:flex">
+                    <dt className="font-medium text-gray-900 sm:w-64 sm:flex-none sm:pr-6">
+                      Full name
+                    </dt>
+                    <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
+                      <div className="text-gray-900">
+                        {data?.data?.username}
+                      </div>
+                      <button
+                        type="button"
+                        className="font-semibold text-indigo-600 hover:text-indigo-500"
+                        onClick={handleUpdateClick}
+                      >
+                        Update
+                      </button>
+                    </dd>
+                  </div>
+                  {isModalOpen && (
+                    <UpdateProfileModal
+                      onClose={handleCloseModal}
+                      headerMessage="Update Profile Full Name"
+                      infoMessage="Full Name"
+                      exampleText="Ryomen Sukuna"
+                    />
+                  )}
                 </div>
+
                 <div className="pt-6 sm:flex">
                   <dt className="font-medium text-gray-900 sm:w-64 sm:flex-none sm:pr-6">
                     Email address
