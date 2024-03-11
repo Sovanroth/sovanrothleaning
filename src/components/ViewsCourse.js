@@ -93,19 +93,19 @@ const ViewsCourse = () => {
                   secondaryColor="#000000"
                 />
 
-                <Link
-                  className="flex justify-end"
-                  to={{
-                    pathname: "../browse/buy-course/pricing",
-                  }}
-                >
-                  <button
-                    type="button"
-                    className="rounded-full mt-5 bg-indigo-600 px-3.5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                <div class="mt-6 border bg-slate-100 rounded-md p-4">
+                  <div class="font-medium text-sm flex items-center justify-between">
+                    Resource and Attatchments
+                  </div>
+                  <a
+                    href={oneData?.data?.courseResource}
+                    className="mt-3 text-sm italic text-blue-800 hover:underline"
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    Buy Course
-                  </button>
-                </Link>
+                    {oneData?.data?.courseResource}
+                  </a>
+                </div>
               </div>
             </div>
           </div>
