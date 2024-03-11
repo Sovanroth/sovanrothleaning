@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../../utils/axios";
 import axios from "axios";
+import { FanIcon } from "lucide-react";
 
 const initialState = {
   isLoading: false,
@@ -34,6 +35,10 @@ const logInSlice = createSlice({
       state.isLoading = false;
       state.user = actions.payload;
     },
+    updateUserSuccess(state, action) {
+      state.isLoading = false;
+      state.user = action.payload;
+    },
   },
 });
 
@@ -42,7 +47,7 @@ export const loginUser = (params) => async (dispatch) => {
 
   try {
     const response = await axiosInstance.post(`/users/auth/login`, params);
-    
+
     if (response?.data) {
       dispatch(login(response?.data));
     }
@@ -67,11 +72,42 @@ export const loginUser = (params) => async (dispatch) => {
   }
 };
 
+export const updateUser = (param) => async (dispatch) => {
+  dispatch(startLoading());
+
+  try {
+    const respone = await axiosInstance.put(
+      `/users/auth/update-user/${localStorage.getItem("userId")}`,
+      param,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    if (respone?.data) {
+      dispatch(updateUserSuccess(respone?.data));
+    }
+    console.log(respone);
+  } catch (error) {
+    console.log(error);
+    return error;
+  } finally {
+    dispatch(stopLoading());
+  }
+};
+
 export const logOut = async () => {
   localStorage.clear();
   console.log(localStorage.getItem("token"));
 };
 
-export const { startLoading, stopLoading, hasError, setFilterSuccess, login } =
-  logInSlice.actions;
+export const {
+  startLoading,
+  stopLoading,
+  hasError,
+  setFilterSuccess,
+  login,
+  updateUserSuccess,
+} = logInSlice.actions;
 export default logInSlice.reducer;
