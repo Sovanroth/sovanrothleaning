@@ -1,4 +1,30 @@
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getCourseByUserID } from "../redux/slice/courseSlice";
+import { isEmpty } from "@firebase/util";
+
 export default function Setting() {
+  const data = useSelector((state) => state?.courses?.getCourseByUser);
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+
+  const initData = async () => {
+    setLoading(true);
+    let response = {};
+    try {
+      const response = await dispatch(getCourseByUserID());
+    } catch (error) {
+      console.log(error);
+      response = error;
+    }
+    setLoading(false);
+    return response;
+  };
+
+  useEffect(() => {
+    initData();
+  }, []);
+
   return (
     <>
       <div className="mx-auto max-w-7xl lg:flex lg:gap-x-16 lg:px-8">
@@ -14,32 +40,54 @@ export default function Setting() {
               </p>
 
               <dl className="mt-6 space-y-6 divide-y divide-gray-100 border-t border-gray-200 text-sm leading-6">
-                <div className="pt-6 sm:flex">
-                  <dt className="font-medium text-gray-900 sm:w-64 sm:flex-none sm:pr-6 self-center">
-                    Profile Picture
-                  </dt>
-                  <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
-                    <img
-                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTP_7kx3ebJTZsdZlXOG72pEqqV-qCopHlurQ&usqp=CAU"
-                      height="75px"
-                      width="75px"
-                      className="rounded-full"
-                    />
-                    <button
-                      type="button"
-                      className="font-semibold text-indigo-600 hover:text-indigo-500"
-                    >
-                      Update
-                    </button>
-                  </dd>
-                </div>
+                {data?.data?.profile === null ? (
+                  <div className="pt-6 sm:flex">
+                    <dt className="font-medium text-gray-900 sm:w-64 sm:flex-none sm:pr-6 self-center">
+                      Profile Picture
+                    </dt>
+                    <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
+                      <img
+                        src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                        height="75px"
+                        width="75px"
+                        className="rounded-full"
+                      />
+                      <button
+                        type="button"
+                        className="font-semibold text-indigo-600 hover:text-indigo-500"
+                      >
+                        Update
+                      </button>
+                    </dd>
+                  </div>
+                ) : (
+                  <div className="pt-6 sm:flex">
+                    <dt className="font-medium text-gray-900 sm:w-64 sm:flex-none sm:pr-6 self-center">
+                      Profile Picture
+                    </dt>
+                    <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
+                      <img
+                        src={data?.data?.profile?.profileImage}
+                        height="75px"
+                        width="75px"
+                        className="rounded-full"
+                      />
+                      <button
+                        type="button"
+                        className="font-semibold text-indigo-600 hover:text-indigo-500"
+                      >
+                        Update
+                      </button>
+                    </dd>
+                  </div>
+                )}
 
                 <div className="pt-6 sm:flex">
                   <dt className="font-medium text-gray-900 sm:w-64 sm:flex-none sm:pr-6">
                     Full name
                   </dt>
                   <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
-                    <div className="text-gray-900">Ryōmen Sukuna</div>
+                    <div className="text-gray-900">{data?.data?.username}</div>
                     <button
                       type="button"
                       className="font-semibold text-indigo-600 hover:text-indigo-500"
@@ -53,7 +101,7 @@ export default function Setting() {
                     Email address
                   </dt>
                   <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
-                    <div className="text-gray-900">sukuna@gmail.com</div>
+                    <div className="text-gray-900">{data?.data?.email}</div>
                     <button
                       type="button"
                       className="font-semibold text-indigo-600 hover:text-indigo-500"
