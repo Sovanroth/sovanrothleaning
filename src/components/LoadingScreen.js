@@ -19,6 +19,7 @@ function LoadingScreen({ className, ...other }) {
           ease: "easeInOut",
           flip: Infinity,
           repeatDelay: 1,
+          repeat: Infinity
         }}
         style={{
           position: "absolute",
