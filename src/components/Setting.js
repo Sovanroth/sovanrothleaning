@@ -4,9 +4,9 @@ import courseSlice, {
   getCourseByUserID,
   startLoading,
 } from "../redux/slice/courseSlice";
-import { isEmpty } from "@firebase/util";
+import { errorPrefix, isEmpty } from "@firebase/util";
 import UpdateProfileModal from "./UpdateProfileModal";
-import { createProfile } from "../redux/slice/loginSlice";
+import { createProfile, updateProfile } from "../redux/slice/loginSlice";
 import LoadingScreen from "./LoadingScreen";
 
 export default function Setting() {
@@ -16,10 +16,39 @@ export default function Setting() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadCompleted, setUploadCompleted] = useState(false);
+  const [selectedUpdateFile, setSelectedUpdateFile] = useState(null);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
     uploadFile(event.target.files[0]);
+  };
+
+  const handleUpdateFileChange = (event, id) => {
+    setSelectedUpdateFile(event.target.files[0]);
+    UpdateProfileFile(event.target.files[0], id);
+  };
+
+  const UpdateProfileFile = async (file, id) => {
+    if (file) {
+      console.log("file ", file);
+
+      setLoading(true);
+      let response = {};
+
+      try {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        response = await dispatch(updateProfile(formData, id));
+      } catch (error) {
+        console.log(error);
+        return error;
+      }
+      setLoading(false);
+      return response;
+    } else {
+      console.log("No file selected.");
+    }
   };
 
   const uploadFile = async (file) => {
@@ -33,9 +62,8 @@ export default function Setting() {
         const formData = new FormData();
         formData.append("file", file);
 
-        // Assuming createProfile is an asynchronous function that sends the request to the backend
         response = await dispatch(createProfile(formData));
-        // Set the state variable to indicate that upload is completed
+
         setUploadCompleted(true);
         setLoading(true);
       } catch (error) {
@@ -48,19 +76,6 @@ export default function Setting() {
       console.log("No file selected.");
     }
   };
-
-  // const handleAddProfile = async () => {
-  //   setLoading(true);
-  //   let response = {};
-
-  //   try {
-  //   } catch (error) {
-  //     console.log(error);
-  //     response = error;
-  //   }
-
-  //   setLoading(false);
-  // };
 
   const initData = async () => {
     setLoading(true);
@@ -86,7 +101,6 @@ export default function Setting() {
   useEffect(() => {
     initData();
     if (uploadCompleted) {
-      // window.location.reload();
       setLoading(false);
     }
   }, [uploadCompleted]);
@@ -156,12 +170,29 @@ export default function Setting() {
                           width="75px"
                           className="rounded-full"
                         />
-                        <button
-                          type="button"
-                          className="font-semibold text-indigo-600 hover:text-indigo-500"
-                        >
-                          Update
-                        </button>
+                        <input
+                          type="file"
+                          id="updateFileInput"
+                          accept="image/*"
+                          style={{ display: "none" }}
+                          onChange={(event) =>
+                            handleUpdateFileChange(
+                              event,
+                              data?.data?.profile?.id
+                            )
+                          }
+                        />
+                        <label htmlFor="updateFileInput">
+                          <button
+                            type="button"
+                            className="font-semibold text-indigo-600 hover:text-indigo-500"
+                            onClick={() =>
+                              document.getElementById("updateFileInput").click()
+                            }
+                          >
+                            Update
+                          </button>
+                        </label>
                       </dd>
                     </div>
                   )}

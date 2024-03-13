@@ -110,6 +110,7 @@ export default function AddCourse() {
       console.log(error);
       return error;
     }
+    setLoading(false);
   };
 
   return (

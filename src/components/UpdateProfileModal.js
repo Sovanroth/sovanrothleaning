@@ -9,6 +9,16 @@ export default function UpdateProfileModal({
 }) {
   const cancelButtonRef = useRef(null);
 
+  const handleChangeUsername = (e) => {};
+
+  const updateFullname = async () => {
+    try {
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  };
+
   return (
     <Transition.Root show={true} as={Fragment}>
       <Dialog

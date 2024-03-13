@@ -44,6 +44,10 @@ const logInSlice = createSlice({
       state.isLoading = false;
       state.profile = actions.payload;
     },
+    updateProfileSuccess(state, actions) {
+      state.isLoading = false;
+      state.profile = actions.payload;
+    },
   },
 });
 
@@ -127,6 +131,51 @@ export const createProfile = (param) => async (dispatch) => {
   }
 };
 
+export const updateProfile = (param, id) => async (dispatch) => {
+  dispatch(startLoading());
+
+  try {
+    const response = await axiosInstance.put(
+      `/users/update-user-profile/${id}`,
+      param,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+
+    if (response?.data) {
+      dispatch(updateProfileSuccess(response?.data));
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
+  } finally {
+    dispatch(stopLoading());
+  }
+};
+
+export const removePrifle = (id) => async (dispatch) => {
+  dispatch(startLoading());
+  try {
+    const response = await axiosInstance.delete(
+      `/users/delete-user-profile/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    console.log(error);
+    return error;
+  } finally {
+    dispatch(stopLoading());
+  }
+};
+
 export const logOut = async () => {
   localStorage.clear();
   console.log(localStorage.getItem("token"));
@@ -140,5 +189,6 @@ export const {
   login,
   updateUserSuccess,
   createProfileSuccess,
+  updateProfileSuccess,
 } = logInSlice.actions;
 export default logInSlice.reducer;
