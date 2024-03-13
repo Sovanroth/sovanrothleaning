@@ -3,9 +3,8 @@ import { CheckIcon } from "@heroicons/react/20/solid";
 import NavBar from "./NavBar";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { buyCourse, getCourseByUserID, getOneData } from "../redux/slice/courseSlice";
-import { useNavigate } from "react-router-dom";
-import Footer from "./Footer";
+import { buyCourse, getOneData } from "../redux/slice/courseSlice";
+import { useNavigate, useParams } from "react-router-dom";
 
 const includedFeatures = [
   "ស្វែងយល់ពីអ្វីជា Unix",
@@ -16,36 +15,39 @@ const includedFeatures = [
 
 export default function Pricing() {
   const oneData = useSelector((state) => state?.courses?.oneData);
-  const [data, SetData] = useState(oneData);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const id = data?.data?.id;
+  const { id } = useParams();
 
-  // const initData = async () => {
-  //   setLoading(true);
-  //   let response = {};
-  //   try {
-  //     const response = await dispatch(getCourseByUserID());
-  //   } catch (error) {
-  //     console.log(error);
-  //     response = error;
-  //   }
-  //   setLoading(false);
-  //   return response;
-  // };
+  const initData = async () => {
+    setLoading(true);
+    let response = {};
+    try {
+      response = await dispatch(getOneData(id));
+    } catch (error) {
+      response = error;
+    }
+    setLoading(false);
+    console.log(response);
+    return response;
+  };
 
   const handleBuyCourse = async () => {
     setLoading(true);
 
     try {
-      dispatch(buyCourse(data?.data?.id));
+      dispatch(buyCourse(oneData?.data?.id));
       navigate("/");
     } catch (error) {
       console.log(error);
       return error;
     }
   };
+
+  useEffect(() => {
+    initData();
+  }, []);
 
   return (
     <>
@@ -59,10 +61,10 @@ export default function Pricing() {
           <div className="mx-auto mt-16 max-w-2xl rounded-3xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
             <div className="p-8 sm:p-10 lg:flex-auto">
               <h3 className="text-2xl font-bold tracking-tight text-gray-900">
-                {data?.data?.courseTitle}
+                {oneData?.data?.courseTitle}
               </h3>
               <p className="mt-6 text-base leading-7 text-gray-600">
-                {data?.data?.courseDescription}
+                {oneData?.data?.courseDescription}
               </p>
               <div className="mt-10 flex items-center gap-x-4">
                 <h4 className="flex-none text-sm font-semibold leading-6 text-indigo-600">
@@ -74,13 +76,13 @@ export default function Pricing() {
                 role="list"
                 className="mt-8 grid grid-cols-1 gap-4 text-sm leading-6 text-gray-600 sm:grid-cols-2 sm:gap-6"
               >
-                {includedFeatures.map((feature) => (
+                {oneData?.data?.videos.map((feature) => (
                   <li key={feature} className="flex gap-x-3">
                     <CheckIcon
                       className="h-6 w-5 flex-none text-indigo-600"
                       aria-hidden="true"
                     />
-                    {feature}
+                    {feature?.video_title}
                   </li>
                 ))}
               </ul>
@@ -93,7 +95,7 @@ export default function Pricing() {
                   </p>
                   <p className="mt-6 flex items-baseline justify-center gap-x-2">
                     <span className="text-5xl font-bold tracking-tight text-gray-900">
-                      {data?.data?.coursePrice}
+                      {oneData?.data?.coursePrice}
                     </span>
                     <span className="text-sm font-semibold leading-6 tracking-wide text-gray-600">
                       USD

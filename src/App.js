@@ -25,27 +25,27 @@ import SettingPage from "./view/SettingPage";
 import WatchVideos from "./view/Student/WatchVideos";
 
 function App() {
-  // document.addEventListener("contextmenu", function (e) {
-  //   e.preventDefault();
-  // });
+  document.addEventListener("contextmenu", function (e) {
+    e.preventDefault();
+  });
 
-  // document.onkeydown = function (e) {
-  //   if (e.keyCode === 123) {
-  //     return false;
-  //   }
-  //   if (e.ctrlKey && e.shiftKey && e.keyCode == "I".charCodeAt(0)) {
-  //     return false;
-  //   }
-  //   if (e.ctrlKey && e.shiftKey && e.keyCode == "C".charCodeAt(0)) {
-  //     return false;
-  //   }
-  //   if (e.ctrlKey && e.shiftKey && e.keyCode == "J".charCodeAt(0)) {
-  //     return false;
-  //   }
-  //   if (e.ctrlKey && e.shiftKey && e.keyCode == "U".charCodeAt(0)) {
-  //     return false;
-  //   }
-  // };
+  document.onkeydown = function (e) {
+    if (e.keyCode === 123) {
+      return false;
+    }
+    if (e.ctrlKey && e.shiftKey && e.keyCode == "I".charCodeAt(0)) {
+      return false;
+    }
+    if (e.ctrlKey && e.shiftKey && e.keyCode == "C".charCodeAt(0)) {
+      return false;
+    }
+    if (e.ctrlKey && e.shiftKey && e.keyCode == "J".charCodeAt(0)) {
+      return false;
+    }
+    if (e.ctrlKey && e.shiftKey && e.keyCode == "U".charCodeAt(0)) {
+      return false;
+    }
+  };
 
   return (
     <Router>
@@ -54,7 +54,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/browse" element={<Browse />} />
           <Route path="/browse/buy-course/:id" element={<PurchaseCourse />} />
-          <Route path="/browse/buy-course/pricing" element={<Pricing />} />
+          <Route path="/browse/buy-course/pricing/:id" element={<Pricing />} />
           <Route path="/setting" element={<SettingPage />} />
           <Route path="/dashboard/course/:id" element={<WatchVideos />} />
         </Route>

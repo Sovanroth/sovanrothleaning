@@ -1,20 +1,70 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getCourseByUserID } from "../redux/slice/courseSlice";
+import courseSlice, {
+  getCourseByUserID,
+  startLoading,
+} from "../redux/slice/courseSlice";
 import { isEmpty } from "@firebase/util";
 import UpdateProfileModal from "./UpdateProfileModal";
+import { createProfile } from "../redux/slice/loginSlice";
 
 export default function Setting() {
   const data = useSelector((state) => state?.courses?.getCourseByUser);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [uploadCompleted, setUploadCompleted] = useState(false);
+
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+    uploadFile(event.target.files[0]);
+  };
+
+  const uploadFile = async (file) => {
+    if (file) {
+      console.log("Uploading file:", file);
+
+      setLoading(true);
+      let response = {};
+
+      try {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        // Assuming createProfile is an asynchronous function that sends the request to the backend
+        response = await dispatch(createProfile(formData));
+        // Set the state variable to indicate that upload is completed
+        setUploadCompleted(true);
+      } catch (error) {
+        response = error;
+        console.log(error);
+      }
+      setLoading(false);
+      return response;
+    } else {
+      console.log("No file selected.");
+    }
+  };
+
+  // const handleAddProfile = async () => {
+  //   setLoading(true);
+  //   let response = {};
+
+  //   try {
+  //   } catch (error) {
+  //     console.log(error);
+  //     response = error;
+  //   }
+
+  //   setLoading(false);
+  // };
 
   const initData = async () => {
     setLoading(true);
     let response = {};
     try {
-      const response = await dispatch(getCourseByUserID());
+      response = await dispatch(getCourseByUserID());
     } catch (error) {
       console.log(error);
       response = error;
@@ -33,7 +83,10 @@ export default function Setting() {
 
   useEffect(() => {
     initData();
-  }, []);
+    if (uploadCompleted) {
+      window.location.reload();
+    }
+  }, [uploadCompleted]);
 
   return (
     <>
@@ -58,16 +111,31 @@ export default function Setting() {
                     <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
                       <img
                         src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                        alt="Profile"
                         height="75px"
                         width="75px"
                         className="rounded-full"
                       />
-                      <button
-                        type="button"
-                        className="font-semibold text-indigo-600 hover:text-indigo-500"
-                      >
-                        Select Profile Picture
-                      </button>
+                      <div>
+                        <input
+                          type="file"
+                          id="fileInput"
+                          accept="image/*"
+                          style={{ display: "none" }}
+                          onChange={handleFileChange}
+                        />
+                        <label htmlFor="fileInput">
+                          <button
+                            type="button"
+                            className="font-semibold text-indigo-600 hover:text-indigo-500"
+                            onClick={() =>
+                              document.getElementById("fileInput").click()
+                            }
+                          >
+                            Select Profile Picture
+                          </button>
+                        </label>
+                      </div>
                     </dd>
                   </div>
                 ) : (
