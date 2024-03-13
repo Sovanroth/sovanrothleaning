@@ -156,7 +156,7 @@ export const updateProfile = (param, id) => async (dispatch) => {
   }
 };
 
-export const removePrifle = (id) => async (dispatch) => {
+export const removeProfile = (id) => async (dispatch) => {
   dispatch(startLoading());
   try {
     const response = await axiosInstance.delete(

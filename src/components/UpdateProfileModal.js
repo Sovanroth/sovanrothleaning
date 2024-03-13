@@ -1,5 +1,7 @@
-import { Fragment, useRef } from "react";
+import { Fragment, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Dialog, Transition } from "@headlessui/react";
+import { updateUser } from "../redux/slice/loginSlice";
 
 export default function UpdateProfileModal({
   headerMessage,
@@ -8,15 +10,44 @@ export default function UpdateProfileModal({
   exampleText,
 }) {
   const cancelButtonRef = useRef(null);
+  const [data, setData] = useState("");
+  const dispatch = useDispatch();
 
-  const handleChangeUsername = (e) => {};
+  const handleChangeData = (e) => {
+    setData(e.target.value);
+  };
 
-  const updateFullname = async () => {
+  const updateSetting = async (infoMessage) => {
     try {
+      let tobeUpdate = {};
+      if (infoMessage === "Full Name") {
+        const param = {
+          username: data,
+        };
+        tobeUpdate = param;
+      } else if (infoMessage === "Email") {
+        const param = {
+          email: data,
+        };
+        tobeUpdate = param;
+      } else if (infoMessage === "Password") {
+        const param = {
+          password: data,
+        };
+        tobeUpdate = param;
+      }
+
+      // console.log(tobeUpdate);
+      dispatch(updateUser(tobeUpdate));
     } catch (error) {
       console.log(error);
-      return error;
+      throw error;
     }
+  };
+
+  const handleSubmit = (infoMessage) => {
+    updateSetting(infoMessage);
+    onClose();
   };
 
   return (
@@ -71,6 +102,7 @@ export default function UpdateProfileModal({
                           <input
                             type="text"
                             name="name"
+                            onChange={handleChangeData}
                             id="name"
                             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             placeholder={exampleText}
@@ -84,7 +116,7 @@ export default function UpdateProfileModal({
                   <button
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2"
-                    onClick={() => onClose()}
+                    onClick={() => handleSubmit(infoMessage)}
                   >
                     Update
                   </button>

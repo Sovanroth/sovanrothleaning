@@ -40,6 +40,8 @@ export default function Setting() {
         formData.append("file", file);
 
         response = await dispatch(updateProfile(formData, id));
+        setUploadCompleted(true);
+        setLoading(true);
       } catch (error) {
         console.log(error);
         return error;
