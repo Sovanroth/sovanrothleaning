@@ -11,6 +11,7 @@ const initialState = {
     password: "",
   },
   user: {},
+  profile: {},
 };
 
 const logInSlice = createSlice({
@@ -38,6 +39,10 @@ const logInSlice = createSlice({
     updateUserSuccess(state, action) {
       state.isLoading = false;
       state.user = action.payload;
+    },
+    createProfileSuccess(state, actions) {
+      state.isLoading = false;
+      state.profile = actions.payload;
     },
   },
 });
@@ -97,6 +102,31 @@ export const updateUser = (param) => async (dispatch) => {
   }
 };
 
+export const createProfile = (param) => async (dispatch) => {
+  dispatch(startLoading());
+  try {
+    const response = await axiosInstance.post(
+      `/users/upload-profile/${localStorage.getItem("userId")}`,
+      param,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+
+    if (response?.data) {
+      dispatch(createProfileSuccess(response?.data));
+    }
+    console.log(response);
+  } catch (error) {
+    console.log(error);
+    return error;
+  } finally {
+    dispatch(stopLoading());
+  }
+};
+
 export const logOut = async () => {
   localStorage.clear();
   console.log(localStorage.getItem("token"));
@@ -109,5 +139,6 @@ export const {
   setFilterSuccess,
   login,
   updateUserSuccess,
+  createProfileSuccess,
 } = logInSlice.actions;
 export default logInSlice.reducer;
