@@ -118,7 +118,7 @@ const BuyCourse = () => {
                 <Link
                   className="flex justify-end"
                   to={{
-                    pathname: "../browse/buy-course/pricing",
+                    pathname: `../browse/buy-course/pricing/${oneData?.data?.id}`,
                   }}
                 >
                   <button
