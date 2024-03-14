@@ -277,7 +277,7 @@ export const getCourseByUserID = () => async (dispatch) => {
     if (respone?.data) {
       dispatch(getCourseByUserIDSuccess(respone?.data));
     }
-    console.log(respone);
+    // console.log(respone);
     return respone;
   } catch (error) {
     console.log(error);

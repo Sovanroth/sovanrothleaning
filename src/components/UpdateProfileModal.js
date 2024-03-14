@@ -1,21 +1,111 @@
-import { Fragment, useRef } from "react";
+import { Fragment, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Dialog, Transition } from "@headlessui/react";
+import { updateUser } from "../redux/slice/loginSlice";
 
 export default function UpdateProfileModal({
   headerMessage,
   infoMessage,
   onClose,
   exampleText,
+  type,
 }) {
   const cancelButtonRef = useRef(null);
+  const [data, setData] = useState("");
+  const [error, setError] = useState("");
+  const dispatch = useDispatch();
 
-  const handleChangeUsername = (e) => {};
+  const handleChangeData = (e) => {
+    setData(e.target.value);
+    if (type === "email" && e.target.value) {
+      validateEmail(e.target.value);
+    }
+    if (type === "password" && e.target.value) {
+      validatePassword(e.target.value);
+    }
+  };
 
-  const updateFullname = async () => {
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("Please enter a valid email address.");
+      return false;
+    }
+    setError("");
+    return true;
+  };
+
+  const validatePassword = (password) => {
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters long.");
+      return false;
+    }
+    setError("");
+    return true;
+  };
+
+  const updateSetting = async (infoMessage) => {
     try {
+      let tobeUpdate = {};
+      if (infoMessage === "Full Name") {
+        const param = {
+          username: data,
+        };
+        tobeUpdate = param;
+      } else if (infoMessage === "Email") {
+        if (!validateEmail(data)) return;
+        const param = {
+          email: data,
+        };
+        tobeUpdate = param;
+      } else if (infoMessage === "Password") {
+        if (!validatePassword(data)) return;
+        const param = {
+          password: data,
+        };
+        tobeUpdate = param;
+      }
+
+      // console.log(tobeUpdate);
+      const response = await dispatch(updateUser(tobeUpdate));
+      return response;
     } catch (error) {
       console.log(error);
-      return error;
+      throw error;
+    }
+  };
+
+  // const handleSubmit = (infoMessage) => {
+  //   if (!data) {
+  //     setError("Please enter a value.");
+  //     return;
+  //   }
+  //   if (type === "email" && !validateEmail(data)) return;
+  //   if (type === "password" && !validatePassword(data)) return;
+  //   setError("");
+  //   updateSetting(infoMessage);
+  //   onClose();
+  // };
+
+  const handleSubmit = async (infoMessage) => {
+    if (!data) {
+      setError("Please enter a value.");
+      return;
+    }
+    if (type === "email" && !validateEmail(data)) return;
+    if (type === "password" && !validatePassword(data)) return;
+    setError("");
+
+    try {
+      const response = await updateSetting(infoMessage);
+      console.log(response?.data?.error);
+      if (response?.data?.error) {
+        setError("Email is already in use.");
+        return;
+      }
+      onClose();
+    } catch (error) {
+      console.error("Error updating setting:", error);
     }
   };
 
@@ -69,13 +159,17 @@ export default function UpdateProfileModal({
                             {infoMessage}
                           </label>
                           <input
-                            type="text"
-                            name="name"
+                            type={type}
+                            name={type}
+                            onChange={handleChangeData}
                             id="name"
                             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             placeholder={exampleText}
                           />
                         </div>
+                        {error && (
+                          <p className="mt-1 text-xs text-red-500">{error}</p>
+                        )}
                       </p>
                     </div>
                   </div>
@@ -84,7 +178,7 @@ export default function UpdateProfileModal({
                   <button
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2"
-                    onClick={() => onClose()}
+                    onClick={() => handleSubmit(infoMessage)}
                   >
                     Update
                   </button>
