@@ -17,6 +17,8 @@ export default function Setting() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadCompleted, setUploadCompleted] = useState(false);
   const [selectedUpdateFile, setSelectedUpdateFile] = useState(null);
+  const [isOpenEmailUpdate, setIsOpenEmailUpdate] = useState(false);
+  const [isOpenPasswordUpdate, setIsOpenPasswordUpdate] = useState(false);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -98,6 +100,22 @@ export default function Setting() {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+  };
+
+  const handleUpdateEmailClick = () => {
+    setIsOpenEmailUpdate(true);
+  };
+
+  const handleCloseUpdateEmail = () => {
+    setIsOpenEmailUpdate(false);
+  };
+
+  const handleUpdatePasswordClick = () => {
+    setIsOpenPasswordUpdate(true);
+  };
+
+  const handleCLocseUpdatePassword = () => {
+    setIsOpenPasswordUpdate(false);
   };
 
   useEffect(() => {
@@ -223,38 +241,63 @@ export default function Setting() {
                         headerMessage="Update Profile Full Name"
                         infoMessage="Full Name"
                         exampleText="Ryomen Sukuna"
+                        type="text"
                       />
                     )}
                   </div>
 
-                  <div className="pt-6 sm:flex">
-                    <dt className="font-medium text-gray-900 sm:w-64 sm:flex-none sm:pr-6">
-                      Email address
-                    </dt>
-                    <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
-                      <div className="text-gray-900">{data?.data?.email}</div>
-                      <button
-                        type="button"
-                        className="font-semibold text-indigo-600 hover:text-indigo-500"
-                      >
-                        Update
-                      </button>
-                    </dd>
+                  <div>
+                    <div className="pt-6 sm:flex">
+                      <dt className="font-medium text-gray-900 sm:w-64 sm:flex-none sm:pr-6">
+                        Email address
+                      </dt>
+                      <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
+                        <div className="text-gray-900">{data?.data?.email}</div>
+                        <button
+                          type="button"
+                          className="font-semibold text-indigo-600 hover:text-indigo-500"
+                          onClick={handleUpdateEmailClick}
+                        >
+                          Update
+                        </button>
+                      </dd>
+                    </div>
+                    {isOpenEmailUpdate && (
+                      <UpdateProfileModal
+                        onClose={handleCloseUpdateEmail}
+                        headerMessage="Update Email Address"
+                        infoMessage="Email"
+                        exampleText="sukuna@gmail.com"
+                        type="email"
+                      />
+                    )}
                   </div>
 
-                  <div className="pt-6 sm:flex">
-                    <dt className="font-medium text-gray-900 sm:w-64 sm:flex-none sm:pr-6">
-                      Password
-                    </dt>
-                    <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
-                      <div className="text-gray-900">****************</div>
-                      <button
-                        type="button"
-                        className="font-semibold text-indigo-600 hover:text-indigo-500"
-                      >
-                        Update
-                      </button>
-                    </dd>
+                  <div>
+                    <div className="pt-6 sm:flex">
+                      <dt className="font-medium text-gray-900 sm:w-64 sm:flex-none sm:pr-6">
+                        Password
+                      </dt>
+                      <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
+                        <div className="text-gray-900">****************</div>
+                        <button
+                          type="button"
+                          className="font-semibold text-indigo-600 hover:text-indigo-500"
+                          onClick={handleUpdatePasswordClick}
+                        >
+                          Update
+                        </button>
+                      </dd>
+                    </div>
+                    {isOpenPasswordUpdate && (
+                      <UpdateProfileModal
+                        onClose={handleCLocseUpdatePassword}
+                        headerMessage="Update Password"
+                        infoMessage="Password"
+                        exampleText=""
+                        type="password"
+                      />
+                    )}
                   </div>
                 </dl>
               </div>

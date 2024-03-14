@@ -8,13 +8,40 @@ export default function UpdateProfileModal({
   infoMessage,
   onClose,
   exampleText,
+  type,
 }) {
   const cancelButtonRef = useRef(null);
   const [data, setData] = useState("");
+  const [error, setError] = useState("");
   const dispatch = useDispatch();
 
   const handleChangeData = (e) => {
     setData(e.target.value);
+    if (type === "email" && e.target.value) {
+      validateEmail(e.target.value);
+    }
+    if (type === "password" && e.target.value) {
+      validatePassword(e.target.value);
+    }
+  };
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("Please enter a valid email address.");
+      return false;
+    }
+    setError("");
+    return true;
+  };
+
+  const validatePassword = (password) => {
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters long.");
+      return false;
+    }
+    setError("");
+    return true;
   };
 
   const updateSetting = async (infoMessage) => {
@@ -26,18 +53,20 @@ export default function UpdateProfileModal({
         };
         tobeUpdate = param;
       } else if (infoMessage === "Email") {
+        if (!validateEmail(data)) return; // Skip updating if email is invalid
         const param = {
           email: data,
         };
         tobeUpdate = param;
       } else if (infoMessage === "Password") {
+        if (!validatePassword(data)) return; // Skip updating if password is invalid
         const param = {
           password: data,
         };
         tobeUpdate = param;
       }
 
-      // console.log(tobeUpdate);
+      console.log(tobeUpdate);
       dispatch(updateUser(tobeUpdate));
     } catch (error) {
       console.log(error);
@@ -46,6 +75,13 @@ export default function UpdateProfileModal({
   };
 
   const handleSubmit = (infoMessage) => {
+    if (!data) {
+      setError("Please enter a value.");
+      return;
+    }
+    if (type === "email" && !validateEmail(data)) return;
+    if (type === "password" && !validatePassword(data)) return;
+    setError("");
     updateSetting(infoMessage);
     onClose();
   };
@@ -100,7 +136,7 @@ export default function UpdateProfileModal({
                             {infoMessage}
                           </label>
                           <input
-                            type="text"
+                            type={type}
                             name="name"
                             onChange={handleChangeData}
                             id="name"
@@ -108,6 +144,9 @@ export default function UpdateProfileModal({
                             placeholder={exampleText}
                           />
                         </div>
+                        {error && (
+                          <p className="mt-1 text-xs text-red-500">{error}</p>
+                        )}
                       </p>
                     </div>
                   </div>
