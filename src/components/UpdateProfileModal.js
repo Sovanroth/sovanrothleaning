@@ -1,5 +1,5 @@
 import { Fragment, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Dialog, Transition } from "@headlessui/react";
 import { updateUser } from "../redux/slice/loginSlice";
 
@@ -53,28 +53,41 @@ export default function UpdateProfileModal({
         };
         tobeUpdate = param;
       } else if (infoMessage === "Email") {
-        if (!validateEmail(data)) return; // Skip updating if email is invalid
+        if (!validateEmail(data)) return;
         const param = {
           email: data,
         };
         tobeUpdate = param;
       } else if (infoMessage === "Password") {
-        if (!validatePassword(data)) return; // Skip updating if password is invalid
+        if (!validatePassword(data)) return;
         const param = {
           password: data,
         };
         tobeUpdate = param;
       }
 
-      console.log(tobeUpdate);
-      dispatch(updateUser(tobeUpdate));
+      // console.log(tobeUpdate);
+      const response = await dispatch(updateUser(tobeUpdate));
+      return response;
     } catch (error) {
       console.log(error);
       throw error;
     }
   };
 
-  const handleSubmit = (infoMessage) => {
+  // const handleSubmit = (infoMessage) => {
+  //   if (!data) {
+  //     setError("Please enter a value.");
+  //     return;
+  //   }
+  //   if (type === "email" && !validateEmail(data)) return;
+  //   if (type === "password" && !validatePassword(data)) return;
+  //   setError("");
+  //   updateSetting(infoMessage);
+  //   onClose();
+  // };
+
+  const handleSubmit = async (infoMessage) => {
     if (!data) {
       setError("Please enter a value.");
       return;
@@ -82,8 +95,18 @@ export default function UpdateProfileModal({
     if (type === "email" && !validateEmail(data)) return;
     if (type === "password" && !validatePassword(data)) return;
     setError("");
-    updateSetting(infoMessage);
-    onClose();
+
+    try {
+      const response = await updateSetting(infoMessage);
+      console.log(response?.data?.error);
+      if (response?.data?.error) {
+        setError("Email is already in use.");
+        return;
+      }
+      onClose();
+    } catch (error) {
+      console.error("Error updating setting:", error);
+    }
   };
 
   return (

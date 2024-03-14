@@ -97,7 +97,8 @@ export const updateUser = (param) => async (dispatch) => {
     if (respone?.data) {
       dispatch(updateUserSuccess(respone?.data));
     }
-    console.log(respone);
+    // console.log(respone);
+    return respone;
   } catch (error) {
     console.log(error);
     return error;
