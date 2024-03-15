@@ -10,6 +10,10 @@ const initialState = {
   videoData: [],
   getCourseByUser: [],
   activeCourse: [],
+  courseByCategory: [],
+  searchCourse: [],
+  allCoursesByUser: [],
+  oneCourseByUser: {},
 };
 
 const coursesSlice = createSlice({
@@ -61,6 +65,22 @@ const coursesSlice = createSlice({
     getCourseByUserIDSuccess(state, action) {
       state.loading = false;
       state.getCourseByUser = action.payload;
+    },
+    getCourseByCategorySuccess(state, actions) {
+      state.loading = false;
+      state.courseByCategory = actions.payload;
+    },
+    searchCourseSuccess(state, actions) {
+      state.loading = false;
+      state.searchCourse = actions.payload;
+    },
+    getAllCoursesByUserSuccess(state, actions) {
+      state.loading = false;
+      state.allCoursesByUser = actions.payload;
+    },
+    getOneCoruseByUserSuccess(state, actions) {
+      state.loading = false;
+      state.oneCourseByUser = actions.payload;
     },
   },
 });
@@ -287,6 +307,99 @@ export const getCourseByUserID = () => async (dispatch) => {
   }
 };
 
+export const getCourseByCategory = (id) => async (dispatch) => {
+  dispatch(startLoading());
+
+  try {
+    const response = await axiosInstance.get(`/courses/category?id=${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    if (response?.data) {
+      dispatch(getCourseByCategorySuccess(response?.data));
+    }
+
+    return response;
+  } catch (error) {
+    console.log(error);
+    return error;
+  } finally {
+    dispatch(stopLoading());
+  }
+};
+
+export const getSearchCourse = (id) => async (dispatch) => {
+  dispatch(startLoading());
+
+  try {
+    const response = await axiosInstance.get(`/courses/category?id=${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    if (response?.data) {
+      dispatch(searchCourseSuccess(response?.data));
+    }
+    return response;
+  } catch (error) {
+    console.log(error);
+    return error;
+  } finally {
+    dispatch(stopLoading());
+  }
+};
+
+export const getAllCoursesByUser = () => async (dispatch) => {
+  dispatch(startLoading());
+
+  try {
+    const response = await axiosInstance.get(
+      `/users/get-all-course-by-user/${localStorage.getItem("userId")}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    if (response?.data) {
+      dispatch(getAllCoursesByUserSuccess(response?.data));
+      // console.log(response);
+      return response;
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
+  } finally {
+    dispatch(stopLoading());
+  }
+};
+
+export const getOneCourseByUser = (id) => async (dispatch) => {
+  dispatch(startLoading(true));
+  try {
+    const response = await axiosInstance.get(
+      `/users/get-one-course?userId=${localStorage.getItem(
+        "userId"
+      )}&courseId=${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    if (response?.data) {
+      dispatch(getOneCoruseByUserSuccess(response?.data));
+      return response;
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
+  } finally {
+    dispatch(stopLoading());
+  }
+};
+
 export const {
   startLoading,
   stopLoading,
@@ -300,6 +413,10 @@ export const {
   postVideoSuccess,
   buyCourseSuccess,
   getActiveCourse,
+  getCourseByCategorySuccess,
+  searchCourseSuccess,
+  getAllCoursesByUserSuccess,
+  getOneCoruseByUserSuccess,
 } = coursesSlice.actions;
 
 export default coursesSlice.reducer;

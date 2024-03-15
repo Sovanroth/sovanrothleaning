@@ -1,17 +1,11 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getActiveData } from "../redux/slice/courseSlice";
+import { getActiveData, getAllCoursesByUser } from "../redux/slice/courseSlice";
 import Moment from "react-moment";
 import { Link } from "react-router-dom";
-import {
-  AreaChart,
-  Code2,
-  DatabaseZap,
-  Music,
-  Settings,
-} from "lucide-react";
+import { AreaChart, Code2, DatabaseZap, Music, Settings } from "lucide-react";
 import LoadingScreen from "./LoadingScreen";
-import { isEmpty } from "@firebase/util";
+import { errorPrefix, isEmpty } from "@firebase/util";
 import { motion } from "framer-motion";
 
 const list = [
@@ -45,6 +39,9 @@ const list = [
 export default function ExploreCourse() {
   const [loading, setLoading] = useState(false);
   const activeData = useSelector((state) => state?.courses?.activeCourse);
+  const allCoursesByUserData = useSelector(
+    (state) => state?.courses?.allCoursesByUser
+  );
   const dispatch = useDispatch();
 
   const getCategoryName = (categoryNumber) => {
@@ -69,18 +66,18 @@ export default function ExploreCourse() {
 
   const initActiveData = async () => {
     setLoading(true);
-    let response = {};
+    // let response = {};
 
     try {
-      response = await dispatch(getActiveData());
+      const response = await dispatch(getAllCoursesByUser());
+      console.log(response);
+      return response;
     } catch (error) {
-      response = error;
-      response = error;
+      console.log(error);
+      return error;
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
-    console.log(activeData);
-    return response;
   };
 
   useEffect(() => {
@@ -91,7 +88,7 @@ export default function ExploreCourse() {
     <div>
       {loading ? (
         <LoadingScreen />
-      ) : isEmpty(activeData) ? (
+      ) : isEmpty(allCoursesByUserData) ? (
         <LoadingScreen />
       ) : (
         <div className="bg-white ">
@@ -112,11 +109,11 @@ export default function ExploreCourse() {
               </div>
             </div>
             <div className="mx-auto mt-5 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-4 md:grid-cols-2">
-              {activeData?.data.map((post, index) => (
+              {allCoursesByUserData?.data.map((post, index) => (
                 <Link to={`/browse/buy-course/${post.id}`}>
                   <motion.article
                     key={post.id + index}
-                    className="flex flex-col items-start justify-between"
+                    className="flex flex-col items-start justify-between relative"
                     whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
                   >
                     <article
@@ -131,7 +128,15 @@ export default function ExploreCourse() {
                           className="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]"
                         />
                         <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
+
+                        {/* Add label */}
+                        {post?.owned === 1 && (
+                          <div className="absolute top-2 right-2 bg-gray-800 text-white text-xs rounded-md px-2 py-1">
+                            Owned
+                          </div>
+                        )}
                       </div>
+
                       <div className="max-w-xl">
                         <div className="mt-2 flex items-center gap-x-4 text-xs">
                           <Moment key={post?.create_at} format="DD-MMM-YYYY">
