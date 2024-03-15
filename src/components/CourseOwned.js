@@ -129,29 +129,29 @@ export default function CourseOwned() {
                           >
                             {getCategoryName(post.category)}
                           </a>
-                          <p
+                          {/* <p
                             key={post.coursePrice}
                             className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 "
                           >
                             {post.coursePrice}
+                          </p> */}
+                        </div>
+                        {/* <Link to={`/browse/buy-course/${post.course_id}`}> */}
+                        <div className="group relative">
+                          <h3 className="mt-1 font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
+                            <a href={post.href} key={post.courseTitle}>
+                              <span className="absolute inset-0" />
+                              {post.courseTitle}
+                            </a>
+                          </h3>
+                          <p
+                            key={post.courseDescription}
+                            className="mt-1 line-clamp-2 text-sm leading-6 text-gray-600"
+                          >
+                            {post.courseDescription}
                           </p>
                         </div>
-                        <Link to={`/browse/buy-course/${post.course_id}`}>
-                          <div className="group relative">
-                            <h3 className="mt-1 font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-                              <a href={post.href} key={post.courseTitle}>
-                                <span className="absolute inset-0" />
-                                {post.courseTitle}
-                              </a>
-                            </h3>
-                            <p
-                              key={post.courseDescription}
-                              className="mt-1 line-clamp-3 text-sm leading-6 text-gray-600"
-                            >
-                              {post.courseDescription}
-                            </p>
-                          </div>
-                        </Link>
+                        {/* </Link> */}
                       </div>
                     </article>
                     {/* </Link> */}

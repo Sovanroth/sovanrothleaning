@@ -164,7 +164,7 @@ export default function ExploreCourse() {
                           </h3>
                           <p
                             key={post.courseDescription}
-                            className="mt-1 line-clamp-3 text-sm leading-6 text-gray-600"
+                            className="mt-1 line-clamp-2 text-sm leading-6 text-gray-600"
                           >
                             {post.courseDescription}
                           </p>
