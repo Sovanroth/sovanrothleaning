@@ -15,6 +15,20 @@ const ViewsCourse = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showFullText, setShowFullText] = useState(false);
+  const [currentVideoUrl, setCurrentVideoUrl] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(null);
+
+  useEffect(() => {
+    if (oneData?.data?.videos.length > 0) {
+      setCurrentVideoUrl(oneData.data.videos[0].video_url);
+      setActiveIndex(0);
+    }
+  }, [oneData]);
+
+  const handleButtonClick = (index, videoUrl) => {
+    setActiveIndex(index);
+    setCurrentVideoUrl(videoUrl);
+  };
 
   const toggleShowText = () => {
     setShowFullText(!showFullText);
@@ -96,10 +110,12 @@ const ViewsCourse = () => {
                   <div className="flex flex-row mt-2" key={index}>
                     <button
                       type="button"
-                      className={`w-screen text-start rounded-md px-3 py-2 text-sm font-semibold bg-white text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50`}
-                      onClick={() => {
-                        // Handle click event if needed
-                      }}
+                      className={`w-screen text-start rounded-md px-3 py-2 text-sm font-semibold bg-white text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 transition-colors duration-300 ${
+                        activeIndex === index
+                          ? "bg-blue-200"
+                          : "hover:bg-gray-50"
+                      }`}
+                      onClick={() => handleButtonClick(index, video.video_url)}
                     >
                       <div className="flex flex-row">
                         <PlayCircle size={24} />
@@ -116,14 +132,16 @@ const ViewsCourse = () => {
             {/* Second Column */}
             <div className="w-2/3">
               <div className="p-4">
-                <MuxPlayer
+                {/* <MuxPlayer
                   streamType="on-demand"
                   playbackId="NZIkna4ZmzsBWJkcqZRZZRjcGeQMMr5nqBRb7Rsu4fA"
                   metadataVideoTitle="Placeholder (optional)"
                   metadataViewerUserId="Placeholder (optional)"
                   primaryColor="#FFFFFF"
                   secondaryColor="#000000"
-                />
+                /> */}
+
+                {currentVideoUrl && <div>{currentVideoUrl}</div>}
 
                 <div class="mt-6 border bg-slate-100 rounded-md p-4">
                   <div class="font-medium text-sm flex items-center justify-between">

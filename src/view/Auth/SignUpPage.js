@@ -4,7 +4,7 @@ import Footer from "../../components/Footer";
 
 const SignUpPage = () => {
   return (
-    <div className="flex flex-col min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white to-gray-400">
+    <div className="flex flex-col min-h-screen">
       <SignUp />
       <div className="flex-grow"></div>
       <footer></footer>
