@@ -23,6 +23,7 @@ import NoTokenRoute from "./view/Auth/NoTokenRoute";
 import ForgotPasswordPage from "./view/Auth/ForgotPasswordPage";
 import SettingPage from "./view/SettingPage";
 import WatchVideos from "./view/Student/WatchVideos";
+import Example from "./test";
 
 function App() {
   document.addEventListener("contextmenu", function (e) {
@@ -78,6 +79,7 @@ function App() {
 
         <Route path="loading" element={<LoadingScreen />} />
         <Route path="*" element={<NotFoundPage />} />
+        {/* <Route path="/test" element={<Example />} /> */}
       </Routes>
     </Router>
   );
