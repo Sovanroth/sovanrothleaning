@@ -19,6 +19,11 @@ const BuyCourse = () => {
   );
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [showFullText, setShowFullText] = useState(false);
+
+  const toggleShowText = () => {
+    setShowFullText(!showFullText);
+  };
 
   const initData = async () => {
     setLoading(true);
@@ -59,9 +64,32 @@ const BuyCourse = () => {
                 <h1 className="text-xl font-bold">
                   {oneCourseByUser?.data?.courseTitle}
                 </h1>
-                <p className=" text-sm mt-2">
-                  {oneCourseByUser?.data?.courseDescription}
-                </p>
+                <div>
+                  <p
+                    key={oneCourseByUser?.data?.courseDescription}
+                    className={`mt-1 ${
+                      showFullText ? "line-clamp-none" : "line-clamp-4"
+                    } text-sm leading-6`}
+                  >
+                    {oneCourseByUser?.data?.courseDescription}
+                  </p>
+                  {!showFullText && (
+                    <button
+                      className="text-blue-500 underline mt-1 text-sm cursor-pointer"
+                      onClick={toggleShowText}
+                    >
+                      See more
+                    </button>
+                  )}
+                  {showFullText && (
+                    <button
+                      className="text-blue-500 underline mt-1 text-sm cursor-pointer"
+                      onClick={toggleShowText}
+                    >
+                      Show less
+                    </button>
+                  )}
+                </div>
                 <div class="border-t border-gray-500 my-4"></div>
                 {oneCourseByUser?.data?.owned === 1 ? (
                   <div>

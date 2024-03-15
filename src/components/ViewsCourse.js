@@ -14,6 +14,11 @@ const ViewsCourse = () => {
   const oneData = useSelector((state) => state?.courses?.oneData);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [showFullText, setShowFullText] = useState(false);
+
+  const toggleShowText = () => {
+    setShowFullText(!showFullText);
+  };
 
   const initData = async () => {
     setLoading(true);
@@ -56,9 +61,36 @@ const ViewsCourse = () => {
                 <h1 className="text-xl font-bold">
                   {oneData?.data?.courseTitle}
                 </h1>
-                <p className=" text-sm mt-2">
+
+                <div>
+                  <p
+                    key={oneData?.data?.courseDescription}
+                    className={`mt-1 ${
+                      showFullText ? "line-clamp-none" : "line-clamp-4"
+                    } text-sm leading-6`}
+                  >
+                    {oneData?.data?.courseDescription}
+                  </p>
+                  {!showFullText && (
+                    <button
+                      className="text-blue-500 underline mt-1 text-sm cursor-pointer"
+                      onClick={toggleShowText}
+                    >
+                      See more
+                    </button>
+                  )}
+                  {showFullText && (
+                    <button
+                      className="text-blue-500 underline mt-1 text-sm cursor-pointer"
+                      onClick={toggleShowText}
+                    >
+                      Show less
+                    </button>
+                  )}
+                </div>
+                {/* <p className=" text-sm mt-2">
                   {oneData?.data?.courseDescription}
-                </p>
+                </p> */}
                 <div class="border-t border-gray-500 my-4"></div>
                 {oneData?.data?.videos.map((video, index) => (
                   <div className="flex flex-row mt-2" key={index}>
