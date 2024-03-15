@@ -7,6 +7,7 @@ import { getOneData } from "../redux/slice/courseSlice";
 import { LockKeyhole, PlayCircle } from "lucide-react";
 import { Tooltip } from "react-tooltip";
 import MuxPlayer from "@mux/mux-player-react";
+import ReactPlayer from "react-player";
 
 const ViewsCourse = () => {
   const { id } = useParams();
@@ -17,6 +18,7 @@ const ViewsCourse = () => {
   const [showFullText, setShowFullText] = useState(false);
   const [currentVideoUrl, setCurrentVideoUrl] = useState(null);
   const [activeIndex, setActiveIndex] = useState(null);
+  const [aspectRatio, setAspectRatio] = useState(9 / 16);
 
   useEffect(() => {
     if (oneData?.data?.videos.length > 0) {
@@ -132,16 +134,17 @@ const ViewsCourse = () => {
             {/* Second Column */}
             <div className="w-2/3">
               <div className="p-4">
-                {/* <MuxPlayer
-                  streamType="on-demand"
-                  playbackId="NZIkna4ZmzsBWJkcqZRZZRjcGeQMMr5nqBRb7Rsu4fA"
-                  metadataVideoTitle="Placeholder (optional)"
-                  metadataViewerUserId="Placeholder (optional)"
-                  primaryColor="#FFFFFF"
-                  secondaryColor="#000000"
-                /> */}
-
-                {currentVideoUrl && <div>{currentVideoUrl}</div>}
+                <div
+                  className="w-full relative"
+                  style={{ paddingTop: `${aspectRatio * 100}%` }}
+                >
+                  <ReactPlayer
+                    url={currentVideoUrl}
+                    width="100%"
+                    height="100%"
+                    className="absolute top-0 left-0"
+                  />
+                </div>
 
                 <div class="mt-6 border bg-slate-100 rounded-md p-4">
                   <div class="font-medium text-sm flex items-center justify-between">
