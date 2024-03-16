@@ -9,6 +9,7 @@ import { isEmpty } from "@firebase/util";
 import LoadingScreen from "./LoadingScreen";
 import "video-react/dist/video-react.css";
 import { Tooltip } from "react-tooltip";
+import ReactPlayer from "react-player";
 
 const BuyCourse = () => {
   const { id } = useParams();
@@ -20,6 +21,22 @@ const BuyCourse = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showFullText, setShowFullText] = useState(false);
+
+  const [currentVideoUrl, setCurrentVideoUrl] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(null);
+  const [aspectRatio, setAspectRatio] = useState(9 / 16);
+
+  useEffect(() => {
+    if (oneData?.data?.videos.length > 0) {
+      setCurrentVideoUrl(oneData.data.videos[0].video_url);
+      setActiveIndex(0);
+    }
+  }, [oneData]);
+
+  const handleButtonClick = (index, videoUrl) => {
+    setCurrentVideoUrl(videoUrl);
+    setActiveIndex(index);
+  };
 
   const toggleShowText = () => {
     setShowFullText(!showFullText);
@@ -97,10 +114,14 @@ const BuyCourse = () => {
                       <div className="flex flex-row mt-2" key={index}>
                         <button
                           type="button"
-                          className={`w-screen text-start rounded-md px-3 py-2 text-sm font-semibold bg-white text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50`}
-                          onClick={() => {
-                            //login
-                          }}
+                          className={`w-screen text-start rounded-md px-3 py-2 text-sm font-semibold bg-white text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 transition-colors duration-300 ${
+                            activeIndex === index
+                              ? "bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white to-gray-300"
+                              : "hover:bg-gray-50"
+                          }`}
+                          onClick={() =>
+                            handleButtonClick(index, video.video_url)
+                          }
                         >
                           <div className="flex flex-row">
                             <PlayCircle size={24} />
@@ -162,14 +183,17 @@ const BuyCourse = () => {
             {/* Second Column */}
             <div className="w-2/3">
               <div className="p-4">
-                <MuxPlayer
-                  streamType="on-demand"
-                  playbackId="NZIkna4ZmzsBWJkcqZRZZRjcGeQMMr5nqBRb7Rsu4fA"
-                  metadataVideoTitle="Placeholder (optional)"
-                  metadataViewerUserId="Placeholder (optional)"
-                  primaryColor="#FFFFFF"
-                  secondaryColor="#000000"
-                />
+                <div
+                  className="w-full relative"
+                  style={{ paddingTop: `${aspectRatio * 100}%` }}
+                >
+                  <ReactPlayer
+                    url={currentVideoUrl}
+                    width="100%"
+                    height="100%"
+                    className="absolute top-0 left-0"
+                  />
+                </div>
 
                 {oneCourseByUser?.data?.owned === 1 ? (
                   <div class="mt-6 border bg-slate-100 rounded-md p-4">

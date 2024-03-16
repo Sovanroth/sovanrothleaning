@@ -28,8 +28,8 @@ const ViewsCourse = () => {
   }, [oneData]);
 
   const handleButtonClick = (index, videoUrl) => {
-    setActiveIndex(index);
     setCurrentVideoUrl(videoUrl);
+    setActiveIndex(index);
   };
 
   const toggleShowText = () => {
@@ -104,9 +104,6 @@ const ViewsCourse = () => {
                     </button>
                   )}
                 </div>
-                {/* <p className=" text-sm mt-2">
-                  {oneData?.data?.courseDescription}
-                </p> */}
                 <div class="border-t border-gray-500 my-4"></div>
                 {oneData?.data?.videos.map((video, index) => (
                   <div className="flex flex-row mt-2" key={index}>
@@ -114,7 +111,7 @@ const ViewsCourse = () => {
                       type="button"
                       className={`w-screen text-start rounded-md px-3 py-2 text-sm font-semibold bg-white text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 transition-colors duration-300 ${
                         activeIndex === index
-                          ? "bg-blue-200"
+                          ? "bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white to-gray-300"
                           : "hover:bg-gray-50"
                       }`}
                       onClick={() => handleButtonClick(index, video.video_url)}
