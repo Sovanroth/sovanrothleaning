@@ -67,6 +67,21 @@ export default function CourseOwned() {
 
   return (
     <div>
+      <div className="mx-auto mt-5 grid max-w-2xl">
+        <div className="hidden md:flex flex-row gap-2">
+          {list.map((data) => (
+            <button
+              type="button"
+              className="rounded-full bg-white px-3 py-1.5 text-xs text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+            >
+              <div className=" flex flex-row">
+                {data.icon}
+                <div className="ml-px align-middle">{data.category}</div>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
       {loading ? (
         <LoadingScreen />
       ) : isEmpty(data?.data?.courses) ? (
@@ -83,21 +98,6 @@ export default function CourseOwned() {
       ) : (
         <div className="bg-white ">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <div className="mx-auto mt-5 grid max-w-2xl">
-              <div className="hidden md:flex flex-row gap-2">
-                {list.map((data) => (
-                  <button
-                    type="button"
-                    className="rounded-full bg-white px-3 py-1.5 text-xs text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                  >
-                    <div className=" flex flex-row">
-                      {data.icon}
-                      <div className="ml-px align-middle">{data.category}</div>
-                    </div>
-                  </button>
-                ))}
-              </div>
-            </div>
             <div className="mx-auto mt-5 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-4 md:grid-cols-2">
               {data?.data?.courses?.map((post, index) => (
                 <Link to={`/dashboard/course/${post.id}`}>
