@@ -41,6 +41,7 @@ const ViewsCourse = () => {
     let response = {};
 
     try {
+      await new Promise((resolve) => setTimeout(resolve, 500));
       response = await dispatch(getOneData(id));
     } catch (error) {
       console.log(error);

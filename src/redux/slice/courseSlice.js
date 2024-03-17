@@ -311,11 +311,16 @@ export const getCourseByCategory = (id) => async (dispatch) => {
   dispatch(startLoading());
 
   try {
-    const response = await axiosInstance.get(`/courses/category?id=${id}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
+    const response = await axiosInstance.get(
+      `/users/get-category?userId=${localStorage.getItem(
+        "userId"
+      )}&categoryId=${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
     if (response?.data) {
       dispatch(getCourseByCategorySuccess(response?.data));
     }

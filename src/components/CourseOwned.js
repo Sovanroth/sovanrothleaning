@@ -51,6 +51,7 @@ export default function CourseOwned() {
     setLoading(true);
     let response = {};
     try {
+      await new Promise((resolve) => setTimeout(resolve, 500));
       const response = await dispatch(getCourseByUserID());
     } catch (error) {
       console.log(error);

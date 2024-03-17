@@ -46,6 +46,7 @@ const BuyCourse = () => {
     setLoading(true);
     let response = {};
     try {
+      await new Promise((resolve) => setTimeout(resolve, 500));
       response = await dispatch(getOneCourseByUser(id));
     } catch (error) {
       response = error;
@@ -144,10 +145,9 @@ const BuyCourse = () => {
                               ? "bg-white text-gray-900"
                               : "bg-gray-100 text-gray-500 pointer-events-none"
                           } shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50`}
-                          onClick={() => {
-                            if (index === 0) {
-                            }
-                          }}
+                          onClick={() =>
+                            handleButtonClick(index, video.video_url)
+                          }
                           data-tip={
                             index !== 0
                               ? "Please purchase the course to unlock the video"
