@@ -70,7 +70,6 @@ export default function ExploreCourse() {
 
   const initActiveData = async () => {
     setLoading(true);
-    // let response = {};
 
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
@@ -107,6 +106,26 @@ export default function ExploreCourse() {
 
   return (
     <div>
+      <div className="mx-auto mt-5 grid max-w-2xl">
+        <div className="hidden md:flex flex-row gap-2">
+          {list.map((data) => (
+            <button
+              key={data.id}
+              type="button"
+              className={`rounded-full bg-white px-3 py-1.5 text-xs text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 transition-colors duration-300 ${
+                activeId === data.id ? "bg-gray-300" : ""
+              }`}
+              onClick={() => handleButtonClick(data.id)}
+            >
+              <div className="flex flex-row">
+                {data.icon}
+                <div className="ml-px align-middle">{data.category}</div>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
       {loading ? (
         <LoadingScreen />
       ) : isEmpty(allCoursesByUserData) ? (
@@ -114,27 +133,11 @@ export default function ExploreCourse() {
       ) : (
         <div className="bg-white ">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <div className="mx-auto mt-5 grid max-w-2xl">
-              <div className="hidden md:flex flex-row gap-2">
-                {list.map((data) => (
-                  <button
-                    key={data.id}
-                    type="button"
-                    className={`rounded-full bg-white px-3 py-1.5 text-xs text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 transition-colors duration-300 ${
-                      activeId === data.id ? "bg-blue-200" : ""
-                    }`}
-                    onClick={() => handleButtonClick(data.id)}
-                  >
-                    <div className="flex flex-row">
-                      {data.icon}
-                      <div className="ml-px align-middle">{data.category}</div>
-                    </div>
-                  </button>
-                ))}
-              </div>
-            </div>
             <div className="mx-auto mt-5 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-4 md:grid-cols-2">
-              {coursesToRender &&
+              {coursesToRender?.error === true ? (
+                <p>Course not found</p>
+              ) : (
+                coursesToRender &&
                 coursesToRender.map((post, index) => (
                   <Link to={`/browse/buy-course/${post.id}`}>
                     <motion.article
@@ -202,7 +205,8 @@ export default function ExploreCourse() {
                       </article>
                     </motion.article>
                   </Link>
-                ))}
+                ))
+              )}
             </div>
           </div>
         </div>
