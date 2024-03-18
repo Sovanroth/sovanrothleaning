@@ -334,11 +334,11 @@ export const getCourseByCategory = (id) => async (dispatch) => {
   }
 };
 
-export const getSearchCourse = (id) => async (dispatch) => {
+export const getSearchCourse = (param) => async (dispatch) => {
   dispatch(startLoading());
 
   try {
-    const response = await axiosInstance.get(`/courses/category?id=${id}`, {
+    const response = await axiosInstance.get(`/courses/search-course?search-input=${param}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
