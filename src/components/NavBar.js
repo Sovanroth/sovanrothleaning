@@ -5,7 +5,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { logOut } from "../redux/slice/loginSlice";
-import { getCourseByUserID } from "../redux/slice/courseSlice";
+import { getCourseByUserID, getSearchCourse } from "../redux/slice/courseSlice";
 
 const navigation = [
   { name: "Dashboard", href: "/", current: false },
@@ -28,6 +28,9 @@ export default function NavBar() {
   const dispatch = useDispatch();
   const role = parseInt(localStorage.getItem("role"));
   const data = useSelector((state) => state?.courses?.getCourseByUser);
+  const [searchQuery, setSearchQuery] = useState("");
+  const searchCourse = useSelector((state) => state?.courses?.searchCourse);
+  const [isSearchClicked, setIsSearchClicked] = useState(false);
 
   const initData = async () => {
     setLoading(true);
@@ -53,6 +56,36 @@ export default function NavBar() {
     setLoading(false);
   };
 
+  const initSearchData = async (param) => {
+    setLoading(true);
+
+    try {
+      const response = await dispatch(getSearchCourse(param));
+      console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleInputChange = (event) => {
+    const inputValue = event.target.value;
+    setSearchQuery(inputValue);
+    // console.log(inputValue);
+    initSearchData(inputValue);
+  };
+
+  const handleInputFocus = () => {
+    setIsSearchClicked(true);
+  };
+
+  const handleInputBlur = () => {
+    setIsSearchClicked(false);
+  };
+
   useEffect(() => {
     initData();
   }, []);
@@ -75,7 +108,7 @@ export default function NavBar() {
                 </div>
               </div>
               <div className="relative z-0 flex flex-1 items-center justify-center px-2 sm:absolute sm:inset-0">
-                <div className="w-full sm:max-w-xs">
+                <div className="w-full sm:max-w-xs relative z-10">
                   <label htmlFor="search" className="sr-only">
                     Search
                   </label>
@@ -86,8 +119,49 @@ export default function NavBar() {
                         aria-hidden="true"
                       />
                     </div>
-                    <input className="block w-full rounded-md border-0 bg-white py-1.5 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                    <input
+                      className="block w-full rounded-md border-0 bg-white py-1.5 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      type="text"
+                      placeholder="Search"
+                      value={searchQuery}
+                      onChange={handleInputChange}
+                      onFocus={handleInputFocus}
+                      onBlur={handleInputBlur}
+                    />
                   </div>
+                  {isSearchClicked && (
+                    <div className="absolute mt-1 bg-white border border-gray-300 w-full max-w-xs max-h-48 overflow-y-auto rounded-md shadow-md z-10">
+                      <ul className="divide-y divide-gray-200">
+                        {!loading && !searchCourse?.data?.length && (
+                          <li className="py-2 px-4 text-sm">
+                            Search not found.
+                          </li>
+                        )}
+                        {!loading &&
+                          searchCourse?.data?.length > 0 &&
+                          searchCourse?.data.map((item) => (
+                            <li
+                              key={item.courseId}
+                              className="py-2 px-4 cursor-pointer hover:bg-gray-100 flex items-center"
+                            >
+                              <Link
+                                to={`/browse/buy-course/${item.id}`}
+                                className="flex items-center"
+                              >
+                                <img
+                                  src={item.courseImage}
+                                  alt={item.courseImage}
+                                  className="h-8 w-auto mr-2"
+                                />
+                                <div className="text-sm">
+                                  {item.courseTitle}
+                                </div>
+                              </Link>
+                            </li>
+                          ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="relative z-10 flex items-center lg:hidden">
