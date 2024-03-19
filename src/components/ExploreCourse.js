@@ -113,7 +113,7 @@ export default function ExploreCourse() {
               key={data.id}
               type="button"
               className={`rounded-full bg-white px-3 py-1.5 text-xs text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 transition-colors duration-300 ${
-                activeId === data.id ? "bg-blue-400" : ""
+                activeId === data.id ? "bg-blue-300" : ""
               }`}
               onClick={() => handleButtonClick(data.id)}
             >

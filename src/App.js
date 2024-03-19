@@ -24,6 +24,7 @@ import ForgotPasswordPage from "./view/Auth/ForgotPasswordPage";
 import SettingPage from "./view/SettingPage";
 import WatchVideos from "./view/Student/WatchVideos";
 import Example from "./test";
+import SearchCourseModal from "./components/SearchCourseModal";
 
 function App() {
   // document.addEventListener("contextmenu", function (e) {
@@ -79,7 +80,7 @@ function App() {
 
         <Route path="loading" element={<LoadingScreen />} />
         <Route path="*" element={<NotFoundPage />} />
-        {/* <Route path="/test" element={<Example />} /> */}
+        <Route path="test" element={<SearchCourseModal />} />
       </Routes>
     </Router>
   );
