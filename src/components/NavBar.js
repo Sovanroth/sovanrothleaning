@@ -8,6 +8,7 @@ import { logOut } from "../redux/slice/loginSlice";
 import { getCourseByUserID, getSearchCourse } from "../redux/slice/courseSlice";
 import { Search } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SearchCourseModal from "./SearchCourseModal";
 
 const navigation = [
   { name: "Dashboard", href: "/", current: false },
@@ -33,6 +34,16 @@ export default function NavBar() {
   const [searchQuery, setSearchQuery] = useState("");
   const searchCourse = useSelector((state) => state?.courses?.searchCourse);
   const [isSearchClicked, setIsSearchClicked] = useState(false);
+  const [openSearch, setOpenSearch] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleClickSearch = () => {
+    setOpenSearch(true);
+  };
+
+  const handleCloseSearch = () => {
+    setOpenSearch(false);
+  };
 
   const initData = async () => {
     setLoading(true);
@@ -76,7 +87,6 @@ export default function NavBar() {
   const handleInputChange = (event) => {
     const inputValue = event.target.value;
     setSearchQuery(inputValue);
-    // console.log(inputValue);
     initSearchData(inputValue);
   };
 
@@ -86,6 +96,10 @@ export default function NavBar() {
 
   const handleInputBlur = () => {
     setIsSearchClicked(false);
+  };
+
+  const handleButtonClick = () => {
+    setIsOpen(true);
   };
 
   useEffect(() => {
@@ -109,7 +123,7 @@ export default function NavBar() {
                   </button>
                 </div>
               </div>
-              <div className="relative z-10 flex flex-1 items-center justify-center px-2 sm:absolute sm:inset-0">
+              {/* <div className="relative z-10 flex flex-1 items-center justify-center px-2 sm:absolute sm:inset-0">
                 <div className="w-full sm:max-w-xs relative z-10">
                   <label htmlFor="search" className="sr-only">
                     Search
@@ -163,7 +177,7 @@ export default function NavBar() {
                     </div>
                   )}
                 </div>
-              </div>
+              </div> */}
               <div className="relative z-10 flex items-center lg:hidden">
                 <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
                   <span className="absolute -inset-0.5" />
@@ -176,9 +190,13 @@ export default function NavBar() {
                 </Disclosure.Button>
               </div>
               <div className="hidden lg:relative lg:z-10 lg:ml-4 lg:flex lg:items-center">
-                <button className="px-3.5 py-2 ">
+                <button className="px-3.5 py-2" onClick={handleButtonClick}>
                   <Search color="gray" />
                 </button>
+                <SearchCourseModal
+                  isOpen={isOpen}
+                  onClose={() => setIsOpen(false)}
+                />
 
                 {role !== 0 && (
                   <Link to="/teacher-mode">
