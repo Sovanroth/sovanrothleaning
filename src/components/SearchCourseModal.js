@@ -69,10 +69,10 @@ export default function SearchCourseModal({ isOpen, onClose }) {
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            <div className="w-full max-w-lg mx-auto mt-20">
+            <div className="w-full max-w-sm mx-auto mt-20">
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white backdrop-blur-md text-left shadow-xl transition-all">
                 <div>
-                  <div className="text-center">
+                  <div>
                     <Dialog.Title className="flex items-center">
                       <input
                         type="text"
@@ -84,39 +84,28 @@ export default function SearchCourseModal({ isOpen, onClose }) {
                         onBlur={handleInputBlur}
                       />
                     </Dialog.Title>
-                    <Dialog.Panel>
-                      {isSearchClicked && (
-                        <div className="absolute mt-1 bg-white border border-gray-300 w-full max-w-xs max-h-48 overflow-y-auto rounded-md shadow-md z-10">
-                          <ul className="divide-y divide-gray-200">
-                            {!loading && !searchCourse?.data?.length && (
-                              <li className="py-2 px-4 text-sm">
-                                Search not found.
-                              </li>
-                            )}
-                            {!loading &&
-                              searchCourse?.data?.length > 0 &&
-                              searchCourse?.data.map((item) => (
-                                <Link
-                                  to={`browse/buy-course/${item.id}`}
-                                  className="flex items-center"
-                                  key={item.courseId}
-                                >
-                                  <li className="py-2 px-4 cursor-pointer hover:bg-gray-100 flex items-center">
-                                    <img
-                                      src={item.courseImage}
-                                      alt={item.courseImage}
-                                      className="h-8 w-auto mr-2"
-                                    />
-                                    <div className="text-sm">
-                                      {item.courseTitle}
-                                    </div>
-                                  </li>
-                                </Link>
-                              ))}
-                          </ul>
-                        </div>
-                      )}
-                    </Dialog.Panel>
+                    {searchQuery && (
+                      <div>
+                        <ul className="divide-y divide-gray-200">
+                          {searchCourse?.data?.length > 0 &&
+                            searchCourse?.data.map((item, index) => (
+                              <Link
+                                to={`/browse/buy-course/${item?.id}`}
+                                className="py-2 px-4 cursor-pointer hover:bg-gray-100 flex"
+                              >
+                                <img
+                                  src={item.courseImage}
+                                  alt={item.courseTitle}
+                                  className="h-8 w-auto mr-2"
+                                />
+                                <div className="text-sm">
+                                  {item.courseTitle}
+                                </div>
+                              </Link>
+                            ))}
+                        </ul>
+                      </div>
+                    )}
                   </div>
                 </div>
               </Dialog.Panel>
