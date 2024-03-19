@@ -6,6 +6,8 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { logOut } from "../redux/slice/loginSlice";
 import { getCourseByUserID, getSearchCourse } from "../redux/slice/courseSlice";
+import { Search } from "lucide-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const navigation = [
   { name: "Dashboard", href: "/", current: false },
@@ -107,7 +109,7 @@ export default function NavBar() {
                   </button>
                 </div>
               </div>
-              <div className="relative z-0 flex flex-1 items-center justify-center px-2 sm:absolute sm:inset-0">
+              <div className="relative z-10 flex flex-1 items-center justify-center px-2 sm:absolute sm:inset-0">
                 <div className="w-full sm:max-w-xs relative z-10">
                   <label htmlFor="search" className="sr-only">
                     Search
@@ -140,14 +142,12 @@ export default function NavBar() {
                         {!loading &&
                           searchCourse?.data?.length > 0 &&
                           searchCourse?.data.map((item) => (
-                            <li
+                            <Link
+                              to={`browse/buy-course/${item.id}`}
+                              className="flex items-center"
                               key={item.courseId}
-                              className="py-2 px-4 cursor-pointer hover:bg-gray-100 flex items-center"
                             >
-                              <Link
-                                to={`/browse/buy-course/${item.id}`}
-                                className="flex items-center"
-                              >
+                              <li className="py-2 px-4 cursor-pointer hover:bg-gray-100 flex items-center">
                                 <img
                                   src={item.courseImage}
                                   alt={item.courseImage}
@@ -156,8 +156,8 @@ export default function NavBar() {
                                 <div className="text-sm">
                                   {item.courseTitle}
                                 </div>
-                              </Link>
-                            </li>
+                              </li>
+                            </Link>
                           ))}
                       </ul>
                     </div>
@@ -176,6 +176,10 @@ export default function NavBar() {
                 </Disclosure.Button>
               </div>
               <div className="hidden lg:relative lg:z-10 lg:ml-4 lg:flex lg:items-center">
+                <button className="px-3.5 py-2 ">
+                  <Search color="gray" />
+                </button>
+
                 {role !== 0 && (
                   <Link to="/teacher-mode">
                     <button
