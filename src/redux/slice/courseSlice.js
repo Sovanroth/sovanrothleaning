@@ -242,13 +242,18 @@ export const createCourse = (params) => async (dispatch) => {
   dispatch(startLoading);
 
   try {
-    const response = await axiosInstance.post(`/course/create-course`, params, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
+    const response = await axiosInstance.post(
+      `/courses/create-course`,
+      params,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
     if (response?.data) {
       dispatch(createCourseSuccess());
+      return response;
     }
   } catch (error) {
     console.log(error);
@@ -338,11 +343,14 @@ export const getSearchCourse = (param) => async (dispatch) => {
   dispatch(startLoading());
 
   try {
-    const response = await axiosInstance.get(`/courses/search-course?search-input=${param}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
+    const response = await axiosInstance.get(
+      `/courses/search-course?search-input=${param}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
     if (response?.data) {
       dispatch(searchCourseSuccess(response?.data));
     }
