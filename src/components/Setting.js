@@ -85,7 +85,7 @@ export default function Setting() {
     setLoading(true);
     let response = {};
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      // await new Promise((resolve) => setTimeout(resolve, 500));
       response = await dispatch(getCourseByUserID());
     } catch (error) {
       console.log(error);

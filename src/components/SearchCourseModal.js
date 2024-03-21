@@ -57,7 +57,7 @@ export default function SearchCourseModal({ isOpen, onClose }) {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+            <Dialog.Overlay className="fixed inset-0 backdrop-filter backdrop-blur-sm bg-gray-500 bg-opacity-75 transition-opacity" />
           </Transition.Child>
 
           <Transition.Child
@@ -88,19 +88,23 @@ export default function SearchCourseModal({ isOpen, onClose }) {
                       <div>
                         <ul className="divide-y divide-gray-200">
                           {searchCourse?.data?.length > 0 &&
-                            searchCourse?.data.map((item, index) => (
+                            searchCourse?.data.map((item) => (
                               <Link
                                 to={`/browse/buy-course/${item?.id}`}
                                 className="py-2 px-4 cursor-pointer hover:bg-gray-100 flex"
                               >
-                                <img
-                                  src={item.courseImage}
-                                  alt={item.courseTitle}
-                                  className="h-8 w-auto mr-2"
-                                />
-                                <div className="text-sm">
-                                  {item.courseTitle}
-                                </div>
+                                <ul className="flex items-center">
+                                  <li className="flex items-center">
+                                    <img
+                                      src={item.courseImage}
+                                      alt={item.courseTitle}
+                                      className="h-8 w-auto mr-2"
+                                    />
+                                    <div className="text-sm">
+                                      {item.courseTitle}
+                                    </div>
+                                  </li>
+                                </ul>
                               </Link>
                             ))}
                         </ul>

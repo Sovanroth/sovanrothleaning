@@ -72,7 +72,7 @@ export default function ExploreCourse() {
     setLoading(true);
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      // await new Promise((resolve) => setTimeout(resolve, 500));
       const response = await dispatch(getAllCoursesByUser());
       console.log(response);
       return response;
@@ -88,7 +88,7 @@ export default function ExploreCourse() {
     setLoading(true);
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      // await new Promise((resolve) => setTimeout(resolve, 500));
       const response = await dispatch(getCourseByCategory(id));
       console.log(response);
       return response;
