@@ -93,28 +93,22 @@ export default function AddCourse() {
 
   const handleCreatePost = async () => {
     setLoading(true);
+    let response = {};
     try {
       const formData = new FormData();
-      // formData.append("courseTitle", data?.courseTitle);
-      // formData.append("courseDescription", data?.courseDescription);
-      // formData.append("category", data?.category);
-      // formData.append("courseImage", data?.courseImage);
-      // formData.append("coursePrice", data?.coursePrice);
-      // formData.append("active", data?.active);
-      // formData.append("courseResource", data?.courseResource);
       Object.entries(data).forEach(([key, value]) => {
         formData.append(key, value);
       });
 
-      const response = dispatch(createCourse(formData));
-      console.log(response?.data?.error);
-      // console.log(data?.courseImage);
+      response = await dispatch(createCourse(formData));
+      console.log(response);
+
       if (response?.data?.error === false) {
         navigate("/teacher-mode");
       }
     } catch (error) {
       console.log(error);
-      return error;
+      response = error;
     } finally {
       setLoading(false);
     }
