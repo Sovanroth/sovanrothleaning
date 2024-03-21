@@ -251,10 +251,11 @@ export const createCourse = (params) => async (dispatch) => {
         },
       }
     );
+    console.log(response);
     if (response?.data) {
       dispatch(createCourseSuccess());
-      return response;
     }
+    return response;
   } catch (error) {
     console.log(error);
     return error;

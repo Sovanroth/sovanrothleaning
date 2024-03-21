@@ -20,7 +20,7 @@ const Courses = () => {
   const refreshData = () => {
     setLoading(true);
     dispatch(getCoursesData());
-    setLoading(false)
+    setLoading(false);
   };
 
   const deleteData = async (param) => {
@@ -28,13 +28,13 @@ const Courses = () => {
     let respone = {};
     try {
       respone = dispatch(deleteCourse(param));
-      console.log(respone)
+      // refreshData();
+      console.log(respone);
     } catch (error) {
       console.log(error);
       respone = error;
     }
     setLoading(false);
-    refreshData();
     return respone;
   };
 
@@ -56,18 +56,15 @@ const Courses = () => {
   };
 
   const handleDeleteCancel = () => {
-    // If the user cancels the delete operation, close the modal
     setShowDeleteModal(false);
   };
 
   useEffect(() => {
     console.log(course);
-    dispatch(getCoursesData())
-    refreshData()
+    refreshData();
   }, [getCoursesData]);
 
-  useEffect(() => {
-  }, [])
+  useEffect(() => {}, []);
 
   return (
     <div>
@@ -138,9 +135,7 @@ const Courses = () => {
                             </td>
                             <td
                               className={`whitespace-nowrap px-3 py-4 text-sm font-bold ${
-                                person.active === 1
-                                  ? "text-green"
-                                  : "text-red"
+                                person.active === 1 ? "text-green" : "text-red"
                               }`}
                             >
                               {person.active === 1 ? "Publish" : "Unpublish"}
