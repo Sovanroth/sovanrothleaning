@@ -74,6 +74,21 @@ export default function AddCourse() {
   const handleChangeCourseImage = (e) => {
     const file = e.target.files[0];
     setData({ ...data, courseImage: file });
+
+    const selectedImagePreview = document.getElementById(
+      "selected-image-preview"
+    );
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        selectedImagePreview.src = e.target.result;
+        selectedImagePreview.classList.remove("hidden");
+      };
+      reader.readAsDataURL(file);
+    } else {
+      selectedImagePreview.src = "";
+      selectedImagePreview.classList.add("hidden");
+    }
   };
 
   const handleChnageCoursePrice = (e) => {
@@ -234,6 +249,17 @@ export default function AddCourse() {
                   onChange={handleChangeCourseImage}
                 />
               </label>
+            </div>
+            <div>
+              <div className="mt-2">
+                Preview Image
+              </div>
+              <img className="mt-2"
+                src=""
+                alt="Selected Image"
+                class="hidden"
+                id="selected-image-preview"
+              />
             </div>
           </div>
         </div>
