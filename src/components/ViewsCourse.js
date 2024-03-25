@@ -41,7 +41,6 @@ const ViewsCourse = () => {
     let response = {};
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
       response = await dispatch(getOneData(id));
     } catch (error) {
       console.log(error);
@@ -140,6 +139,7 @@ const ViewsCourse = () => {
                     url={currentVideoUrl}
                     width="100%"
                     height="100%"
+                    controls
                     className="absolute top-0 left-0"
                   />
                 </div>

@@ -46,7 +46,6 @@ const BuyCourse = () => {
     setLoading(true);
     let response = {};
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
       response = await dispatch(getOneCourseByUser(id));
     } catch (error) {
       response = error;
