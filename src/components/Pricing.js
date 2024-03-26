@@ -3,15 +3,8 @@ import { CheckIcon } from "@heroicons/react/20/solid";
 import NavBar from "./NavBar";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { buyCourse, getOneData } from "../redux/slice/courseSlice";
+import { buyCourse, getCourseByUserID, getOneCourseByUser, getOneData } from "../redux/slice/courseSlice";
 import { useNavigate, useParams } from "react-router-dom";
-
-const includedFeatures = [
-  "ស្វែងយល់ពីអ្វីជា Unix",
-  "រុករក និងគ្រប់គ្រងឯកសារ និង Directory ដោយប្រើពាក្យបញ្ជា UNIX",
-  "រៀបចំទិន្នន័យដោយប្រើពាក្យបញ្ជា UNIX",
-  "បង្កើត និងកែសម្រួលឯកសារអត្ថបទដោយប្រើពាក្យបញ្ជា UNIX",
-];
 
 export default function Pricing() {
   const oneData = useSelector((state) => state?.courses?.oneData);
@@ -38,6 +31,7 @@ export default function Pricing() {
 
     try {
       dispatch(buyCourse(oneData?.data?.id));
+      dispatch(getCourseByUserID())
       navigate("/");
     } catch (error) {
       console.log(error);
