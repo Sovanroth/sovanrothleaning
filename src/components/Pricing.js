@@ -3,8 +3,14 @@ import { CheckIcon } from "@heroicons/react/20/solid";
 import NavBar from "./NavBar";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { buyCourse, getCourseByUserID, getOneCourseByUser, getOneData } from "../redux/slice/courseSlice";
+import {
+  buyCourse,
+  getCourseByUserID,
+  getOneCourseByUser,
+  getOneData,
+} from "../redux/slice/courseSlice";
 import { useNavigate, useParams } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 export default function Pricing() {
   const oneData = useSelector((state) => state?.courses?.oneData);
@@ -31,7 +37,7 @@ export default function Pricing() {
 
     try {
       dispatch(buyCourse(oneData?.data?.id));
-      dispatch(getCourseByUserID())
+      dispatch(getCourseByUserID());
       navigate("/");
     } catch (error) {
       console.log(error);
