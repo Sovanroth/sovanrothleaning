@@ -25,6 +25,7 @@ import SettingPage from "./view/SettingPage";
 import WatchVideos from "./view/Student/WatchVideos";
 import Example from "./test";
 import SearchCourseModal from "./components/SearchCourseModal";
+import SearchPage from "./view/Student/SearchPage";
 
 function App() {
   document.addEventListener("contextmenu", (e) => e.preventDefault());
@@ -55,6 +56,7 @@ function App() {
           <Route path="/browse/buy-course/pricing/:id" element={<Pricing />} />
           <Route path="/setting" element={<SettingPage />} />
           <Route path="/dashboard/course/:id" element={<WatchVideos />} />
+          <Route path="/search-course/:id" element={<SearchPage />} />
         </Route>
 
         <Route element={<TeacherPrivateRoute />}>

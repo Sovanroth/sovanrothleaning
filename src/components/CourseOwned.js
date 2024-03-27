@@ -67,21 +67,23 @@ export default function CourseOwned() {
 
   return (
     <div>
-      <div className="mx-auto mt-5 grid max-w-2xl">
+      <div className="mx-auto mt-5 grid max-w-2xl justify-center">
         <div className="hidden md:flex flex-row gap-2">
-          {list.map((data) => (
+          {list.map((data, index) => (
             <button
+              key={index}
               type="button"
               className="rounded-full bg-white px-3 py-1.5 text-xs text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
             >
-              <div className=" flex flex-row">
+              <div className="flex flex-row items-center">
                 {data.icon}
-                <div className="ml-px align-middle">{data.category}</div>
+                <div className="ml-1">{data.category}</div>
               </div>
             </button>
           ))}
         </div>
       </div>
+
       {loading ? (
         <LoadingScreen />
       ) : isEmpty(data?.data?.courses) ? (
