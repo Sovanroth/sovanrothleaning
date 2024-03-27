@@ -8,6 +8,7 @@ import { errorPrefix, isEmpty } from "@firebase/util";
 import UpdateProfileModal from "./UpdateProfileModal";
 import { createProfile, updateProfile } from "../redux/slice/loginSlice";
 import LoadingScreen from "./LoadingScreen";
+import { Helmet } from "react-helmet";
 
 export default function Setting() {
   const data = useSelector((state) => state?.courses?.getCourseByUser);
@@ -128,6 +129,11 @@ export default function Setting() {
 
   return (
     <>
+    <Helmet>
+      <title>
+        Suku | Setting
+      </title>
+    </Helmet>
       {loading ? (
         <LoadingScreen />
       ) : (

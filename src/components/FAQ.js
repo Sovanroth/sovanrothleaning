@@ -19,7 +19,7 @@ const faqs = [
                 sending us an email
               </a>{' '}
               and we’ll get back to you as soon as we can.
-            </p>
+            </p>``
           </div>
           <div className="mt-20">
             <dl className="space-y-16 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-16 sm:space-y-0 lg:grid-cols-3 lg:gap-x-10">

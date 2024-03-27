@@ -26,6 +26,7 @@ import WatchVideos from "./view/Student/WatchVideos";
 import Example from "./test";
 import SearchCourseModal from "./components/SearchCourseModal";
 import SearchPage from "./view/Student/SearchPage";
+import NotAllow from "./view/Teacher/NotAllow";
 
 function App() {
   document.addEventListener("contextmenu", (e) => e.preventDefault());
@@ -78,7 +79,7 @@ function App() {
 
         <Route path="loading" element={<LoadingScreen />} />
         <Route path="*" element={<NotFoundPage />} />
-        <Route path="test" element={<SearchCourseModal />} />
+        <Route path="test" element={<NotAllow />} />
       </Routes>
     </Router>
   );
