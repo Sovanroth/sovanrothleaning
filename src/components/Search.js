@@ -11,7 +11,7 @@ import "video-react/dist/video-react.css";
 import { Tooltip } from "react-tooltip";
 import ReactPlayer from "react-player";
 
-const BuyCourse = () => {
+const Search = () => {
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const oneData = useSelector((state) => state?.courses?.oneData);
@@ -236,4 +236,4 @@ const BuyCourse = () => {
   );
 };
 
-export default BuyCourse;
+export default Search;

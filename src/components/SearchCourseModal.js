@@ -90,7 +90,7 @@ export default function SearchCourseModal({ isOpen, onClose }) {
                           {searchCourse?.data?.length > 0 &&
                             searchCourse?.data.map((item) => (
                               <Link
-                                to={`/browse/buy-course/${item?.id}`}
+                                to={`/search-course/${item?.id}`}
                                 className="py-2 px-4 cursor-pointer hover:bg-gray-100 flex"
                               >
                                 <ul className="flex items-center">
