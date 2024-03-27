@@ -26,12 +26,12 @@ const BuyCourse = () => {
   const [activeIndex, setActiveIndex] = useState(null);
   const [aspectRatio, setAspectRatio] = useState(9 / 16);
 
-  useEffect(() => {
-    if (oneData?.data?.videos.length > 0) {
-      setCurrentVideoUrl(oneData.data.videos[0].video_url);
-      setActiveIndex(0);
-    }
-  }, [oneData]);
+  // useEffect(() => {
+  //   if (oneData?.data?.videos.length > 0) {
+  //     setCurrentVideoUrl(oneData.data.videos[0].video_url);
+  //     setActiveIndex(0);
+  //   }
+  // }, [oneData]);
 
   const handleButtonClick = (index, videoUrl) => {
     setCurrentVideoUrl(videoUrl);
@@ -58,6 +58,21 @@ const BuyCourse = () => {
   useEffect(() => {
     initData();
   }, []);
+
+  useEffect(() => {
+    if (
+      oneCourseByUser &&
+      oneCourseByUser.data &&
+      oneCourseByUser.data.owned === 1 &&
+      oneCourseByUser.data.videos.length > 0
+    ) {
+      setCurrentVideoUrl(oneCourseByUser.data.videos[0].video_url);
+      setActiveIndex(0);
+    } else if (oneData && oneData.data && oneData.data.videos.length > 0) {
+      setCurrentVideoUrl(oneData.data.videos[0].video_url);
+      setActiveIndex(0);
+    }
+  }, [oneCourseByUser, oneData]);
 
   return (
     <div>
@@ -147,12 +162,6 @@ const BuyCourse = () => {
                           onClick={() =>
                             handleButtonClick(index, video.video_url)
                           }
-                          data-tip={
-                            index !== 0
-                              ? "Please purchase the course to unlock the video"
-                              : ""
-                          }
-                          data-for={`tooltip-${index}`}
                         >
                           <div className="flex flex-row">
                             {index === 0 ? (
@@ -165,13 +174,6 @@ const BuyCourse = () => {
                             </p>
                           </div>
                         </button>
-                        {index !== 0 && (
-                          <Tooltip
-                            id={`tooltip-${index}`}
-                            effect="solid"
-                            place="top"
-                          />
-                        )}
                       </div>
                     ))}
                   </div>
