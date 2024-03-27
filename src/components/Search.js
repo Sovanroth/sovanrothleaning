@@ -10,6 +10,7 @@ import LoadingScreen from "./LoadingScreen";
 import "video-react/dist/video-react.css";
 import { Tooltip } from "react-tooltip";
 import ReactPlayer from "react-player";
+import { Helmet } from "react-helmet";
 
 const Search = () => {
   const { id } = useParams();
