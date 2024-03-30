@@ -60,7 +60,7 @@ const Courses = () => {
   };
 
   useEffect(() => {
-    console.log(course);
+    // console.log(course);
     refreshData();
   }, [getCoursesData]);
 

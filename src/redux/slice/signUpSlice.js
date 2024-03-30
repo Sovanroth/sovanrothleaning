@@ -50,7 +50,7 @@ export const createUser = (params) => async (dispatch) => {
     if (response?.data) {
       dispatch(signUp(response?.data));
     }
-    console.log("signup", response);
+    // console.log("signup", response);
     return response;
   } catch (error) {
     console.log(error);
