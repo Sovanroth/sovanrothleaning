@@ -27,6 +27,7 @@ import Example from "./test";
 import SearchCourseModal from "./components/SearchCourseModal";
 import SearchPage from "./view/Student/SearchPage";
 import NotAllow from "./view/Teacher/NotAllow";
+import { AuthProvider } from "./view/Auth/AuthContext";
 
 function App() {
   document.addEventListener("contextmenu", (e) => e.preventDefault());
@@ -48,40 +49,45 @@ function App() {
   };
 
   return (
-    <Router>
-      <Routes>
-        <Route element={<PrivateRoute />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/browse" element={<Browse />} />
-          <Route path="/browse/buy-course/:id" element={<PurchaseCourse />} />
-          <Route path="/browse/buy-course/pricing/:id" element={<Pricing />} />
-          <Route path="/setting" element={<SettingPage />} />
-          <Route path="/dashboard/course/:id" element={<WatchVideos />} />
-          <Route path="/search-course/:id" element={<SearchPage />} />
-        </Route>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route element={<PrivateRoute />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/browse" element={<Browse />} />
+            <Route path="/browse/buy-course/:id" element={<PurchaseCourse />} />
+            <Route
+              path="/browse/buy-course/pricing/:id"
+              element={<Pricing />}
+            />
+            <Route path="/setting" element={<SettingPage />} />
+            <Route path="/dashboard/course/:id" element={<WatchVideos />} />
+            <Route path="/search-course/:id" element={<SearchPage />} />
+          </Route>
 
-        <Route element={<TeacherPrivateRoute />}>
-          <Route path="/teacher-mode" element={<TeacherHome />} />
-          <Route path="/teacher-mode/create" element={<Create />} />
-          <Route
-            path="/teacher-mode/edit-course/:id"
-            element={<EditCoursePage />}
-          />
-          <Route path="/teacher-mode/create-course" element={<Create />} />
-          <Route path="/delete-course" element={<DeleteCourseModal />} />
-        </Route>
+          <Route element={<TeacherPrivateRoute />}>
+            <Route path="/teacher-mode" element={<TeacherHome />} />
+            <Route path="/teacher-mode/create" element={<Create />} />
+            <Route
+              path="/teacher-mode/edit-course/:id"
+              element={<EditCoursePage />}
+            />
+            <Route path="/teacher-mode/create-course" element={<Create />} />
+            <Route path="/delete-course" element={<DeleteCourseModal />} />
+          </Route>
 
-        <Route element={<NoTokenRoute />}>
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/login" element={<LogInPage />} />
-          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        </Route>
+          <Route element={<NoTokenRoute />}>
+            <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/login" element={<LogInPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          </Route>
 
-        <Route path="loading" element={<LoadingScreen />} />
-        <Route path="*" element={<NotFoundPage />} />
-        <Route path="test" element={<NotAllow />} />
-      </Routes>
-    </Router>
+          <Route path="loading" element={<LoadingScreen />} />
+          <Route path="*" element={<NotFoundPage />} />
+          <Route path="test" element={<NotAllow />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 
