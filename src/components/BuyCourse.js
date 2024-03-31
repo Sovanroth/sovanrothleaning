@@ -26,13 +26,6 @@ const BuyCourse = () => {
   const [activeIndex, setActiveIndex] = useState(null);
   const [aspectRatio, setAspectRatio] = useState(9 / 16);
 
-  // useEffect(() => {
-  //   if (oneData?.data?.videos.length > 0) {
-  //     setCurrentVideoUrl(oneData.data.videos[0].video_url);
-  //     setActiveIndex(0);
-  //   }
-  // }, [oneData]);
-
   const handleButtonClick = (index, videoUrl) => {
     setCurrentVideoUrl(videoUrl);
     setActiveIndex(index);
