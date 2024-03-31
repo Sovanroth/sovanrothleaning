@@ -70,7 +70,7 @@ export const loginUser = (params) => async (dispatch) => {
       // console.log(localStorage.getItem("role"));
     }
 
-    console.log(response);
+    // console.log(response);
 
     return response;
   } catch (error) {
@@ -123,7 +123,7 @@ export const createProfile = (param) => async (dispatch) => {
     if (response?.data) {
       dispatch(createProfileSuccess(response?.data));
     }
-    console.log(response);
+    // console.log(response);
   } catch (error) {
     console.log(error);
     return error;

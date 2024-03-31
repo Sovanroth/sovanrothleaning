@@ -95,7 +95,7 @@ export const getCoursesData = () => async (dispatch) => {
     });
     if (response?.data) {
       dispatch(getCourses(response?.data));
-      console.log("course", response);
+      // console.log("course", response);
       return response;
     }
   } catch (error) {
@@ -143,8 +143,8 @@ export const getOneData = (param) => async (dispatch) => {
     if (respone?.data) {
       // dispatch(getone)
       dispatch(getCourseByone(respone?.data));
-      console.log(respone);
-      console.log(param);
+      // console.log(respone);
+      // console.log(param);
       return respone;
     }
   } catch (error) {
@@ -191,7 +191,7 @@ export const updateCourse = (params, id) => async (dispatch) => {
     if (respone?.data) {
       dispatch(updateCourseSuccess(respone?.data));
     }
-    console.log(respone);
+    // console.log(respone);
   } catch (error) {
     console.log(error);
     return error;
@@ -251,7 +251,7 @@ export const createCourse = (params) => async (dispatch) => {
         },
       }
     );
-    console.log(response);
+    // console.log(response);
     if (response?.data) {
       dispatch(createCourseSuccess());
     }

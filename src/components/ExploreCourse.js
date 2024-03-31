@@ -74,7 +74,7 @@ export default function ExploreCourse() {
     try {
       // await new Promise((resolve) => setTimeout(resolve, 500));
       const response = await dispatch(getAllCoursesByUser());
-      console.log(response);
+      // console.log(response);
       return response;
     } catch (error) {
       console.log(error);
@@ -89,7 +89,7 @@ export default function ExploreCourse() {
 
     try {
       const response = await dispatch(getCourseByCategory(id));
-      console.log(response);
+      // console.log(response);
       return response;
     } catch (error) {
       console.log(error);
