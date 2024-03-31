@@ -272,6 +272,7 @@ export const buyCourse = (courseId) => async (dispatch) => {
       `/users/buy-course?userId=${localStorage.getItem(
         "userId"
       )}&courseId=${courseId}`,
+      null,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
