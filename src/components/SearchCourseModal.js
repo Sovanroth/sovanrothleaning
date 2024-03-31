@@ -16,7 +16,6 @@ export default function SearchCourseModal({ isOpen, onClose }) {
 
     try {
       const response = await dispatch(getSearchCourse(param));
-      console.log(response);
       return response;
     } catch (error) {
       console.log(error);
