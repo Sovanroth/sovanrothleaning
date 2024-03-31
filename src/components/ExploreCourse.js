@@ -119,7 +119,7 @@ export default function ExploreCourse() {
               >
                 <div className="flex flex-row">
                   {data.icon}
-                  <div className="ml-px align-middle"> {data.category}</div>
+                  <div className="ml-1 align-middle"> {data.category}</div>
                 </div>
               </button>
             ))}
