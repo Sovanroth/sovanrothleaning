@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getCourseByUserID } from "../redux/slice/courseSlice";
+import {
+  getCourseByCategory,
+  getCourseByUserID,
+} from "../redux/slice/courseSlice";
 import Moment from "react-moment";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AreaChart, Code2, DatabaseZap, Music, Settings } from "lucide-react";
@@ -39,8 +42,14 @@ const list = [
 export default function CourseOwned() {
   const [loading, setLoading] = useState(false);
   const data = useSelector((state) => state?.courses?.getCourseByUser);
+  const courseByCategory = useSelector(
+    (state) => state?.courses?.courseByCategory
+  );
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [activeId, setActiveId] = useState(null);
+  const [clickedCategoryId, setClickedCategoryId] = useState(null);
+  const coursesToRender = activeId ? courseByCategory?.data : data?.data;
 
   const getCategoryName = (categoryNumber) => {
     const category = list.find((item) => item.id === categoryNumber);
@@ -61,6 +70,26 @@ export default function CourseOwned() {
     return response;
   };
 
+  const handleInitCategoryData = async (id) => {
+    setLoading(true);
+
+    try {
+      const response = await dispatch(getCourseByCategory(id));
+      return response;
+    } catch (error) {
+      console.log(error);
+      return error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleButtonClick = (id) => {
+    setClickedCategoryId(id);
+    setActiveId(id === activeId ? null : id);
+    handleInitCategoryData(id);
+  };
+
   useEffect(() => {
     initData();
   }, []);
@@ -74,6 +103,7 @@ export default function CourseOwned() {
               key={index}
               type="button"
               className="rounded-full bg-white px-3 py-1.5 text-xs text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+              onClick={() => handleButtonClick(data.id)}
             >
               <div className="flex flex-row items-center">
                 {data.icon}
