@@ -59,9 +59,7 @@ const ViewsCourse = () => {
   return (
     <div>
       <Helmet>
-        <title>
-          Video | Suku
-        </title>
+        <title>Video | Suku</title>
       </Helmet>
       <div>
         {loading ? (
@@ -73,13 +71,13 @@ const ViewsCourse = () => {
             <button
               onClick={() => navigate(-1)}
               type="button"
-              className="rounded-full bg-indigo-600 px-3.5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className=" hidden md:block rounded-full bg-indigo-600 px-3.5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-3"
             >
               Back
             </button>
 
             <div className="flex">
-              <div className="w-1/3">
+              <div className="w-1/3 hidden md:block">
                 <div className=" p-4">
                   <h1 className="text-xl font-bold">
                     {oneData?.data?.courseTitle}
@@ -138,8 +136,41 @@ const ViewsCourse = () => {
               </div>
 
               {/* Second Column */}
-              <div className="w-2/3">
+              <div className=" w-full lg:w-2/3">
                 <div className="p-4">
+                  <div className="md:hidden pb-5">
+                    <h1 className="text-xl font-bold text-center">
+                      {oneData?.data?.courseTitle}
+                    </h1>
+
+                    <div>
+                      <p
+                        key={oneData?.data?.courseDescription}
+                        className={`mt-1 ${
+                          showFullText ? "line-clamp-none" : "line-clamp-4"
+                        } text-sm leading-6`}
+                      >
+                        {oneData?.data?.courseDescription}
+                      </p>
+                      {!showFullText && (
+                        <button
+                          className="text-blue-500 underline mt-1 text-sm cursor-pointer"
+                          onClick={toggleShowText}
+                        >
+                          See more
+                        </button>
+                      )}
+                      {showFullText && (
+                        <button
+                          className="text-blue-500 underline mt-1 text-sm cursor-pointer"
+                          onClick={toggleShowText}
+                        >
+                          Show less
+                        </button>
+                      )}
+                    </div>
+                  </div>
+
                   <div
                     className="w-full relative"
                     style={{ paddingTop: `${aspectRatio * 100}%` }}
@@ -151,6 +182,31 @@ const ViewsCourse = () => {
                       controls
                       className="absolute top-0 left-0"
                     />
+                  </div>
+
+                  <div className="md:hidden mt-3">
+                    {oneData?.data?.videos.map((video, index) => (
+                      <div className="flex flex-row mt-2" key={index}>
+                        <button
+                          type="button"
+                          className={`w-screen text-start rounded-md px-3 py-2 text-sm font-semibold bg-white text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 transition-colors duration-300 ${
+                            activeIndex === index
+                              ? "bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white to-gray-300"
+                              : "hover:bg-gray-50"
+                          }`}
+                          onClick={() =>
+                            handleButtonClick(index, video.video_url)
+                          }
+                        >
+                          <div className="flex flex-row">
+                            <PlayCircle size={24} />
+                            <p className="content-center ml-2 mt-px align-middle">
+                              {video.video_title}
+                            </p>
+                          </div>
+                        </button>
+                      </div>
+                    ))}
                   </div>
 
                   <div class="mt-6 border bg-slate-100 rounded-md p-4">
