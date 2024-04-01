@@ -36,12 +36,15 @@ export default function Pricing() {
     setLoading(true);
 
     try {
-      dispatch(buyCourse(oneData?.data?.id));
-      dispatch(getCourseByUserID());
+      await dispatch(buyCourse(oneData?.data?.id));
+      await dispatch(getCourseByUserID());
       navigate("/");
     } catch (error) {
       console.log(error);
       return error;
+    } finally {
+      await dispatch(getCourseByUserID());
+      setLoading(false);
     }
   };
 
