@@ -28,6 +28,8 @@ import SearchCourseModal from "./components/SearchCourseModal";
 import SearchPage from "./view/Student/SearchPage";
 import NotAllow from "./view/Teacher/NotAllow";
 import { AuthProvider } from "./view/Auth/AuthContext";
+import ResetPassword from "./view/Auth/ResetPassword";
+import ResetPasswordSuccess from "./view/Auth/ResetPasswordSuccess";
 
 function App() {
   document.addEventListener("contextmenu", (e) => e.preventDefault());
@@ -82,6 +84,8 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           </Route>
 
+          <Route path="forgot-password/reset-password/:token" element={<ResetPassword />} />
+          <Route path="forgot-password/reset-successfully" element={<ResetPasswordSuccess />} />
           <Route path="loading" element={<LoadingScreen />} />
           <Route path="*" element={<NotFoundPage />} />
           <Route path="test" element={<NotAllow />} />
