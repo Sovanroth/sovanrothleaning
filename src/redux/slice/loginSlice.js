@@ -1,7 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../../utils/axios";
-import axios from "axios";
-import { FanIcon } from "lucide-react";
 
 const initialState = {
   isLoading: false,
@@ -12,6 +10,8 @@ const initialState = {
   },
   user: {},
   profile: {},
+  resetLink: {},
+  resetData: {},
 };
 
 const logInSlice = createSlice({
@@ -48,6 +48,14 @@ const logInSlice = createSlice({
       state.isLoading = false;
       state.profile = actions.payload;
     },
+    reqLink(state, actions) {
+      state.isLoading = false;
+      state.resetLink = actions.payload;
+    },
+    resetData(state, actions) {
+      state.isLoading = false;
+      state.resetData = actions.payload;
+    },
   },
 });
 
@@ -71,6 +79,47 @@ export const loginUser = (params) => async (dispatch) => {
     }
 
     // console.log(response);
+
+    return response;
+  } catch (error) {
+    console.log(error);
+    return error;
+  } finally {
+    dispatch(stopLoading());
+  }
+};
+
+export const requestResetLink = (params) => async (dispatch) => {
+  dispatch(startLoading());
+
+  try {
+    const response = await axiosInstance.post(`/auth/reset-password`, params);
+
+    if (response?.data) {
+      dispatch(reqLink(response?.data));
+    }
+
+    return response;
+  } catch (error) {
+    console.log(error);
+    return error;
+  } finally {
+    dispatch(stopLoading());
+  }
+};
+
+export const resetPassword = (param) => async (dispatch) => {
+  dispatch(startLoading());
+
+  try {
+    const response = await axiosInstance.post(
+      "/users/auth/reset-password",
+      param
+    );
+
+    if (response?.data) {
+      dispatch(resetData(response?.data));
+    }
 
     return response;
   } catch (error) {
@@ -191,5 +240,7 @@ export const {
   updateUserSuccess,
   createProfileSuccess,
   updateProfileSuccess,
+  reqLink,
+  resetData,
 } = logInSlice.actions;
 export default logInSlice.reducer;
