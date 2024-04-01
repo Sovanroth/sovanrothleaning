@@ -6,7 +6,7 @@ const ResetPasswordSuccess = () => {
     <>
       <main className="h-full">
         <img
-          src="https://img.freepik.com/free-photo/employee-putting-sticky-notes-laptop-screen-as-work-reminder-company-office-manager-using-adhesive-post-it-paper-display-remember-business-schedule-presentation-close-up_482257-33914.jpg?t=st=1711949344~exp=1711952944~hmac=ebb5bd49acc3ebb557b8e48caa7130371d57c6db95d0986b1ec4b43297e42907&w=2000"
+          src="https://images.unsplash.com/photo-1484807352052-23338990c6c6?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           alt=""
           className="absolute inset-0 -z-10 h-full w-full object-cover object-top"
         />
