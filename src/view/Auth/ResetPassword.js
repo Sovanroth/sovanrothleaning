@@ -28,7 +28,7 @@ const ResetPassword = () => {
       };
 
       const response = await dispatch(resetPassword(params));
-      console.log(response?.data?.data?.message);
+      // console.log(response?.data?.data?.message);
       if (response?.data?.data?.success === true) {
         navigate("/forgot-password/reset-successfully");
       } else {
@@ -63,9 +63,6 @@ const ResetPassword = () => {
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
         <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
           <div className="text-center text-sm text-gray-500">
-            {errorMessage && (
-              <div className="text-red-500 mb-4">{errorMessage}</div>
-            )}
             Please enter your new password!
           </div>
           <form
@@ -95,6 +92,9 @@ const ResetPassword = () => {
                   <div className="text-red-500 mt-2 text-sm">
                     Password must be at least 8 characters long.
                   </div>
+                )}
+                {errorMessage && (
+                  <div className="text-red-500 mb-4">{errorMessage}</div>
                 )}
               </div>
             </div>
