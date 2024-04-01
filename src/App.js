@@ -30,6 +30,7 @@ import NotAllow from "./view/Teacher/NotAllow";
 import { AuthProvider } from "./view/Auth/AuthContext";
 import ResetPassword from "./view/Auth/ResetPassword";
 import ResetPasswordSuccess from "./view/Auth/ResetPasswordSuccess";
+import RequestLink from "./view/Auth/RequestLink";
 
 function App() {
   document.addEventListener("contextmenu", (e) => e.preventDefault());
@@ -86,6 +87,7 @@ function App() {
 
           <Route path="forgot-password/reset-password/:token" element={<ResetPassword />} />
           <Route path="forgot-password/reset-successfully" element={<ResetPasswordSuccess />} />
+          <Route path="forgot-password/request-reset-password" element={<RequestLink />} />
           <Route path="loading" element={<LoadingScreen />} />
           <Route path="*" element={<NotFoundPage />} />
           <Route path="test" element={<NotAllow />} />

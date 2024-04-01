@@ -93,7 +93,7 @@ export const requestResetLink = (params) => async (dispatch) => {
   dispatch(startLoading());
 
   try {
-    const response = await axiosInstance.post(`/auth/reset-password`, params);
+    const response = await axiosInstance.post(`/users/auth/forgot-password`, params);
 
     if (response?.data) {
       dispatch(reqLink(response?.data));

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { resetPassword } from "../../redux/slice/loginSlice";
 
 const ResetPassword = () => {
@@ -11,6 +11,7 @@ const ResetPassword = () => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleChangePassword = (e) => {
     const newVal = { ...data, password: e.target.value };
@@ -27,8 +28,11 @@ const ResetPassword = () => {
       };
 
       const response = await dispatch(resetPassword(params));
-      if (!response.data.success) {
-        setErrorMessage(response.data.message);
+      // console.log(response?.data?.data?.message);
+      if (response?.data?.data?.success === true) {
+        navigate("/forgot-password/reset-successfully");
+      } else {
+        setErrorMessage(response?.data?.data?.message);
       }
       return response;
     } catch (error) {
@@ -40,7 +44,7 @@ const ResetPassword = () => {
 
   const handleClickResetPassword = async (event) => {
     event.preventDefault();
-    handleResetPassword()
+    handleResetPassword();
   };
 
   return (
@@ -59,9 +63,6 @@ const ResetPassword = () => {
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
         <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
           <div className="text-center text-sm text-gray-500">
-            {errorMessage && (
-              <div className="text-red-500 mb-4">{errorMessage}</div>
-            )}
             Please enter your new password!
           </div>
           <form
@@ -91,6 +92,9 @@ const ResetPassword = () => {
                   <div className="text-red-500 mt-2 text-sm">
                     Password must be at least 8 characters long.
                   </div>
+                )}
+                {errorMessage && (
+                  <div className="text-red-500 mb-4">{errorMessage}</div>
                 )}
               </div>
             </div>

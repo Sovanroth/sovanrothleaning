@@ -97,6 +97,9 @@ export default function SignUp() {
                   Sign in here
                 </Link>
               </p>
+              <p className=" text-sm leading-6 text-gray-500">
+                Please use valid email
+              </p>
             </div>
 
             <div className="mt-5">
