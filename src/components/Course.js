@@ -8,63 +8,41 @@ import {
 } from "../../src/redux/slice/courseSlice";
 import LoadingScreen from "./LoadingScreen";
 import { isEmpty } from "@firebase/util";
-import DeleteCourseModal from "./DeleteCourseModal";
+import DeleteModal from "./DeleteModal";
 
 const Courses = () => {
   const course = useSelector((state) => state?.courses?.data);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [courseName, setCourseName] = useState("");
+  const [courseId, setCourseId] = useState("");
 
-  const refreshData = () => {
-    setLoading(true);
-    dispatch(getCoursesData());
-    setLoading(false);
+  const openModal = (name, id) => {
+    setCourseName(name);
+    setCourseId(id);
+    setIsModalOpen(true);
   };
 
-  const deleteData = async (param) => {
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const initData = async () => {
     setLoading(true);
-    let respone = {};
     try {
-      respone = dispatch(deleteCourse(param));
-      // refreshData();
-      console.log(respone);
+      const response = await dispatch(getCoursesData());
     } catch (error) {
       console.log(error);
-      respone = error;
+      return error;
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
-    return respone;
-  };
-
-  const handleChangeEditCoursePage = () => {
-    navigate("/teacher-mode/edit-course");
-  };
-
-  const handleDeleteClick = () => {
-    setShowDeleteModal(true);
-  };
-
-  const handleDeleteConfirm = (courseId) => {
-    // Handle the delete logic here
-    // You can call your deleteData function here
-    // deleteData(courseId);
-
-    // After handling delete, close the modal
-    setShowDeleteModal(false);
-  };
-
-  const handleDeleteCancel = () => {
-    setShowDeleteModal(false);
   };
 
   useEffect(() => {
-    // console.log(course);
-    refreshData();
-  }, [getCoursesData]);
-
-  useEffect(() => {}, []);
+    initData();
+  }, []);
 
   return (
     <div>
@@ -154,27 +132,25 @@ const Courses = () => {
 
                               <button
                                 type="button"
-                                onClick={() => deleteData(person?.id)}
-                                // onClick={handleDeleteClick}
-                                className="ml-1 rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-red-400 shadow-sm ring-1 ring-inset ring-red-400 hover:bg-red-100"
+                                onClick={() =>
+                                  openModal(person.courseTitle, person.id)
+                                }
+                                className="ml-1 rounded-md bg-red-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-red-500"
                               >
                                 Delete
-                                <span>
-                                  {showDeleteModal && (
-                                    <DeleteCourseModal
-                                      onConfirm={handleDeleteConfirm}
-                                      onCancel={handleDeleteCancel}
-                                      courseId={person?.id}
-                                      courseTitle={person?.courseTitle}
-                                    />
-                                  )}
-                                </span>
                               </button>
                             </td>
                           </tr>
                         ))}
                       </tbody>
                     </table>
+                    {isModalOpen && (
+                      <DeleteModal
+                        onClose={closeModal}
+                        courseName={courseName}
+                        courseId={courseId}
+                      />
+                    )}
                   </div>
                 </div>
               </div>
