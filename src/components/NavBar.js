@@ -123,61 +123,6 @@ export default function NavBar() {
                   </button>
                 </div>
               </div>
-              {/* <div className="relative z-10 flex flex-1 items-center justify-center px-2 sm:absolute sm:inset-0">
-                <div className="w-full sm:max-w-xs relative z-10">
-                  <label htmlFor="search" className="sr-only">
-                    Search
-                  </label>
-                  <div className="relative">
-                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                      <MagnifyingGlassIcon
-                        className="h-5 w-5 text-gray-400"
-                        aria-hidden="true"
-                      />
-                    </div>
-                    <input
-                      className="block w-full rounded-md border-0 bg-white py-1.5 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      type="text"
-                      placeholder="Search"
-                      value={searchQuery}
-                      onChange={handleInputChange}
-                      onFocus={handleInputFocus}
-                      onBlur={handleInputBlur}
-                    />
-                  </div>
-                  {isSearchClicked && (
-                    <div className="absolute mt-1 bg-white border border-gray-300 w-full max-w-xs max-h-48 overflow-y-auto rounded-md shadow-md z-10">
-                      <ul className="divide-y divide-gray-200">
-                        {!loading && !searchCourse?.data?.length && (
-                          <li className="py-2 px-4 text-sm">
-                            Search not found.
-                          </li>
-                        )}
-                        {!loading &&
-                          searchCourse?.data?.length > 0 &&
-                          searchCourse?.data.map((item) => (
-                            <Link
-                              to={`browse/buy-course/${item.id}`}
-                              className="flex items-center"
-                              key={item.courseId}
-                            >
-                              <li className="py-2 px-4 cursor-pointer hover:bg-gray-100 flex items-center">
-                                <img
-                                  src={item.courseImage}
-                                  alt={item.courseImage}
-                                  className="h-8 w-auto mr-2"
-                                />
-                                <div className="text-sm">
-                                  {item.courseTitle}
-                                </div>
-                              </li>
-                            </Link>
-                          ))}
-                      </ul>
-                    </div>
-                  )}
-                </div>
-              </div> */}
               <div className="relative z-10 flex items-center lg:hidden">
                 <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
                   <span className="absolute -inset-0.5" />
