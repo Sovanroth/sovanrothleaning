@@ -17,7 +17,7 @@ const RequestLink = () => {
             Thank you for using our platform!
           </h1>
           <p className="mt-4 text-base text-white/70 sm:mt-6">
-            You've sent the reset link to your email; please check it out!
+            We've sent the reset link to your email; please check it out!
           </p>
           <div className="mt-10 flex justify-center">
             <a
