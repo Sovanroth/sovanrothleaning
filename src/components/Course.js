@@ -52,7 +52,7 @@ const Courses = () => {
         <LoadingScreen />
       ) : (
         <div className="mx-auto">
-          <div className="App max-w-7xl mx-auto mt-5">
+          <div className="App max-w-7xl mx-auto p-5">
             <div className="flow-root">
               <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8 mx-auto">
@@ -79,13 +79,13 @@ const Courses = () => {
                           </th>
                           <th
                             scope="col"
-                            className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                            className="hidden sm:table-cell px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
                           >
                             Price
                           </th>
                           <th
                             scope="col"
-                            className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
+                            className="hidden sm:table-cell px-3 py-3.5 text-center text-sm font-semibold text-gray-900"
                           >
                             Status
                           </th>
@@ -108,11 +108,11 @@ const Courses = () => {
                             <td className="whitespace-nowrap py-4 pr-3 text-sm font-medium text-gray-900">
                               {person.courseTitle}
                             </td>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                            <td className="hidden sm:table-cell whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                               {person.coursePrice}
                             </td>
                             <td
-                              className={`whitespace-nowrap px-3 py-4 text-sm font-bold ${
+                              className={`hidden sm:table-cell whitespace-nowrap px-3 py-4 text-sm font-bold ${
                                 person.active === 1 ? "text-green" : "text-red"
                               }`}
                             >
@@ -129,7 +129,6 @@ const Courses = () => {
                                   Edit
                                 </button>
                               </Link>
-
                               <button
                                 type="button"
                                 onClick={() =>
