@@ -192,7 +192,7 @@ const BuyCourse = () => {
                     </p>
                     {!showFullText && (
                       <button
-                          className="text-blue-500 underline mt-1 text-sm cursor-pointer"
+                        className="text-blue-500 underline mt-1 text-sm cursor-pointer"
                         onClick={toggleShowText}
                       >
                         See more
@@ -216,6 +216,7 @@ const BuyCourse = () => {
                     url={currentVideoUrl}
                     width="100%"
                     height="100%"
+                    controls
                     className="absolute top-0 left-0"
                   />
                 </div>
