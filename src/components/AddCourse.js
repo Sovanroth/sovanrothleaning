@@ -134,8 +134,8 @@ export default function AddCourse() {
       <div className=" text-center m-5 font-bold text-xl">Course Setup</div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-7xl lg:mx-auto pt-4 sm:w-screen">
         <div className="pl-8 pr-8 sm:pr-0">
-          <div className=" text-start">
-            <div className=" flex">
+          <div className="text-start">
+            <div className="flex justify-between">
               <button
                 onClick={() => navigate(-1)}
                 type="button"
@@ -146,7 +146,7 @@ export default function AddCourse() {
               <button
                 type="button"
                 onClick={handleCreatePost}
-                className=" self-end sm:hidden rounded-full bg-green-500 px-3.5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500"
+                className="self-end sm:hidden rounded-full bg-green-500 px-3.5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500"
               >
                 Post
               </button>
