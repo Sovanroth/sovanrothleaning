@@ -12,6 +12,7 @@ const initialState = {
   profile: {},
   resetLink: {},
   resetData: {},
+  changePassword: {},
 };
 
 const logInSlice = createSlice({
@@ -56,6 +57,10 @@ const logInSlice = createSlice({
       state.isLoading = false;
       state.resetData = actions.payload;
     },
+    changePasswordData(state, actions) {
+      state.isLoading = false;
+      state.changePassword = actions.payload;
+    },
   },
 });
 
@@ -93,7 +98,10 @@ export const requestResetLink = (params) => async (dispatch) => {
   dispatch(startLoading());
 
   try {
-    const response = await axiosInstance.post(`/users/auth/forgot-password`, params);
+    const response = await axiosInstance.post(
+      `/users/auth/forgot-password`,
+      params
+    );
 
     if (response?.data) {
       dispatch(reqLink(response?.data));
@@ -226,6 +234,33 @@ export const removeProfile = (id) => async (dispatch) => {
   }
 };
 
+export const changePasswordRequest = (params) => async (dispatch) => {
+  dispatch(startLoading());
+
+  try {
+    const response = await axiosInstance.post(
+      `/users/change-password/${localStorage.getItem("userId")}`,
+      params,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+
+    if (response?.data) {
+      dispatch(changePasswordData(response?.data));
+    }
+
+    return response;
+  } catch (error) {
+    console.log(error);
+    return error;
+  } finally {
+    dispatch(stopLoading());
+  }
+};
+
 export const logOut = async () => {
   localStorage.clear();
   console.log(localStorage.getItem("token"));
@@ -242,5 +277,6 @@ export const {
   updateProfileSuccess,
   reqLink,
   resetData,
+  changePasswordData,
 } = logInSlice.actions;
 export default logInSlice.reducer;

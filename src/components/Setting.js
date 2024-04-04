@@ -9,6 +9,7 @@ import UpdateProfileModal from "./UpdateProfileModal";
 import { createProfile, updateProfile } from "../redux/slice/loginSlice";
 import LoadingScreen from "./LoadingScreen";
 import { Helmet } from "react-helmet";
+import ChangePasswordModal from "./ChangePasswordModal";
 
 export default function Setting() {
   const data = useSelector((state) => state?.courses?.getCourseByUser);
@@ -129,11 +130,9 @@ export default function Setting() {
 
   return (
     <>
-    <Helmet>
-      <title>
-        Suku | Setting
-      </title>
-    </Helmet>
+      <Helmet>
+        <title>Suku | Setting</title>
+      </Helmet>
       {loading ? (
         <LoadingScreen />
       ) : (
@@ -297,12 +296,8 @@ export default function Setting() {
                       </dd>
                     </div>
                     {isOpenPasswordUpdate && (
-                      <UpdateProfileModal
+                      <ChangePasswordModal
                         onClose={handleCLocseUpdatePassword}
-                        headerMessage="Update Password"
-                        infoMessage="Password"
-                        exampleText=""
-                        type="password"
                       />
                     )}
                   </div>
