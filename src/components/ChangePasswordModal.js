@@ -38,13 +38,14 @@ export default function ChangePasswordModal({ onClose }) {
       //   console.log(response?.data?.data?.message);
       if (response?.data?.data?.error === true) {
         setError(response?.data?.data?.message);
+      } else {
+        onClose();
       }
       return response;
     } catch (error) {
       console.log(error);
       return error;
     } finally {
-      onClose()
       setLoading(false);
     }
   };
