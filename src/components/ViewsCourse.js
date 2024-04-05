@@ -110,28 +110,30 @@ const ViewsCourse = () => {
                     )}
                   </div>
                   <div class="border-t border-gray-500 my-4"></div>
-                  {oneData?.data?.videos.map((video, index) => (
-                    <div className="flex flex-row mt-2" key={index}>
-                      <button
-                        type="button"
-                        className={`w-screen text-start rounded-md px-3 py-2 text-sm font-semibold bg-white text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 transition-colors duration-300 ${
-                          activeIndex === index
-                            ? "bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white to-gray-300"
-                            : "hover:bg-gray-50"
-                        }`}
-                        onClick={() =>
-                          handleButtonClick(index, video.video_url)
-                        }
-                      >
-                        <div className="flex flex-row">
-                          <PlayCircle size={24} />
-                          <p className="content-center ml-2 mt-px align-middle">
-                            {video.video_title}
-                          </p>
-                        </div>
-                      </button>
-                    </div>
-                  ))}
+                  <div className="overflow-y-auto max-h-80">
+                    {oneData?.data?.videos.map((video, index) => (
+                      <div className="flex flex-row mt-2" key={index}>
+                        <button
+                          type="button"
+                          className={`mr-2 w-screen text-start rounded-md px-3 py-2 text-sm font-semibold bg-white text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 transition-colors duration-300 ${
+                            activeIndex === index
+                              ? "bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white to-gray-300"
+                              : "hover:bg-gray-50"
+                          }`}
+                          onClick={() =>
+                            handleButtonClick(index, video.video_url)
+                          }
+                        >
+                          <div className="flex flex-row">
+                            <PlayCircle size={24} />
+                            <p className="content-center ml-2 mt-px align-middle">
+                              {video.video_title}
+                            </p>
+                          </div>
+                        </button>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
 
@@ -184,7 +186,7 @@ const ViewsCourse = () => {
                     />
                   </div>
 
-                  <div className="md:hidden mt-3">
+                  <div className="md:hidden mt-3 overflow-y-auto max-h-80">
                     {oneData?.data?.videos.map((video, index) => (
                       <div className="flex flex-row mt-2" key={index}>
                         <button

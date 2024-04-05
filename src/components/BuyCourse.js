@@ -117,7 +117,7 @@ const BuyCourse = () => {
                 </div>
                 <div class="border-t border-gray-500 my-4"></div>
                 {oneCourseByUser?.data?.owned === 1 ? (
-                  <div>
+                  <div className="overflow-y-auto max-h-80">
                     {oneCourseByUser?.data?.videos.map((video, index) => (
                       <div className="flex flex-row mt-2" key={index}>
                         <button
@@ -142,7 +142,7 @@ const BuyCourse = () => {
                     ))}
                   </div>
                 ) : (
-                  <div>
+                  <div className="overflow-y-auto max-h-80">
                     {oneCourseByUser?.data?.videos.map((video, index) => (
                       <div className="flex flex-row mt-2" key={index}>
                         <button
@@ -221,9 +221,9 @@ const BuyCourse = () => {
                   />
                 </div>
 
-                <div className="md:hidden mt-3">
+                <div className="md:hidden mt-3 ">
                   {oneCourseByUser?.data?.owned === 1 ? (
-                    <div>
+                    <div className="overflow-y-auto max-h-60">
                       {oneCourseByUser?.data?.videos.map((video, index) => (
                         <div className="flex flex-row mt-2" key={index}>
                           <button
@@ -248,7 +248,7 @@ const BuyCourse = () => {
                       ))}
                     </div>
                   ) : (
-                    <div>
+                    <div className="overflow-y-auto max-h-60">
                       {oneCourseByUser?.data?.videos.map((video, index) => (
                         <div className="flex flex-row mt-2" key={index}>
                           <button
