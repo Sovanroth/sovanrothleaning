@@ -31,6 +31,7 @@ import { AuthProvider } from "./view/Auth/AuthContext";
 import ResetPassword from "./view/Auth/ResetPassword";
 import ResetPasswordSuccess from "./view/Auth/ResetPasswordSuccess";
 import RequestLink from "./view/Auth/RequestLink";
+import AddVideoPage from "./view/Teacher/AddVideoPage";
 
 function App() {
   document.addEventListener("contextmenu", (e) => e.preventDefault());
@@ -90,7 +91,7 @@ function App() {
           <Route path="forgot-password/request-reset-password" element={<RequestLink />} />
           <Route path="loading" element={<LoadingScreen />} />
           <Route path="*" element={<NotFoundPage />} />
-          <Route path="test" element={<NotAllow />} />
+          <Route path="test" element={<AddVideoPage />} />
         </Routes>
       </Router>
     </AuthProvider>
