@@ -6,10 +6,8 @@ import { requestResetLink } from "../redux/slice/loginSlice";
 const AddVideo = () => {
   return (
     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
-      <div className="bg-white px-6 py-5 shadow sm:rounded-lg sm:px-12">
-        <h1 className="text-center ">
-          Add Video for course Test
-        </h1>
+      <div className="bg-white px-5 py-4 shadow sm:rounded-lg sm:px-12">
+        <div className="text-center text-xl font-bold">Add video for course Test</div>
 
         <div className="flex mt-5">
           <button
