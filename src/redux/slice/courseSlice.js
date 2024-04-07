@@ -218,11 +218,11 @@ export const deleteVideo = (id) => async (dispatch) => {
   }
 };
 
-export const postVideo = (params) => async (dispatch) => {
+export const postVideo = (id, params) => async (dispatch) => {
   dispatch(startLoading());
 
   try {
-    const response = await axiosInstance.post(`/video/post-video`, params, {
+    const response = await axiosInstance.post(`/video/post-video/${id}`, params, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
