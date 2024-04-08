@@ -29,7 +29,7 @@ const AddVideo = () => {
 
     try {
       const respone = await dispatch(getOneData(id));
-      console.log(respone);
+      // console.log(respone);
       return respone;
     } catch (error) {
       console.log(error);
@@ -75,7 +75,7 @@ const AddVideo = () => {
   }, []);
 
   return (
-    <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
+    <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[720px]">
       <div className="bg-white px-5 py-4 shadow sm:rounded-lg sm:px-12">
         <div className="text-center text-md font-bold">
           Add video for course Test
@@ -86,18 +86,18 @@ const AddVideo = () => {
             <div className="flex justify-between items-center text-sm mt-2">
               <div className="truncate">{video?.video_title}</div>
               <button
-                className="rounded-md bg-red-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-red-500"
+                className="mr-3 rounded-md bg-red-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-red-500"
                 onClick={() => openMoal(video?.video_title, video?.id)}
               >
                 Delete
+                {isModalOpen && (
+                  <DeleteVideoModal
+                    onClose={closeModal}
+                    videoName={videoName}
+                    videoId={videoId}
+                  />
+                )}
               </button>
-              {isModalOpen && (
-                <DeleteVideoModal
-                  onClose={closeModal}
-                  videoName={videoName}
-                  videoId={videoId}
-                />
-              )}
             </div>
           ))}
         </div>

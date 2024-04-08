@@ -1,32 +1,31 @@
 import { Fragment, useRef, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { CheckIcon } from "@heroicons/react/24/outline";
-import { deleteCourse, deleteVideo, getCoursesData, getOneData } from "../redux/slice/courseSlice";
-import { useSelector, useDispatch } from "react-redux";
+import { deleteVideo, getOneData } from "../redux/slice/courseSlice";
 
 export default function DeleteVideoModal({ onClose, videoName, videoId }) {
-  const [open, setOpen] = useState(true);
   const cancelButtonRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
-  const deleteData = async () => {
+  const deleteData = async (videoId) => {
     setLoading(true);
     try {
-      await dispatch(deleteVideo(videoId));
+      const response = await dispatch(deleteVideo(videoId));
+      console.log(response); // Log the response from the deleteVideo action
       // onClose();
     } catch (error) {
       console.log(error);
     } finally {
-      await dispatch(getOneData());
       setLoading(false);
     }
   };
 
-  const handleSubmit = async () => {
-    deleteData();
-    onClose();
+  const handleDeleteClick = async () => {
+    if (loading) return; // Prevent multiple clicks while loading
+    await deleteData();
   };
 
   return (
@@ -89,9 +88,10 @@ export default function DeleteVideoModal({ onClose, videoName, videoId }) {
                   <button
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2"
-                    onClick={() => handleSubmit()}
+                    onClick={handleDeleteClick} // Use handleDeleteClick instead of deleteData directly
+                    disabled={loading} // Disable the button while loading
                   >
-                    Delete
+                    {loading ? "Deleting..." : "Delete"}
                   </button>
                   <button
                     type="button"
