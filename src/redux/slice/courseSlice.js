@@ -226,7 +226,7 @@ export const postVideo = (id, params) => async (dispatch) => {
 
   try {
     const response = await axiosInstance.post(
-      `/video/post-video/${id}`,
+      `/courses/post-video/${id}`,
       params,
       {
         headers: {

@@ -1,5 +1,6 @@
 import { Fragment, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { CheckIcon } from "@heroicons/react/24/outline";
@@ -9,14 +10,13 @@ export default function DeleteVideoModal({ onClose, videoName, videoId }) {
   const cancelButtonRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-  const id = 26;
+  const { id } = useParams();
 
   const deleteVideoData = async () => {
     setLoading(true);
 
     try {
       await dispatch(deleteVideo(videoId));
-      console.log("ETst");
     } catch (error) {
       console.log(error);
       return error;

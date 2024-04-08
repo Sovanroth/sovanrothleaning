@@ -5,21 +5,31 @@ import { deleteVideo, getOneData, postVideo } from "../redux/slice/courseSlice";
 import DeleteVideoModal from "./DeleteVideoModal";
 import LoadingScreen from "./LoadingScreen";
 import { isEmpty } from "@firebase/util";
+import AddVideoModal from "./AddVideoModal";
 
 const AddVideo = () => {
   const [loading, setLoading] = useState(false);
   const oneData = useSelector((state) => state?.courses?.oneData);
-  // const { id } = useParams();
+  const { id } = useParams();
   const dispatch = useDispatch();
-  const id = 26;
+  // const id = 26;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [videoName, setVideoName] = useState("");
   const [videoId, setVideoId] = useState("");
+  const [open, setOpen] = useState(false);
 
   const openMoal = (name, id) => {
     setVideoId(id);
     setVideoName(name);
     setIsModalOpen(true);
+  };
+
+  const handleOpenAddModal = () => {
+    setOpen(true);
+  };
+
+  const closeAddModal = () => {
+    setOpen(false);
   };
 
   const closeModal = () => {
@@ -111,18 +121,21 @@ const AddVideo = () => {
             )}
 
             <div className="flex mt-5">
-              <button
+              <Link
+              to={"/teacher-mode"}
                 type="button"
-                className="mr-2 w-1/2 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                className=" text-center mr-2 w-1/2 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
               >
-                Not Now
-              </button>
+                Done | Not Now
+              </Link>
               <button
                 type="button"
+                onClick={() => handleOpenAddModal()}
                 className="ml-2 w-1/2 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Add Video
               </button>
+              {open && <AddVideoModal onClose={closeAddModal} />}
             </div>
           </div>
         </div>

@@ -78,6 +78,10 @@ function App() {
             />
             <Route path="/teacher-mode/create-course" element={<Create />} />
             <Route path="/delete-course" element={<DeleteCourseModal />} />
+            <Route
+              path="/teacher-mode/create-course/add-video/:id"
+              element={<AddVideoPage />}
+            />
           </Route>
 
           <Route element={<NoTokenRoute />}>
@@ -86,9 +90,18 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           </Route>
 
-          <Route path="forgot-password/reset-password/:token" element={<ResetPassword />} />
-          <Route path="forgot-password/reset-successfully" element={<ResetPasswordSuccess />} />
-          <Route path="forgot-password/request-reset-password" element={<RequestLink />} />
+          <Route
+            path="forgot-password/reset-password/:token"
+            element={<ResetPassword />}
+          />
+          <Route
+            path="forgot-password/reset-successfully"
+            element={<ResetPasswordSuccess />}
+          />
+          <Route
+            path="forgot-password/request-reset-password"
+            element={<RequestLink />}
+          />
           <Route path="loading" element={<LoadingScreen />} />
           <Route path="*" element={<NotFoundPage />} />
           <Route path="test" element={<AddVideoPage />} />

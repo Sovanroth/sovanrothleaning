@@ -119,7 +119,9 @@ export default function AddCourse() {
       console.log(response);
 
       if (response?.data?.error === false) {
-        navigate("/teacher-mode");
+        navigate(
+          `/teacher-mode/create-course/add-video/${response?.data?.course?.id}`
+        );
       }
     } catch (error) {
       console.log(error);
@@ -148,7 +150,7 @@ export default function AddCourse() {
                 onClick={handleCreatePost}
                 className="self-end sm:hidden rounded-full bg-green-500 px-3.5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500"
               >
-                Post
+                {loading ? "Loading ..." : "Post"}
               </button>
             </div>
           </div>
@@ -371,7 +373,7 @@ export default function AddCourse() {
               onClick={handleCreatePost}
               className="rounded-full bg-green-500 px-3.5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500"
             >
-              Post
+              {loading ? "Loading ..." : "Post"}
             </button>
           </div>
 
