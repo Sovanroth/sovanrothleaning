@@ -1,5 +1,6 @@
 import { Fragment, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { CheckIcon } from "@heroicons/react/24/outline";
@@ -9,23 +10,25 @@ export default function DeleteVideoModal({ onClose, videoName, videoId }) {
   const cancelButtonRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const { id } = useParams();
 
-  const deleteData = async (videoId) => {
+  const deleteVideoData = async () => {
     setLoading(true);
+
     try {
-      const response = await dispatch(deleteVideo(videoId));
-      console.log(response); // Log the response from the deleteVideo action
-      // onClose();
+      await dispatch(deleteVideo(videoId));
     } catch (error) {
       console.log(error);
+      return error;
     } finally {
+      await dispatch(getOneData(id));
       setLoading(false);
     }
   };
 
-  const handleDeleteClick = async () => {
-    if (loading) return; // Prevent multiple clicks while loading
-    await deleteData();
+  const handleSubmit = async () => {
+    deleteVideoData();
+    onClose();
   };
 
   return (
@@ -88,8 +91,7 @@ export default function DeleteVideoModal({ onClose, videoName, videoId }) {
                   <button
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2"
-                    onClick={handleDeleteClick} // Use handleDeleteClick instead of deleteData directly
-                    disabled={loading} // Disable the button while loading
+                    onClick={() => handleSubmit()}
                   >
                     {loading ? "Deleting..." : "Delete"}
                   </button>
