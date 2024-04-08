@@ -201,15 +201,18 @@ export const updateCourse = (params, id) => async (dispatch) => {
 };
 
 export const deleteVideo = (id) => async (dispatch) => {
-  dispatch(startLoading);
+  dispatch(startLoading());
 
   try {
-    const respone = await axiosInstance.delete(`/video/delete-video/${id}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-    return respone;
+    const response = await axiosInstance.delete(
+      `/courses/delete-course-video/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    return response;
   } catch (error) {
     console.log(error);
     return error;
@@ -218,15 +221,19 @@ export const deleteVideo = (id) => async (dispatch) => {
   }
 };
 
-export const postVideo = (params) => async (dispatch) => {
+export const postVideo = (id, params) => async (dispatch) => {
   dispatch(startLoading());
 
   try {
-    const response = await axiosInstance.post(`/video/post-video`, params, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
+    const response = await axiosInstance.post(
+      `/video/post-video/${id}`,
+      params,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
     if (response?.data) {
       dispatch(postVideoSuccess());
     }

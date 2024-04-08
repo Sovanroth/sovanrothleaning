@@ -96,7 +96,7 @@ export default function CourseOwned() {
 
   return (
     <div>
-      <div className="mx-auto mt-5 grid max-w-2xl justify-center">
+      {/* <div className="mx-auto mt-5 grid max-w-2xl justify-center">
         <div className="hidden md:flex flex-row gap-2">
           {list.map((data, index) => (
             <button
@@ -112,7 +112,7 @@ export default function CourseOwned() {
             </button>
           ))}
         </div>
-      </div>
+      </div> */}
 
       {loading ? (
         <LoadingScreen />

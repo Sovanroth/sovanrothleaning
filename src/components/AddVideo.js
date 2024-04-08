@@ -1,13 +1,106 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { requestResetLink } from "../redux/slice/loginSlice";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { deleteVideo, getOneData, postVideo } from "../redux/slice/courseSlice";
+import DeleteVideoModal from "./DeleteVideoModal";
 
 const AddVideo = () => {
+  const [loading, setLoading] = useState(false);
+  const oneData = useSelector((state) => state?.courses?.oneData);
+  // const { id } = useParams();
+  const dispatch = useDispatch();
+  const id = 26;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [videoName, setVideoName] = useState("");
+  const [videoId, setVideoId] = useState("");
+
+  const openMoal = (name, id) => {
+    setVideoId(id);
+    setVideoName(name);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const getData = async () => {
+    setLoading(true);
+
+    try {
+      const respone = await dispatch(getOneData(id));
+      // console.log(respone);
+      return respone;
+    } catch (error) {
+      console.log(error);
+      return error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const postCourseVideo = async () => {
+    setLoading(true);
+
+    try {
+      const param = {
+        video_title: "1",
+        video_url: "1",
+      };
+
+      await dispatch(postVideo(id, param));
+    } catch (error) {
+      console.log(error);
+      return error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // const deleteVideoData = async (videoID) => {
+  //   setLoading(false);
+
+  //   try {
+  //     await deleteVideo(videoID);
+  //   } catch (error) {
+  //     console.log(error);
+  //     return error;
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
-    <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
+    <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[720px]">
       <div className="bg-white px-5 py-4 shadow sm:rounded-lg sm:px-12">
-        <div className="text-center text-xl font-bold">Add video for course Test</div>
+        <div className="text-center text-md font-bold">
+          Add video for course Test
+        </div>
+
+        <div className="overflow-y-auto max-h-80">
+          {oneData?.data?.videos?.map((video) => (
+            <div className="flex justify-between items-center text-sm mt-2">
+              <div className="truncate">{video?.video_title}</div>
+              <button
+                className="mr-3 rounded-md bg-red-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-red-500"
+                onClick={() => openMoal(video?.video_title, video?.id)}
+              >
+                Delete
+                {isModalOpen && (
+                  <DeleteVideoModal
+                    onClose={closeModal}
+                    videoName={videoName}
+                    videoId={videoId}
+                  />
+                )}
+              </button>
+            </div>
+          ))}
+        </div>
 
         <div className="flex mt-5">
           <button
