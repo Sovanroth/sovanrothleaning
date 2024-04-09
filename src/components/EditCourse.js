@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   deleteVideo,
+  getCoursesData,
   getOneData,
   updateCourse,
 } from "../redux/slice/courseSlice";
@@ -16,6 +17,8 @@ import {
   ListChecks,
   PlayCircle,
 } from "lucide-react";
+import DeleteVideoModal from "./DeleteVideoModal";
+import AddVideoModal from "./AddVideoModal";
 
 const categoryData = [
   {
@@ -52,6 +55,28 @@ export default function EditCourse() {
   const { id } = useParams();
   const [data, setData] = useState({});
   const [isChecked, setIsChecked] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [addModalOpen, setAddModalOpen] = useState(false);
+  const [videoName, setVideoName] = useState("");
+  const [videoId, setVideoId] = useState("");
+
+  const deletModal = (name, id) => {
+    setVideoId(id);
+    setVideoName(name);
+    setDeleteModalOpen(true);
+  };
+
+  const addModal = () => {
+    setAddModalOpen(true);
+  };
+
+  const closeDeleteModal = () => {
+    setDeleteModalOpen(false);
+  };
+
+  const closeAddModal = () => {
+    setAddModalOpen(false);
+  };
 
   const handleCheckboxChange = () => {
     const newCheckedValue = data?.active === 1 ? 0 : 1;
@@ -90,15 +115,15 @@ export default function EditCourse() {
 
   const initData = async () => {
     setLoading(true);
-    let response = {};
     try {
-      response = dispatch(getOneData(id));
-      console.log(response);
+      const response = await dispatch(getOneData(id));
+      return response;
     } catch (error) {
-      response = error;
+      console.log(error);
+      return error;
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
-    return response;
   };
 
   const handleUdpateCourse = async () => {
@@ -114,50 +139,33 @@ export default function EditCourse() {
         active: data?.active,
       };
       console.log(params);
-      dispatch(updateCourse(params, id));
+      await dispatch(updateCourse(params, id));
       console.log(params);
       navigate("/teacher-mode");
     } catch (error) {
+      await dispatch(getCoursesData());
       console.log(error);
       return error;
     }
   };
 
-  const refreshData = async (param) => {
-    setLoading(true);
-    dispatch(getOneData(id));
-    setLoading(false);
-  };
-
-  const hanldeDeleteVideo = async (param) => {
-    setLoading(true);
-    let respone = {};
-    try {
-      respone = dispatch(deleteVideo(param));
-      console.log(respone);
-    } catch (error) {
-      console.log(error);
-      respone = error;
-    }
-    setLoading(false);
-    return respone;
-  };
-
   useEffect(() => {
-    console.log(oneData);
     initData();
+    // console.log(oneData);
   }, []);
 
   useEffect(() => {
-    setData({
-      courseTitle: oneData?.data?.courseTitle,
-      courseDescription: oneData?.data?.courseDescription,
-      category: oneData?.data?.category,
-      courseImage: oneData?.data?.courseImage,
-      coursePrice: oneData?.data?.coursePrice,
-      courseResource: oneData?.data?.courseResource,
-      active: oneData?.data?.active,
-    });
+    if (oneData) {
+      setData({
+        courseTitle: oneData?.data?.courseTitle,
+        courseDescription: oneData?.data?.courseDescription,
+        category: oneData?.data?.category,
+        courseImage: oneData?.data?.courseImage,
+        coursePrice: oneData?.data?.coursePrice,
+        courseResource: oneData?.data?.courseResource,
+        active: oneData?.data?.active,
+      });
+    }
   }, [oneData]);
 
   return (
@@ -271,14 +279,14 @@ export default function EditCourse() {
                 />
               </div>
             </div>
-            <div className=" pt-4">
+            <div className=" pt-1">
               <div className="flex justify-end">
                 <button
                   type="button"
                   onClick={handleUdpateCourse}
-                  className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-green-500 hover:bg-gray-50"
+                  className="rounded-full bg-green-500 px-3.5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500"
                 >
-                  UPDATE
+                  {loading ? "Updating..." : "Update"}
                 </button>
               </div>
               <div className="mt-5 flex-grow text-start rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300">
@@ -289,47 +297,24 @@ export default function EditCourse() {
               </div>
 
               <div class="mt-6 border bg-slate-100 rounded-md p-4">
-                <div class="font-medium text-sm flex items-center justify-between">
-                  Course Chapters
+                <div class="flex items-center justify-between">
+                  <div class="font-medium text-sm">Course Chapters</div>
+                  <div className="flex">
+                    <button
+                      type="button"
+                      onClick={() => addModal()}
+                      className=" rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    >
+                      Add Video
+                    </button>
+                    {addModalOpen && <AddVideoModal onClose={closeAddModal} />}
+                  </div>
                 </div>
 
-                <div class=" mt-3 flex items-center justify-center w-full">
-                  <label
-                    for="dropzone-file"
-                    class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-                  >
-                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                      <svg
-                        class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 20 16"
-                      >
-                        <path
-                          stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                        />
-                      </svg>
-                      <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                        <span class="font-semibold">Click to upload</span> or
-                        drag and drop
-                      </p>
-                      <p class="text-xs text-gray-500 dark:text-gray-400">
-                        MP4
-                      </p>
-                    </div>
-                    <input id="dropzone-file" type="file" class="hidden" />
-                  </label>
-                </div>
-
-                <p className=" text-sm pt-5 ">
-                  {oneData?.course?.videos?.map((video) => (
+                <p className=" text-sm pt-2 overflow-y-auto max-h-80 ">
+                  {oneData?.data?.videos?.map((video) => (
                     <div className="mt-3 flex flex-row">
-                      <div className="flex-grow text-start rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                      <div className="flex-grow text-start rounded-md bg-white px-3 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
                         <div className="flex flex-row">
                           <PlayCircle />
                           <p className="content-center ml-2 mt-px rem align-middle">
@@ -339,13 +324,22 @@ export default function EditCourse() {
                       </div>
                       <button
                         type="button"
-                        onClick={() => hanldeDeleteVideo(video?.video_id)}
-                        className=" ml-3 text-start rounded-md bg-white px-3 py-2 text-sm font-semibold text-red-400 shadow-sm ring-1 ring-inset ring-red-400 hover:bg-white"
+                        onClick={() =>
+                          deletModal(video?.video_title, video?.id)
+                        }
+                        className="ml-3 mr-3 rounded-md bg-red-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-red-500"
                       >
                         Delete
                       </button>
                     </div>
                   ))}
+                  {deleteModalOpen && (
+                    <DeleteVideoModal
+                      onClose={closeDeleteModal}
+                      videoName={videoName}
+                      videoId={videoId}
+                    />
+                  )}
                 </p>
               </div>
 
