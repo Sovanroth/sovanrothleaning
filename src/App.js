@@ -104,7 +104,7 @@ function App() {
           />
           <Route path="loading" element={<LoadingScreen />} />
           <Route path="*" element={<NotFoundPage />} />
-          <Route path="test" element={<AddVideoPage />} />
+          {/* <Route path="test" element={<AddVideoPage />} /> */}
         </Routes>
       </Router>
     </AuthProvider>
