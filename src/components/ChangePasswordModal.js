@@ -108,6 +108,7 @@ export default function ChangePasswordModal({ onClose }) {
                             <input
                               type="password"
                               name="currentPassword"
+                              minlength="8"
                               value={data?.currentPassword}
                               onChange={(e) => handleChangeCurrentPassword(e)}
                               id="currentPassword"
@@ -126,6 +127,7 @@ export default function ChangePasswordModal({ onClose }) {
                             <input
                               type="password"
                               name="newPassword"
+                              minlength="8"
                               required
                               value={data?.newPassword}
                               onChange={(e) => handleChangeNewPassword(e)}
