@@ -142,6 +142,7 @@ export default function Login() {
                         onChange={(e) => handleChangePassword(e)}
                         id="password"
                         name="password"
+                        minlength="8"
                         type={showPassword ? "text" : "password"}
                         autoComplete="current-password"
                         required
