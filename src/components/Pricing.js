@@ -79,13 +79,13 @@ export default function Pricing() {
                 role="list"
                 className="mt-8 grid grid-cols-1 gap-4 text-sm leading-6 text-gray-600 sm:grid-cols-2 sm:gap-6"
               >
-                {oneData?.data?.videos.map((feature) => (
-                  <li key={feature} className="flex gap-x-3">
+                {oneData?.data?.videos.slice(0, 4).map((feature) => (
+                  <li key={feature.id} className="flex gap-x-3">
                     <CheckIcon
                       className="h-6 w-5 flex-none text-indigo-600"
                       aria-hidden="true"
                     />
-                    {feature?.video_title}
+                    {feature.video_title}
                   </li>
                 ))}
               </ul>
@@ -108,7 +108,7 @@ export default function Pricing() {
                     onClick={handleBuyCourse}
                     className="mt-10 block w-full rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
-                        {/* {loading ? "Loading ..." : `Enroll for ${oneCourseByUser?.data?.coursePrice}`} */}
+                    {/* {loading ? "Loading ..." : `Enroll for ${oneCourseByUser?.data?.coursePrice}`} */}
                     {/* Get access */}
                     {loading ? "Loading ..." : "Get access"}
                   </button>
