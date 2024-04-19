@@ -6,7 +6,7 @@ import {
 } from "../redux/slice/courseSlice";
 import Moment from "react-moment";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { AreaChart, Code2, DatabaseZap, Music, Settings } from "lucide-react";
+import { AreaChart, Clapperboard, Code2, DatabaseZap, Music, Settings } from "lucide-react";
 import LoadingScreen from "./LoadingScreen";
 import { isEmpty } from "@firebase/util";
 import { motion } from "framer-motion";
@@ -35,7 +35,7 @@ const list = [
   {
     id: 5,
     category: "MUSIC",
-    icon: <Music size={16} color="purple" />,
+    icon: <Clapperboard size={16} color="purple" />,
   },
 ];
 
