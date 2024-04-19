@@ -34,7 +34,7 @@ const list = [
   },
   {
     id: 5,
-    category: "MUSIC",
+    category: "Movie",
     icon: <Clapperboard size={16} color="purple" />,
   },
 ];
