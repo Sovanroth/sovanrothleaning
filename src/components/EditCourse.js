@@ -54,6 +54,7 @@ export default function EditCourse() {
   const dispatch = useDispatch();
   const { id } = useParams();
   const [data, setData] = useState({});
+  const [originalData, setOriginalData] = useState({});
   const [isChecked, setIsChecked] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [addModalOpen, setAddModalOpen] = useState(false);
@@ -96,9 +97,25 @@ export default function EditCourse() {
   };
 
   const handleChangeCourseImage = (e) => {
-    const newVal = { ...data, courseImage: e.target.value };
-    setData(newVal);
+    const file = e.target.files[0];
+    setData({ ...data, courseImage: file });
+
+    const selectedImagePreview = document.getElementById(
+      "selected-image-preview"
+    );
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        selectedImagePreview.src = e.target.result;
+        selectedImagePreview.classList.remove("hidden");
+      };
+      reader.readAsDataURL(file);
+    } else {
+      selectedImagePreview.src = "";
+      selectedImagePreview.classList.add("hidden");
+    }
   };
+
   const handleChangeCoursePrice = (e) => {
     const newVal = { ...data, coursePrice: e.target.value };
     setData(newVal);
@@ -129,7 +146,7 @@ export default function EditCourse() {
   const handleUdpateCourse = async () => {
     setLoading(true);
     try {
-      const params = {
+      const updatedData = {
         courseTitle: data?.courseTitle,
         courseDescription: data?.courseDescription,
         category: data?.category,
@@ -138,25 +155,67 @@ export default function EditCourse() {
         courseResource: data?.courseResource,
         active: data?.active,
       };
-      console.log(params);
-      await dispatch(updateCourse(params, id));
-      console.log(params);
-      navigate("/teacher-mode");
+
+      const params = {}
+
+      if (originalData.courseTitle !== updatedData.courseTitle) {
+        params.courseTitle = updatedData.courseTitle;
+      }
+
+      if (originalData.category !== updatedData.category) {
+        params.category = updatedData.category;
+      }
+
+      if (originalData.courseDescription !== updatedData.courseDescription) {
+        params.courseDescription = updatedData.courseDescription;
+      }
+
+      if (originalData.coursePrice !== updatedData.coursePrice) {
+        params.coursePrice = updatedData.coursePrice;
+      }
+
+      if (originalData.courseResource !== updatedData.courseResource) {
+        params.courseResource = updatedData.courseResource;
+      }
+      if (originalData.active !== updatedData.active) {
+        params.active = updatedData.active;
+      }
+
+      const numberOfChangedFields = Object.keys(params).length;
+      if (numberOfChangedFields === 0) {
+        navigate("/teacher-mode");
+      }
+
+      const response = await dispatch(updateCourse(params, id));
+      console.log(response?.data?.error);
+      if (response?.data?.error == false) {
+        navigate("/teacher-mode");
+      }
     } catch (error) {
       await dispatch(getCoursesData());
       console.log(error);
       return error;
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     initData();
-    // console.log(oneData);
   }, []);
 
   useEffect(() => {
     if (oneData) {
       setData({
+        courseTitle: oneData?.data?.courseTitle,
+        courseDescription: oneData?.data?.courseDescription,
+        category: oneData?.data?.category,
+        courseImage: oneData?.data?.courseImage,
+        coursePrice: oneData?.data?.coursePrice,
+        courseResource: oneData?.data?.courseResource,
+        active: oneData?.data?.active,
+      });
+      setOriginalData({
         courseTitle: oneData?.data?.courseTitle,
         courseDescription: oneData?.data?.courseDescription,
         category: oneData?.data?.category,
@@ -263,20 +322,54 @@ export default function EditCourse() {
                 <div class="font-medium text-sm flex items-center justify-between">
                   Course Image
                 </div>
-                <div className="mt-3">
-                  <input
-                    type="text"
-                    name="courseImage"
-                    id="courseImage"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    value={data.courseImage}
-                    onChange={(e) => handleChangeCourseImage(e)}
+                <div class=" mt-3 flex items-center justify-center w-full">
+                  <label
+                    for="dropzone-file"
+                    class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+                  >
+                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                      <svg
+                        class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 20 16"
+                      >
+                        <path
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                        />
+                      </svg>
+                      <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                        <span class="font-semibold">Click to upload</span>
+                      </p>
+                      <p class="text-xs text-gray-500 dark:text-gray-400">
+                        JPG, JPEG, PNG
+                      </p>
+                    </div>
+                    <input
+                      id="dropzone-file"
+                      type="file"
+                      accept="image/*"
+                      class="hidden"
+                      onChange={handleChangeCourseImage}
+                    />
+                  </label>
+                </div>
+
+                <div>
+                  <div className="mt-2 text-center text-sm">Preview Image</div>
+                  <img
+                    className="mt-2"
+                    src=""
+                    alt="Selected Image"
+                    class="hidden"
+                    id="selected-image-preview"
                   />
                 </div>
-                <img
-                  className=" w-full mt-3"
-                  src={oneData?.course?.courseImage}
-                />
               </div>
             </div>
             <div className=" pt-1">

@@ -191,6 +191,8 @@ export const updateCourse = (params, id) => async (dispatch) => {
     if (respone?.data) {
       dispatch(updateCourseSuccess(respone?.data));
     }
+
+    return respone;
     // console.log(respone);
   } catch (error) {
     console.log(error);
