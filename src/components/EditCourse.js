@@ -252,7 +252,7 @@ export default function EditCourse() {
                     onChange={(e) => handleChnageCategory(e)}
                   >
                     {categoryData.map((category) => (
-                      <option>{category.name}</option>
+                      <option>{category.id}</option>
                     ))}
                   </select>
                 </div>
