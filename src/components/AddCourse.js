@@ -35,10 +35,6 @@ const categoryData = [
     id: 5,
     name: "MUSIC",
   },
-  {
-    id: 6,
-    name: "MOGWARTS",
-  },
 ];
 
 export default function AddCourse() {
