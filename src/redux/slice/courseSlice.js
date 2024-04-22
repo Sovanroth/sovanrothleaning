@@ -54,6 +54,10 @@ const coursesSlice = createSlice({
       state.loading = false;
       state.videoData = actions.payload;
     },
+    updateVideoSuccess(state, actions) {
+      state.loading = false;
+      state.videoData = actions.payload;
+    },
     createCourseSuccess(state, actions) {
       state.loading = false;
       state.data = actions.payload;
@@ -400,7 +404,7 @@ export const getAllCoursesByUser = () => async (dispatch) => {
 };
 
 export const getOneCourseByUser = (id) => async (dispatch) => {
-  dispatch(startLoading(true));
+  dispatch(startLoading());
   try {
     const response = await axiosInstance.get(
       `/users/get-one-course?userId=${localStorage.getItem(
@@ -414,6 +418,31 @@ export const getOneCourseByUser = (id) => async (dispatch) => {
     );
     if (response?.data) {
       dispatch(getOneCoruseByUserSuccess(response?.data));
+      return response;
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
+  } finally {
+    dispatch(stopLoading());
+  }
+};
+
+export const updateVideoData = (id, params) => async (dispatch) => {
+  dispatch(startLoading());
+
+  try {
+    const response = await axiosInstance.put(
+      `/courses/update-video/${id}`,
+      params,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    if (response?.data) {
+      dispatch(updateVideoSuccess(response?.data));
       return response;
     }
   } catch (error) {
@@ -441,6 +470,7 @@ export const {
   searchCourseSuccess,
   getAllCoursesByUserSuccess,
   getOneCoruseByUserSuccess,
+  updateVideoSuccess,
 } = coursesSlice.actions;
 
 export default coursesSlice.reducer;
