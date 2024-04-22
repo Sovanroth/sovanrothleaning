@@ -59,7 +59,7 @@ const ViewsCourse = () => {
   return (
     <div>
       <Helmet>
-        <title>Video | Suku</title>
+        <title>Suku | Watch</title>
       </Helmet>
       <div>
         {loading ? (
