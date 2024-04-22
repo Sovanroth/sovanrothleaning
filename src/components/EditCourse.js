@@ -41,10 +41,6 @@ const categoryData = [
     id: 5,
     name: "MUSIC",
   },
-  {
-    id: 6,
-    name: "MOGWARTS",
-  },
 ];
 
 export default function EditCourse() {
@@ -152,11 +148,12 @@ export default function EditCourse() {
         category: data?.category,
         courseImage: data?.courseImage,
         coursePrice: data?.coursePrice,
+        courseImage: null,
         courseResource: data?.courseResource,
         active: data?.active,
       };
 
-      const params = {}
+      const params = {};
 
       if (originalData.courseTitle !== updatedData.courseTitle) {
         params.courseTitle = updatedData.courseTitle;
@@ -187,7 +184,6 @@ export default function EditCourse() {
       }
 
       const response = await dispatch(updateCourse(params, id));
-      console.log(response?.data?.error);
       if (response?.data?.error == false) {
         navigate("/teacher-mode");
       }
