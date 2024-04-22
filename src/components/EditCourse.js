@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import DeleteVideoModal from "./DeleteVideoModal";
 import AddVideoModal from "./AddVideoModal";
+import EditVideoModal from "./EditVideoModal";
 
 const categoryData = [
   {
@@ -54,8 +55,12 @@ export default function EditCourse() {
   const [isChecked, setIsChecked] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [addModalOpen, setAddModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
   const [videoName, setVideoName] = useState("");
   const [videoId, setVideoId] = useState("");
+  const [videoTitle, setVideoTitle] = useState("");
+  const [videoURL, setVideoURL] = useState("");
+  const [video, setVideo] = useState("");
 
   const deletModal = (name, id) => {
     setVideoId(id);
@@ -73,6 +78,17 @@ export default function EditCourse() {
 
   const closeAddModal = () => {
     setAddModalOpen(false);
+  };
+
+  const editModal = (tilte, url, id) => {
+    setVideoTitle(tilte);
+    setVideoURL(url);
+    setVideo(id);
+    setEditModalOpen(true);
+  };
+
+  const closeEditModal = () => {
+    setEditModalOpen(false);
   };
 
   const handleCheckboxChange = () => {
@@ -414,9 +430,22 @@ export default function EditCourse() {
                       <button
                         type="button"
                         onClick={() =>
+                          editModal(
+                            video?.video_title,
+                            video?.video_url,
+                            video?.id
+                          )
+                        }
+                        className="ml-3 rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() =>
                           deletModal(video?.video_title, video?.id)
                         }
-                        className="ml-3 mr-3 rounded-md bg-red-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-red-500"
+                        className="ml-2 mr-3 rounded-md bg-red-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-red-500"
                       >
                         Delete
                       </button>
@@ -427,6 +456,15 @@ export default function EditCourse() {
                       onClose={closeDeleteModal}
                       videoName={videoName}
                       videoId={videoId}
+                    />
+                  )}
+
+                  {editModalOpen && (
+                    <EditVideoModal
+                      onClose={closeEditModal}
+                      videoTitle={videoTitle}
+                      videoURL={videoURL}
+                      videoId={video}
                     />
                   )}
                 </p>
