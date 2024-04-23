@@ -307,7 +307,7 @@ const BuyCourse = () => {
                       >
                         {/* {loading ? "Loading..." : "Log in"} */}
                         {/* Enroll for {oneCourseByUser?.data?.coursePrice} */}
-                        {loading ? "Loading ..." : `Enroll for ${oneCourseByUser?.data?.coursePrice}`}
+                        {loading ? "Loading ..." : `Enroll for ${oneCourseByUser?.data?.coursePrice}$`}
                       </button>
                     </Link>
                   </div>
