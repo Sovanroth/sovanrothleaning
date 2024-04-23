@@ -110,7 +110,7 @@ const Courses = () => {
                               {person.courseTitle}
                             </td>
                             <td className="hidden sm:table-cell whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                              {person.coursePrice}
+                              {person.coursePrice}$
                             </td>
                             <td
                               className={`hidden sm:table-cell whitespace-nowrap px-3 py-4 text-sm font-bold ${
