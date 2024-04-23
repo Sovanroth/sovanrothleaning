@@ -254,16 +254,23 @@ export default function EditCourse() {
         <div>
           <div className=" text-center m-5 font-bold text-xl">Edit Course</div>
 
-          <div className="grid grid-cols-2 gap-4 max-w-7xl mx-auto pt-4">
-            <div className="pl-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-7xl lg:mx-auto pt-4 sm:w-screen">
+            <div className="pl-8 pr-8 sm:pr-0">
               <div className=" text-start">
-                <div className=" flex">
+                <div className=" flex justify-between">
                   <button
                     onClick={() => navigate(-1)}
                     type="button"
                     className="rounded-full bg-indigo-600 px-3.5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
                     Back
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleUdpateCourse}
+                    className="sm:hidden rounded-full bg-green-500 px-3.5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500"
+                  >
+                    {loading ? "Updating..." : "Update"}
                   </button>
                   {/* <p className=" text-xl font-bold">Course Setup</p> */}
                 </div>
@@ -388,8 +395,174 @@ export default function EditCourse() {
                   />
                 </div>
               </div>
+
+              <div className="sm:hidden">
+                <div className="mt-5 flex-grow text-start rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300">
+                  <div className="flex flex-row justify-center">
+                    <ListChecks size={35} className=" text-indigo-600" />
+                    <h1 className="ml-2 mt-2 text-center">Course Chapter</h1>
+                  </div>
+                </div>
+
+                <div class="mt-6 border bg-slate-100 rounded-md p-4">
+                  <div class="flex items-center justify-between">
+                    <div class="font-medium text-sm">Course Chapters</div>
+                    <div className="flex">
+                      <button
+                        type="button"
+                        onClick={() => addModal()}
+                        className=" rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                      >
+                        Add Video
+                      </button>
+                      {addModalOpen && (
+                        <AddVideoModal onClose={closeAddModal} />
+                      )}
+                    </div>
+                  </div>
+
+                  <p className=" text-sm pt-2 overflow-y-auto max-h-80 ">
+                    {oneData?.data?.videos?.map((video) => (
+                      <div className="mt-3 flex flex-row">
+                        <div className="flex-grow text-start rounded-md bg-white px-3 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                          <div className="flex flex-row">
+                            <PlayCircle />
+                            <p className="content-center ml-2 mt-px rem align-middle">
+                              {video?.video_title}
+                            </p>
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            editModal(
+                              video?.video_title,
+                              video?.video_url,
+                              video?.id
+                            )
+                          }
+                          className="ml-3 rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            deletModal(video?.video_title, video?.id)
+                          }
+                          className="ml-2 mr-3 rounded-md bg-red-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-red-500"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    ))}
+                    {deleteModalOpen && (
+                      <DeleteVideoModal
+                        onClose={closeDeleteModal}
+                        videoName={videoName}
+                        videoId={videoId}
+                      />
+                    )}
+
+                    {editModalOpen && (
+                      <EditVideoModal
+                        onClose={closeEditModal}
+                        videoTitle={videoTitle}
+                        videoURL={videoURL}
+                        videoId={video}
+                      />
+                    )}
+                  </p>
+                </div>
+
+                {/* Course Price */}
+
+                <div className="mt-5 flex-grow text-start rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300">
+                  <div className="flex flex-row justify-center">
+                    <CircleDollarSign size={35} className=" text-indigo-600" />
+                    <h1 className="ml-2 mt-2 text-center">Course Price</h1>
+                  </div>
+                </div>
+                <div class="mt-6 border bg-slate-100 rounded-md p-4">
+                  <div class="font-medium text-sm flex items-center justify-between">
+                    Course Price
+                  </div>
+                  <div className="mt-3">
+                    <input
+                      type="text"
+                      name="coursePrice"
+                      id="coursePrice"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      value={data.coursePrice}
+                      onChange={(e) => handleChangeCoursePrice(e)}
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-5 flex-grow text-start rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300">
+                  <div className="flex flex-row justify-center">
+                    <Hand size={35} className=" text-indigo-600" />
+                    <h1 className="ml-2 mt-2 text-center">Acceess Privacy</h1>
+                  </div>
+                </div>
+
+                <div class="mt-6 border bg-slate-100 rounded-md p-4">
+                  <div class="font-medium text-sm flex items-center justify-between">
+                    Acceess Privacy
+                  </div>
+
+                  <div className="relative flex items-start mt-3">
+                    <div className="flex h-6 items-center">
+                      <input
+                        id="comments"
+                        aria-describedby="comments-description"
+                        name="comments"
+                        type="checkbox"
+                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        checked={Boolean(data?.active === 1)}
+                        onChange={handleCheckboxChange}
+                      />
+                    </div>
+                    <div className="ml-3 text-sm leading-6">
+                      <label
+                        htmlFor="comments"
+                        className="font-medium text-gray-900"
+                      >
+                        Click this checkbox if you want everyone to see your
+                        course as public and buy it.
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Resource */}
+                <div className="mt-5 flex-grow text-start rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300">
+                  <div className="flex flex-row justify-center">
+                    <File size={35} className=" text-indigo-600" />
+                    <h1 className="ml-2 mt-2 text-center">
+                      Resource and Attatchments
+                    </h1>
+                  </div>
+                </div>
+                <div class="mt-6 border bg-slate-100 rounded-md p-4">
+                  <div class="font-medium text-sm flex items-center justify-between">
+                    Resource and Attatchments
+                  </div>
+                  <div className="mt-3">
+                    <input
+                      type="text"
+                      name="courseResource"
+                      id="courseResource"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      value={data.courseResource}
+                      onChange={(e) => handleChangeCourseResrouce(e)}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className=" pt-1">
+
+            <div className="hidden sm:block pr-8">
               <div className="flex justify-end">
                 <button
                   type="button"
