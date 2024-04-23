@@ -523,7 +523,7 @@ export default function EditCourse() {
                         onChange={handleCheckboxChange}
                       />
                     </div>
-                    <div className="ml-3 text-sm leading-6">
+                    <div className="ml-3 text-sm">
                       <label
                         htmlFor="comments"
                         className="font-medium text-gray-900"
