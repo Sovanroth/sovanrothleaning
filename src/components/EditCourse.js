@@ -111,6 +111,7 @@ export default function EditCourse() {
   const handleChangeCourseImage = (e) => {
     const file = e.target.files[0];
     setData({ ...data, courseImage: file });
+    console.log(file);
 
     const selectedImagePreview = document.getElementById(
       "selected-image-preview"
@@ -164,50 +165,54 @@ export default function EditCourse() {
         category: data?.category,
         courseImage: data?.courseImage,
         coursePrice: data?.coursePrice,
-        courseImage: null,
         courseResource: data?.courseResource,
         active: data?.active,
       };
 
-      const params = {};
+      const formData = new FormData();
 
       if (originalData.courseTitle !== updatedData.courseTitle) {
-        params.courseTitle = updatedData.courseTitle;
+        formData.append("courseTitle", data?.courseTitle);
       }
 
       if (originalData.category !== updatedData.category) {
-        params.category = updatedData.category;
+        formData.append("category", data?.category);
       }
 
       if (originalData.courseDescription !== updatedData.courseDescription) {
-        params.courseDescription = updatedData.courseDescription;
+        formData.append("courseDescription", data?.courseDescription);
       }
 
       if (originalData.coursePrice !== updatedData.coursePrice) {
-        params.coursePrice = updatedData.coursePrice;
+        formData.append("coursePrice", data?.coursePrice);
       }
 
       if (originalData.courseResource !== updatedData.courseResource) {
-        params.courseResource = updatedData.courseResource;
-      }
-      if (originalData.active !== updatedData.active) {
-        params.active = updatedData.active;
+        formData.append("courseResource", data?.courseResource);
       }
 
-      const numberOfChangedFields = Object.keys(params).length;
+      if (originalData.active !== updatedData.active) {
+        formData.append("active", data?.active);
+      }
+
+      if (originalData.courseImage !== data.courseImage) {
+        formData.append("courseImage", data?.courseImage);
+      }
+
+      const numberOfChangedFields = Object.keys(formData).length;
       if (numberOfChangedFields === 0) {
         navigate("/teacher-mode");
       }
 
-      const response = await dispatch(updateCourse(params, id));
+      const response = await dispatch(updateCourse(formData, id));
       if (response?.data?.error == false) {
         navigate("/teacher-mode");
       }
     } catch (error) {
-      await dispatch(getCoursesData());
       console.log(error);
       return error;
     } finally {
+      await dispatch(getCoursesData());
       setLoading(false);
     }
   };

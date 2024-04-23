@@ -32,6 +32,7 @@ const Courses = () => {
     setLoading(true);
     try {
       const response = await dispatch(getCoursesData());
+      return response;
     } catch (error) {
       console.log(error);
       return error;
