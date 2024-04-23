@@ -32,6 +32,7 @@ import ResetPassword from "./view/Auth/ResetPassword";
 import ResetPasswordSuccess from "./view/Auth/ResetPasswordSuccess";
 import RequestLink from "./view/Auth/RequestLink";
 import AddVideoPage from "./view/Teacher/AddVideoPage";
+import Banner from "./components/Banner";
 
 function App() {
   document.addEventListener("contextmenu", (e) => e.preventDefault());
@@ -54,6 +55,7 @@ function App() {
 
   return (
     <AuthProvider>
+      <Banner />
       <Router>
         <Routes>
           <Route element={<PrivateRoute />}>
