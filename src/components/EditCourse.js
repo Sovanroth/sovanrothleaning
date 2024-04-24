@@ -397,14 +397,14 @@ export default function EditCourse() {
               </div>
 
               <div className="sm:hidden">
-                <div className="mt-5 flex-grow text-start rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300">
+                {/* <div className="mt-5 flex-grow text-start rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300">
                   <div className="flex flex-row justify-center">
                     <ListChecks size={35} className=" text-indigo-600" />
                     <h1 className="ml-2 mt-2 text-center">Course Chapter</h1>
                   </div>
-                </div>
+                </div> */}
 
-                <div class="mt-6 border bg-slate-100 rounded-md p-4">
+                {/* <div class="mt-6 border bg-slate-100 rounded-md p-4">
                   <div class="flex items-center justify-between">
                     <div class="font-medium text-sm">Course Chapters</div>
                     <div className="flex">
@@ -473,7 +473,7 @@ export default function EditCourse() {
                       />
                     )}
                   </p>
-                </div>
+                </div> */}
 
                 {/* Course Price */}
 
