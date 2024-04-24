@@ -107,6 +107,7 @@ export default function CheckOutForm() {
                   <div className="mt-1">
                     <input
                       type="text"
+                      required
                       id="card-number"
                       name="card-number"
                       autoComplete="cc-number"
@@ -125,6 +126,7 @@ export default function CheckOutForm() {
                   <div className="mt-1">
                     <input
                       type="text"
+                      required
                       id="name-on-card"
                       name="name-on-card"
                       autoComplete="cc-name"
@@ -143,6 +145,7 @@ export default function CheckOutForm() {
                   <div className="mt-1">
                     <input
                       type="text"
+                      required
                       name="expiration-date"
                       id="expiration-date"
                       autoComplete="cc-exp"
@@ -163,6 +166,7 @@ export default function CheckOutForm() {
                       type="text"
                       name="cvc"
                       id="cvc"
+                      required
                       autoComplete="csc"
                       className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
@@ -231,7 +235,7 @@ export default function CheckOutForm() {
                   type="submit"
                   className="w-full rounded-md border border-transparent bg-indigo-600 px-2 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
                 >
-                  Confirm buy
+                  {loading ? "Loading ..." : "Confirm buy"}
                 </button>
               </div>
             </div>
