@@ -33,19 +33,20 @@ export default function Pricing() {
   };
 
   const handleBuyCourse = async () => {
-    setLoading(true);
+    // setLoading(true);
 
-    try {
-      await dispatch(buyCourse(oneData?.data?.id));
-      await dispatch(getCourseByUserID());
-      navigate("/");
-    } catch (error) {
-      console.log(error);
-      return error;
-    } finally {
-      await dispatch(getCourseByUserID());
-      setLoading(false);
-    }
+    // try {
+    //   await dispatch(buyCourse(oneData?.data?.id));
+    //   await dispatch(getCourseByUserID());
+    //   navigate("/");
+    // } catch (error) {
+    //   console.log(error);
+    //   return error;
+    // } finally {
+    //   await dispatch(getCourseByUserID());
+    //   setLoading(false);
+    // }
+    navigate(`/confirm-order/${id}`)
   };
 
   useEffect(() => {
