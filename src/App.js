@@ -33,6 +33,7 @@ import ResetPasswordSuccess from "./view/Auth/ResetPasswordSuccess";
 import RequestLink from "./view/Auth/RequestLink";
 import AddVideoPage from "./view/Teacher/AddVideoPage";
 import Banner from "./components/Banner";
+import CheckOutForm from "./components/CheckOutForm";
 
 function App() {
   document.addEventListener("contextmenu", (e) => e.preventDefault());
@@ -69,6 +70,7 @@ function App() {
             <Route path="/setting" element={<SettingPage />} />
             <Route path="/dashboard/course/:id" element={<WatchVideos />} />
             <Route path="/search-course/:id" element={<SearchPage />} />
+            <Route path="/confirm-order/:id" element={<CheckOutForm/>}/>
           </Route>
 
           <Route element={<TeacherPrivateRoute />}>
@@ -106,7 +108,7 @@ function App() {
           />
           <Route path="loading" element={<LoadingScreen />} />
           <Route path="*" element={<NotFoundPage />} />
-          {/* <Route path="test" element={<AddVideoPage />} /> */}
+          {/* <Route path="test" element={<CheckOutForm/>} /> */}
         </Routes>
       </Router>
     </AuthProvider>
