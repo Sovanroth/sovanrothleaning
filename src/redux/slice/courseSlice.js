@@ -14,6 +14,7 @@ const initialState = {
   searchCourse: [],
   allCoursesByUser: [],
   oneCourseByUser: {},
+  checkout: {},
 };
 
 const coursesSlice = createSlice({
@@ -85,6 +86,10 @@ const coursesSlice = createSlice({
     getOneCoruseByUserSuccess(state, actions) {
       state.loading = false;
       state.oneCourseByUser = actions.payload;
+    },
+    getCheckOutSuccess(state, actions) {
+      state.loading = false;
+      state.checkout = actions.payload;
     },
   },
 });
@@ -453,6 +458,27 @@ export const updateVideoData = (id, params) => async (dispatch) => {
   }
 };
 
+export const checkOut = (param) => async (dispatch) => {
+  dispatch(startLoading());
+
+  try {
+    const response = await axiosInstance.post(
+      `/users/paypal/create-order`,
+      param
+    );
+
+    if (response?.data) {
+      dispatch(getCheckOutSuccess(response?.data));
+      return response;
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
+  } finally {
+    dispatch(stopLoading());
+  }
+};
+
 export const {
   startLoading,
   stopLoading,
@@ -471,6 +497,7 @@ export const {
   getAllCoursesByUserSuccess,
   getOneCoruseByUserSuccess,
   updateVideoSuccess,
+  getCheckOutSuccess,
 } = coursesSlice.actions;
 
 export default coursesSlice.reducer;

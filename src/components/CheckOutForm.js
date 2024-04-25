@@ -4,6 +4,7 @@ import NavBar from "./NavBar";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   buyCourse,
+  checkOut,
   getCourseByUserID,
   getOneData,
 } from "../redux/slice/courseSlice";
@@ -33,6 +34,7 @@ const list = [
 
 export default function CheckOutForm() {
   const oneData = useSelector((state) => state?.courses?.oneData);
+  const checkout = useSelector((state) => state?.courses?.checkout);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -73,6 +75,29 @@ export default function CheckOutForm() {
     }
   };
 
+  const getCheckOutData = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+
+    try {
+      const param = {
+        amount: oneData?.data?.coursePrice,
+      };
+
+      // console.log(param);
+
+      const response = await dispatch(checkOut(param));
+      console.log(response);
+
+      return response;
+    } catch (error) {
+      console.log(error);
+      return error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     initData();
   }, []);
@@ -86,7 +111,7 @@ export default function CheckOutForm() {
         <form
           className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16"
           method="POST"
-          onSubmit={handleBuyCourse}
+          onSubmit={getCheckOutData}
         >
           <div>
             <div>

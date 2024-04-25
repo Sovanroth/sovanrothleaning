@@ -5,12 +5,12 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   buyCourse,
+  checkOut,
   getCourseByUserID,
   getOneCourseByUser,
   getOneData,
 } from "../redux/slice/courseSlice";
 import { useNavigate, useParams } from "react-router-dom";
-import { Helmet } from "react-helmet";
 
 export default function Pricing() {
   const oneData = useSelector((state) => state?.courses?.oneData);
@@ -18,6 +18,8 @@ export default function Pricing() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
+  const checkout = useSelector((state) => state?.courses?.checkout);
+  const [returnData, setReturnData] = useState({});
 
   const initData = async () => {
     setLoading(true);
@@ -28,7 +30,7 @@ export default function Pricing() {
       response = error;
     }
     setLoading(false);
-    console.log(response);
+    // console.log(response);
     return response;
   };
 
@@ -46,7 +48,29 @@ export default function Pricing() {
     //   await dispatch(getCourseByUserID());
     //   setLoading(false);
     // }
-    navigate(`/confirm-order/${id}`)
+    // navigate(`/confirm-order/${id}`)
+
+    setLoading(true);
+
+    try {
+      const param = {
+        amount: oneData?.data?.coursePrice,
+      };
+      // console.log(param);
+      const response = await dispatch(checkOut(param));
+      console.log(response);
+      setReturnData(response);
+      window.location.href = response?.data.links.find(
+        (link) => link.rel === "approval_url"
+      ).href;
+      // await dispatch(buyCourse(oneData?.data?.id));
+      return response;
+    } catch (error) {
+      console.log(error);
+      return error;
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -57,6 +81,7 @@ export default function Pricing() {
     <>
       <NavBar />
       <div className="bg-white">
+        {/* {JSON.stringify(returnData)} */}
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl sm:text-center">
             <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"></h2>
