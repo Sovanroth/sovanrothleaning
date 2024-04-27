@@ -18,18 +18,29 @@ const ViewsCourse = () => {
   const navigate = useNavigate();
   const [showFullText, setShowFullText] = useState(false);
   const [currentVideoUrl, setCurrentVideoUrl] = useState(null);
+  const [currentVideoDescription, setCurrentVideoDescription] = useState(null);
+  const [currentVideoResource, setCurrentVideoResource] = useState(null);
   const [activeIndex, setActiveIndex] = useState(null);
   const [aspectRatio, setAspectRatio] = useState(9 / 16);
 
   useEffect(() => {
     if (oneData?.data?.videos.length > 0) {
       setCurrentVideoUrl(oneData.data.videos[0].video_url);
+      setCurrentVideoDescription(oneData?.data?.videos[0].video_description);
+      setCurrentVideoResource(oneData?.data?.videos[0].video_resource);
       setActiveIndex(0);
     }
   }, [oneData]);
 
-  const handleButtonClick = (index, videoUrl) => {
+  const handleButtonClick = (
+    index,
+    videoUrl,
+    videoDescription,
+    videoResource
+  ) => {
     setCurrentVideoUrl(videoUrl);
+    setCurrentVideoDescription(videoDescription);
+    setCurrentVideoResource(videoResource);
     setActiveIndex(index);
   };
 
@@ -121,7 +132,12 @@ const ViewsCourse = () => {
                               : "hover:bg-gray-50"
                           }`}
                           onClick={() =>
-                            handleButtonClick(index, video.video_url)
+                            handleButtonClick(
+                              index,
+                              video.video_url,
+                              video.video_description,
+                              video.video_resource
+                            )
                           }
                         >
                           <div className="flex flex-row">
@@ -197,7 +213,12 @@ const ViewsCourse = () => {
                               : "hover:bg-gray-50"
                           }`}
                           onClick={() =>
-                            handleButtonClick(index, video.video_url)
+                            handleButtonClick(
+                              index,
+                              video.video_url,
+                              video.video_description,
+                              video.video_resource
+                            )
                           }
                         >
                           <div className="flex flex-row">
@@ -211,19 +232,45 @@ const ViewsCourse = () => {
                     ))}
                   </div>
 
-                  <div class="mt-6 border bg-slate-100 rounded-md p-4">
-                    <div class="font-medium text-sm flex items-center justify-between">
-                      Resource and Attatchments
+                  {currentVideoDescription === "" ? (
+                    <div class="mt-6 border bg-slate-100 rounded-md p-4">
+                      <div class="font-medium text-sm flex items-center justify-between">
+                        Resource and Attatchments
+                      </div>
+                      <a
+                        href={oneData?.data?.courseResource}
+                        className="mt-3 text-sm italic text-blue-800 hover:underline"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {oneData?.data?.courseResource}
+                      </a>
                     </div>
-                    <a
-                      href={oneData?.data?.courseResource}
-                      className="mt-3 text-sm italic text-blue-800 hover:underline"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {oneData?.data?.courseResource}
-                    </a>
-                  </div>
+                  ) : (
+                    <div>
+                      <div class="mt-6 border bg-slate-100 rounded-md p-4">
+                        <div class="font-medium text-sm flex items-center justify-between">
+                          Description
+                        </div>
+                        <div class=" text-sm flex items-center justify-between text-justify">
+                          {currentVideoDescription}
+                        </div>
+                      </div>
+                      <div className="mt-2 border bg-slate-100 rounded-md p-4">
+                        <div class="font-medium mt-1 text-sm flex items-center justify-between">
+                          Resource
+                        </div>
+                        <a
+                          href={oneData?.data?.courseResource}
+                          className="mt-3 text-sm italic text-blue-800 hover:underline"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {oneData?.data?.courseResource}
+                        </a>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
