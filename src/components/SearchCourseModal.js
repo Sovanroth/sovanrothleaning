@@ -1,5 +1,5 @@
 import { Fragment, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react";
+import { Dialog, Transition, Combobox } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { getSearchCourse } from "../redux/slice/courseSlice";
 import { Link } from "react-router-dom";
@@ -76,7 +76,7 @@ export default function SearchCourseModal({ isOpen, onClose }) {
                       <input
                         type="text"
                         className="flex-grow rounded-md border-0 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 focus:outline-none focus:ring-0"
-                        placeholder="Find anything..."
+                        placeholder="Search..."
                         value={searchQuery}
                         onChange={handleInputChange}
                         onFocus={handleInputFocus}
