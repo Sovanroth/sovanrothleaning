@@ -251,7 +251,12 @@ const BuyCourse = () => {
                                 : "hover:bg-gray-50"
                             }`}
                             onClick={() =>
-                              handleButtonClick(index, video.video_url)
+                              handleButtonClick(
+                                index,
+                                video.video_surl,
+                                video.video_description,
+                                video.video_resource
+                              )
                             }
                           >
                             <div className="flex flex-row">
