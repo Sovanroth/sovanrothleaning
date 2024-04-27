@@ -60,6 +60,8 @@ export default function EditCourse() {
   const [videoId, setVideoId] = useState("");
   const [videoTitle, setVideoTitle] = useState("");
   const [videoURL, setVideoURL] = useState("");
+  const [videoDescription, setVideoDescription] = useState("");
+  const [videoResource, setVideoResource] = useState("");
   const [video, setVideo] = useState("");
 
   const deletModal = (name, id) => {
@@ -80,10 +82,12 @@ export default function EditCourse() {
     setAddModalOpen(false);
   };
 
-  const editModal = (tilte, url, id) => {
+  const editModal = (tilte, url, id, description, resource) => {
     setVideoTitle(tilte);
     setVideoURL(url);
     setVideo(id);
+    setVideoDescription(description);
+    setVideoResource(resource);
     setEditModalOpen(true);
   };
 
@@ -611,7 +615,9 @@ export default function EditCourse() {
                           editModal(
                             video?.video_title,
                             video?.video_url,
-                            video?.id
+                            video?.id,
+                            video?.video_description,
+                            video?.video_resource
                           )
                         }
                         className="ml-3 rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
@@ -643,6 +649,8 @@ export default function EditCourse() {
                       videoTitle={videoTitle}
                       videoURL={videoURL}
                       videoId={video}
+                      videoDescriptionValue={videoDescription}
+                      videoResourceValue={videoResource}
                     />
                   )}
                 </p>

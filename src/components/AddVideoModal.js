@@ -13,6 +13,8 @@ export default function AddVideoModal({ onClose }) {
   const [data, setData] = useState({
     videoTitle: "",
     videoUrl: "",
+    videoDescription: "",
+    videoResource: "",
   });
   const { id } = useParams();
 
@@ -26,6 +28,16 @@ export default function AddVideoModal({ onClose }) {
     setData(newVal);
   };
 
+  const handleChangeVideoDescription = (e) => {
+    const newVal = { ...data, videoDescription: e.target.value };
+    setData(newVal);
+  };
+
+  const hanldeChnageVideoResource = (e) => {
+    const newVal = { ...data, videoResource: e.target.value };
+    setData(newVal);
+  };
+
   const createVideo = async () => {
     setLoading(true);
 
@@ -33,6 +45,8 @@ export default function AddVideoModal({ onClose }) {
       const params = {
         video_title: data?.videoTitle,
         video_url: data?.videoUrl,
+        video_description: data?.videoDescription,
+        video_resource: data?.videoResource,
       };
 
       const respone = await dispatch(postVideo(id, params));
@@ -128,6 +142,43 @@ export default function AddVideoModal({ onClose }) {
                               required
                               value={data?.videoUrl}
                               onChange={(e) => handleChangeVideoUrl(e)}
+                              id="videoUrl"
+                              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                              placeholder="youtube.com"
+                            />
+                          </div>
+
+                          <div className="relative mt-5">
+                            <label
+                              className="absolute -top-2 left-2 inline-block bg-white px-1 text-xs font-medium text-gray-900"
+                            >
+                              Video Description
+                            </label>
+                            <input
+                              type="text"
+                              name="videoDescription"
+                              required
+                              value={data?.videoDescription}
+                              onChange={(e) => handleChangeVideoDescription(e)}
+                              id="videoUrl"
+                              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                              placeholder="There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain..."
+                            />
+                          </div>
+
+
+                          <div className="relative mt-5">
+                            <label
+                              className="absolute -top-2 left-2 inline-block bg-white px-1 text-xs font-medium text-gray-900"
+                            >
+                              Video Resource
+                            </label>
+                            <input
+                              type="url"
+                              name="videoResource"
+                              required
+                              value={data?.videoResource}
+                              onChange={(e) => hanldeChnageVideoResource(e)}
                               id="videoUrl"
                               className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                               placeholder="youtube.com"

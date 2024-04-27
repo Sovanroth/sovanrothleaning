@@ -1,9 +1,7 @@
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Dialog, Transition } from "@headlessui/react";
-import { changePasswordRequest, updateUser } from "../redux/slice/loginSlice";
-import { errorPrefix } from "@firebase/util";
 import {
   getOneData,
   postVideo,
@@ -15,6 +13,8 @@ export default function EditVideoModal({
   videoTitle,
   videoURL,
   videoId,
+  videoDescriptionValue,
+  videoResourceValue,
 }) {
   const cancelButtonRef = useRef(null);
   const dispatch = useDispatch();
@@ -22,6 +22,8 @@ export default function EditVideoModal({
   const [data, setData] = useState({
     videoTitle: videoTitle,
     videoUrl: videoURL,
+    videoDescription: videoDescriptionValue,
+    videoResource: videoResourceValue,
   });
   const { id } = useParams();
   const oneData = useSelector((state) => state?.courses?.oneData);
@@ -33,6 +35,16 @@ export default function EditVideoModal({
 
   const handleChangeVideoUrl = (e) => {
     const newVal = { ...data, videoUrl: e.target.value };
+    setData(newVal);
+  };
+
+  const hanldeChnageVideoResource = (e) => {
+    const newVal = { ...data, videoResource: e.target.value };
+    setData(newVal);
+  };
+
+  const handleChangeVideoDescription = (e) => {
+    const newVal = { ...data, videoDescription: e.target.value };
     setData(newVal);
   };
 
@@ -48,6 +60,8 @@ export default function EditVideoModal({
       const params = {
         video_title: data?.videoTitle,
         video_url: data?.videoUrl,
+        video_description: data?.videoDescription,
+        video_resource: data?.videoResource,
       };
 
       const response = await dispatch(updateVideoData(videoId, params));
@@ -141,6 +155,42 @@ export default function EditVideoModal({
                               placeholder="youtube.com"
                             />
                           </div>
+
+                          <div className="relative mt-5">
+                            <label
+                              className="absolute -top-2 left-2 inline-block bg-white px-1 text-xs font-medium text-gray-900"
+                            >
+                              Video Description
+                            </label>
+                            <input
+                              type="text"
+                              name="videoDecription"
+                              required
+                              value={data?.videoDescription}
+                              onChange={(e) => handleChangeVideoDescription(e)}
+                              id="videoDecription"
+                              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                              placeholder="youtube.com"
+                            />
+                          </div>
+
+                          <div className="relative mt-5">
+                            <label
+                              className="absolute -top-2 left-2 inline-block bg-white px-1 text-xs font-medium text-gray-900"
+                            >
+                              Video Resource
+                            </label>
+                            <input
+                              type="url"
+                              name="videoResource"
+                              required
+                              value={data?.videoResource}
+                              onChange={(e) => hanldeChnageVideoResource(e)}
+                              id="videoResource"
+                              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                              placeholder="youtube.com"
+                            />
+                          </div>
                         </p>
                       </div>
                     </div>
@@ -150,7 +200,7 @@ export default function EditVideoModal({
                       type="submit"
                       className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2"
                     >
-                      {loading ? "Loading ..." : "Add"}
+                      {loading ? "Loading ..." : "Edit"}
                     </button>
                     <button
                       type="button"
