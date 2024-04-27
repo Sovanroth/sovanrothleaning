@@ -34,6 +34,7 @@ import RequestLink from "./view/Auth/RequestLink";
 import AddVideoPage from "./view/Teacher/AddVideoPage";
 import Banner from "./components/Banner";
 import CheckOutForm from "./components/CheckOutForm";
+import Comment from "./components/Comment";
 
 function App() {
   document.addEventListener("contextmenu", (e) => e.preventDefault());
@@ -108,7 +109,7 @@ function App() {
           />
           <Route path="loading" element={<LoadingScreen />} />
           <Route path="*" element={<NotFoundPage />} />
-          {/* <Route path="test" element={<CheckOutForm/>} /> */}
+          <Route path="test" element={<Comment/>} />
         </Routes>
       </Router>
     </AuthProvider>
