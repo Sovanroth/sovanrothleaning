@@ -9,6 +9,7 @@ import { Tooltip } from "react-tooltip";
 import MuxPlayer from "@mux/mux-player-react";
 import ReactPlayer from "react-player";
 import { Helmet } from "react-helmet";
+import Comment from "./Comment";
 
 const ViewsCourse = () => {
   const { id } = useParams();
@@ -261,12 +262,12 @@ const ViewsCourse = () => {
                           Resource
                         </div>
                         <a
-                          href={oneData?.data?.courseResource}
+                          href={currentVideoResource}
                           className="mt-3 text-sm italic text-blue-800 hover:underline"
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          {oneData?.data?.courseResource}
+                          {currentVideoResource}
                         </a>
                       </div>
                     </div>
@@ -274,6 +275,7 @@ const ViewsCourse = () => {
                 </div>
               </div>
             </div>
+            {/* <Comment /> */}
           </div>
         )}
       </div>

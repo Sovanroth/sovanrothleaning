@@ -21,13 +21,21 @@ const BuyCourse = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showFullText, setShowFullText] = useState(false);
-
   const [currentVideoUrl, setCurrentVideoUrl] = useState(null);
+  const [currentVideoDescription, setCurrentVideoDescription] = useState(null);
+  const [currentVideoResource, setCurrentVideoResource] = useState(null);
   const [activeIndex, setActiveIndex] = useState(null);
   const [aspectRatio, setAspectRatio] = useState(9 / 16);
 
-  const handleButtonClick = (index, videoUrl) => {
+  const handleButtonClick = (
+    index,
+    videoUrl,
+    videoDescription,
+    videoResource
+  ) => {
     setCurrentVideoUrl(videoUrl);
+    setCurrentVideoDescription(videoDescription);
+    setCurrentVideoResource(videoResource);
     setActiveIndex(index);
   };
 
@@ -60,9 +68,13 @@ const BuyCourse = () => {
       oneCourseByUser.data.videos.length > 0
     ) {
       setCurrentVideoUrl(oneCourseByUser.data.videos[0].video_url);
+      setCurrentVideoDescription(oneData?.data?.videos[0].video_description);
+      setCurrentVideoResource(oneData?.data?.videos[0].video_resource);
       setActiveIndex(0);
     } else if (oneData && oneData.data && oneData.data.videos.length > 0) {
       setCurrentVideoUrl(oneData.data.videos[0].video_url);
+      setCurrentVideoDescription(oneData?.data?.videos[0].video_description);
+      setCurrentVideoResource(oneData?.data?.videos[0].video_resource);
       setActiveIndex(0);
     }
   }, [oneCourseByUser, oneData]);
@@ -128,7 +140,12 @@ const BuyCourse = () => {
                               : "hover:bg-gray-50"
                           }`}
                           onClick={() =>
-                            handleButtonClick(index, video.video_url)
+                            handleButtonClick(
+                              index,
+                              video.video_url,
+                              video.video_description,
+                              video.video_resource
+                            )
                           }
                         >
                           <div className="flex flex-row">
@@ -234,7 +251,12 @@ const BuyCourse = () => {
                                 : "hover:bg-gray-50"
                             }`}
                             onClick={() =>
-                              handleButtonClick(index, video.video_url)
+                              handleButtonClick(
+                                index,
+                                video.video_surl,
+                                video.video_description,
+                                video.video_resource
+                              )
                             }
                           >
                             <div className="flex flex-row">
@@ -259,7 +281,12 @@ const BuyCourse = () => {
                                 : "bg-gray-100 text-gray-500 pointer-events-none"
                             } shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50`}
                             onClick={() =>
-                              handleButtonClick(index, video.video_url)
+                              handleButtonClick(
+                                index,
+                                video.video_url,
+                                video.video_description,
+                                video.video_resource
+                              )
                             }
                           >
                             <div className="flex flex-row">
@@ -280,18 +307,59 @@ const BuyCourse = () => {
                 </div>
 
                 {oneCourseByUser?.data?.owned === 1 ? (
-                  <div class="mt-6 border bg-slate-100 rounded-md p-4">
-                    <div class="font-medium text-sm flex items-center justify-between">
-                      Resource and Attatchments
-                    </div>
-                    <a
-                      href={oneCourseByUser?.data?.courseResource}
-                      className="mt-3 text-sm italic text-blue-800 hover:underline"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {oneCourseByUser?.data?.courseResource}
-                    </a>
+                  // <div class="mt-6 border bg-slate-100 rounded-md p-4">
+                  //   <div class="font-medium text-sm flex items-center justify-between">
+                  //     Resource and Attatchments
+                  //   </div>
+                  //   <a
+                  //     href={oneCourseByUser?.data?.courseResource}
+                  //     className="mt-3 text-sm italic text-blue-800 hover:underline"
+                  //     target="_blank"
+                  //     rel="noopener noreferrer"
+                  //   >
+                  //     {oneCourseByUser?.data?.courseResource}
+                  //   </a>
+                  // </div>
+                  <div>
+                    {currentVideoDescription === "" ? (
+                      <div class="mt-6 border bg-slate-100 rounded-md p-4">
+                        <div class="font-medium text-sm flex items-center justify-between">
+                          Resource and Attatchments
+                        </div>
+                        <a
+                          href={oneData?.data?.courseResource}
+                          className="mt-3 text-sm italic text-blue-800 hover:underline"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {oneCourseByUser?.data?.courseResource}
+                        </a>
+                      </div>
+                    ) : (
+                      <div>
+                        <div class="mt-6 border bg-slate-100 rounded-md p-4">
+                          <div class="font-medium text-sm flex items-center justify-between">
+                            Description
+                          </div>
+                          <div class=" text-sm flex items-center justify-between text-justify">
+                            {currentVideoDescription}
+                          </div>
+                        </div>
+                        <div className="mt-2 border bg-slate-100 rounded-md p-4">
+                          <div class="font-medium mt-1 text-sm flex items-center justify-between">
+                            Resource
+                          </div>
+                          <a
+                            href={currentVideoResource}
+                            className="mt-3 text-sm italic text-blue-800 hover:underline"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {currentVideoResource}
+                          </a>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <div>
@@ -307,7 +375,9 @@ const BuyCourse = () => {
                       >
                         {/* {loading ? "Loading..." : "Log in"} */}
                         {/* Enroll for {oneCourseByUser?.data?.coursePrice} */}
-                        {loading ? "Loading ..." : `Enroll for ${oneCourseByUser?.data?.coursePrice}$`}
+                        {loading
+                          ? "Loading ..."
+                          : `Enroll for ${oneCourseByUser?.data?.coursePrice}$`}
                       </button>
                     </Link>
                   </div>
