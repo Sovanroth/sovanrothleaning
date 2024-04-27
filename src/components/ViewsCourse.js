@@ -262,7 +262,7 @@ const ViewsCourse = () => {
                           Resource
                         </div>
                         <a
-                          href={oneData?.data?.courseResource}
+                          href={currentVideoResource}
                           className="mt-3 text-sm italic text-blue-800 hover:underline"
                           target="_blank"
                           rel="noopener noreferrer"
@@ -275,7 +275,7 @@ const ViewsCourse = () => {
                 </div>
               </div>
             </div>
-            <Comment />
+            {/* <Comment /> */}
           </div>
         )}
       </div>
