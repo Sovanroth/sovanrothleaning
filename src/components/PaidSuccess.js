@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { buyCourse, excecutePaymentData } from "../redux/slice/courseSlice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function PaidSuccess() {
   const dispatch = useDispatch();
@@ -38,7 +38,6 @@ export default function PaidSuccess() {
       const response = await dispatch(excecutePaymentData(param));
       console.log(courseId);
       await dispatch(buyCourse(courseId));
-      navigate("/");
       return response;
     } catch (error) {
       console.log(error);
@@ -47,6 +46,10 @@ export default function PaidSuccess() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    hanldeExcecuteData();
+  }, []);
 
   return (
     <>
@@ -68,10 +71,7 @@ export default function PaidSuccess() {
             You've paid for the course; thank you for using our platform!
           </p>
           <div className="mt-10 flex justify-center">
-            <Link
-              onClick={hanldeExcecuteData}
-              className="text-sm font-semibold leading-7 text-white"
-            >
+            <Link to="/" className="text-sm font-semibold leading-7 text-white">
               <span aria-hidden="true">&larr;</span>
               {loading ? "Loading ..." : "Back to home"}
             </Link>
