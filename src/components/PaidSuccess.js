@@ -73,7 +73,7 @@ export default function PaidSuccess() {
           <div className="mt-10 flex justify-center">
             <Link to="/" className="text-sm font-semibold leading-7 text-white">
               <span aria-hidden="true">&larr;</span>
-              {loading ? "Loading ..." : "Back to home"}
+              {loading ? " Loading ..." : " Back to home"}
             </Link>
           </div>
         </div>
