@@ -1,21 +1,30 @@
 import { Helmet } from "react-helmet";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { excecutePaymentData } from "../redux/slice/courseSlice";
+import { buyCourse, excecutePaymentData } from "../redux/slice/courseSlice";
 import { useState } from "react";
 
 export default function PaidSuccess() {
   const dispatch = useDispatch();
+
   const currentURL = window.location.href;
-  const queryString = currentURL.split("?")[1];
-  const params = queryString.split("&");
-  let token = "";
-  params.forEach((param) => {
-    const [key, value] = param.split("=");
-    if (key === "token") {
-      token = value;
-    }
-  });
+  const urlParams = new URLSearchParams(currentURL.split("?")[1]);
+  let token = urlParams.get("token");
+  let userId = urlParams.get("UserId");
+  let courseId = urlParams.get("CourseID");
+
+  if (!token) {
+    console.error("Token parameter is missing or null.");
+  }
+
+  if (!userId) {
+    console.error("UserId parameter is missing or null.");
+  }
+
+  if (!courseId) {
+    console.error("CourseID parameter is missing or null.");
+  }
+
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -25,9 +34,12 @@ export default function PaidSuccess() {
       const param = {
         orderID: token,
       };
+      console.log(param);
       const response = await dispatch(excecutePaymentData(param));
-      // console.log(response);
+      console.log(courseId);
+      await dispatch(buyCourse(courseId));
       navigate("/");
+      return response;
     } catch (error) {
       console.log(error);
       return error;
@@ -56,12 +68,13 @@ export default function PaidSuccess() {
             You've paid for the course; thank you for using our platform!
           </p>
           <div className="mt-10 flex justify-center">
-            <button
+            <Link
               onClick={hanldeExcecuteData}
               className="text-sm font-semibold leading-7 text-white"
             >
-              <span aria-hidden="true">&larr;</span> Back to home
-            </button>
+              <span aria-hidden="true">&larr;</span>
+              {loading ? "Loading ..." : "Back to home"}
+            </Link>
           </div>
         </div>
       </main>

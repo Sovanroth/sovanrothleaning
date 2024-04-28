@@ -56,6 +56,8 @@ export default function Pricing() {
     try {
       const param = {
         amount: oneData?.data?.coursePrice,
+        userId: localStorage.getItem("userId"),
+        courseId: oneData?.data?.id,
       };
       const response = await dispatch(checkOut(param));
       console.log(response);
