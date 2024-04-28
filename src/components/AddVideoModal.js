@@ -157,7 +157,6 @@ export default function AddVideoModal({ onClose }) {
                             <input
                               type="text"
                               name="videoDescription"
-                              required
                               value={data?.videoDescription}
                               onChange={(e) => handleChangeVideoDescription(e)}
                               id="videoUrl"
@@ -176,7 +175,6 @@ export default function AddVideoModal({ onClose }) {
                             <input
                               type="url"
                               name="videoResource"
-                              required
                               value={data?.videoResource}
                               onChange={(e) => hanldeChnageVideoResource(e)}
                               id="videoUrl"

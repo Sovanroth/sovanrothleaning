@@ -165,7 +165,6 @@ export default function EditVideoModal({
                             <input
                               type="text"
                               name="videoDecription"
-                              required
                               value={data?.videoDescription}
                               onChange={(e) => handleChangeVideoDescription(e)}
                               id="videoDecription"
@@ -183,7 +182,6 @@ export default function EditVideoModal({
                             <input
                               type="url"
                               name="videoResource"
-                              required
                               value={data?.videoResource}
                               onChange={(e) => hanldeChnageVideoResource(e)}
                               id="videoResource"
