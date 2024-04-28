@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import {
   buyCourse,
   checkOut,
+  excecutePaymentData,
   getCourseByUserID,
   getOneCourseByUser,
   getOneData,
@@ -56,12 +57,11 @@ export default function Pricing() {
       const param = {
         amount: oneData?.data?.coursePrice,
       };
-      // console.log(param);
       const response = await dispatch(checkOut(param));
       console.log(response);
       setReturnData(response);
       window.location.href = response?.data.links.find(
-        (link) => link.rel === "approval_url"
+        (link) => link.rel === "approve"
       ).href;
       // await dispatch(buyCourse(oneData?.data?.id));
       return response;
