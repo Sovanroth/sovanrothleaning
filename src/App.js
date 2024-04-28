@@ -35,6 +35,7 @@ import AddVideoPage from "./view/Teacher/AddVideoPage";
 import Banner from "./components/Banner";
 import CheckOutForm from "./components/CheckOutForm";
 import Comment from "./components/Comment";
+import PaidSuccess from "./components/PaidSuccess";
 
 function App() {
   document.addEventListener("contextmenu", (e) => e.preventDefault());
@@ -71,7 +72,8 @@ function App() {
             <Route path="/setting" element={<SettingPage />} />
             <Route path="/dashboard/course/:id" element={<WatchVideos />} />
             <Route path="/search-course/:id" element={<SearchPage />} />
-            <Route path="/confirm-order/:id" element={<CheckOutForm/>}/>
+            <Route path="/confirm-order/:id" element={<CheckOutForm />} />
+            <Route path="/paid-success" element={<PaidSuccess />} />
           </Route>
 
           <Route element={<TeacherPrivateRoute />}>
@@ -109,7 +111,7 @@ function App() {
           />
           <Route path="loading" element={<LoadingScreen />} />
           <Route path="*" element={<NotFoundPage />} />
-          <Route path="test" element={<Comment/>} />
+          {/* <Route path="test" element={<PaidSuccess/>} /> */}
         </Routes>
       </Router>
     </AuthProvider>

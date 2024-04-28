@@ -15,6 +15,7 @@ const initialState = {
   allCoursesByUser: [],
   oneCourseByUser: {},
   checkout: {},
+  excecutePayment: {},
 };
 
 const coursesSlice = createSlice({
@@ -90,6 +91,10 @@ const coursesSlice = createSlice({
     getCheckOutSuccess(state, actions) {
       state.loading = false;
       state.checkout = actions.payload;
+    },
+    getExcecutePaymentSuccess(state, actions) {
+      state.loading = false;
+      state.excecutePayment = actions.payload;
     },
   },
 });
@@ -464,11 +469,42 @@ export const checkOut = (param) => async (dispatch) => {
   try {
     const response = await axiosInstance.post(
       `/users/paypal/create-order`,
-      param
+      param,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
     );
 
     if (response?.data) {
       dispatch(getCheckOutSuccess(response?.data));
+      return response;
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
+  } finally {
+    dispatch(stopLoading());
+  }
+};
+
+export const excecutePaymentData = (param) => async (dispatch) => {
+  dispatch(startLoading());
+
+  try {
+    const response = await axiosInstance.post(
+      `/users/paypal/execute-payment`,
+      param,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+
+    if (response?.data) {
+      dispatch(getExcecutePaymentSuccess(response?.data));
       return response;
     }
   } catch (error) {
@@ -498,6 +534,7 @@ export const {
   getOneCoruseByUserSuccess,
   updateVideoSuccess,
   getCheckOutSuccess,
+  getExcecutePaymentSuccess,
 } = coursesSlice.actions;
 
 export default coursesSlice.reducer;
