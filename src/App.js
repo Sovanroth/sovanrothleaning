@@ -58,7 +58,6 @@ function App() {
 
   return (
     <AuthProvider>
-      <Banner />
       <Router>
         <Routes>
           <Route element={<PrivateRoute />}>

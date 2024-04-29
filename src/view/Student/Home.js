@@ -3,6 +3,8 @@ import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
 import CourseOwned from "../../components/CourseOwned";
 import { Helmet } from "react-helmet";
+import { Navbar } from "@material-tailwind/react";
+import Banner from "../../components/Banner";
 
 const Home = () => {
   // console.log(localStorage.getItem("userId"));
@@ -16,6 +18,7 @@ const Home = () => {
           Suku | Home
         </title>
       </Helmet>
+      <Banner/>
       <NavBar />
       <div>
         <CourseOwned />

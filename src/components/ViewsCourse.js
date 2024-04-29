@@ -275,7 +275,7 @@ const ViewsCourse = () => {
                 </div>
               </div>
             </div>
-            {/* <Comment /> */}
+            <Comment data={oneData} />
           </div>
         )}
       </div>

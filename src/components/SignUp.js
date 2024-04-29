@@ -98,7 +98,8 @@ export default function SignUp() {
                 </Link>
               </p>
               <p className=" text-sm leading-6 text-gray-500">
-                Please use valid email
+                Please use a correct email address. You will not be able to
+                modify your email address again!
               </p>
             </div>
 
