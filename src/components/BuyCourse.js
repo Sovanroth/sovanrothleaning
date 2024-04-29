@@ -170,7 +170,12 @@ const BuyCourse = () => {
                               : "bg-gray-100 text-gray-500 pointer-events-none"
                           } shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50`}
                           onClick={() =>
-                            handleButtonClick(index, video.video_url)
+                            handleButtonClick(
+                              index,
+                              video.video_url,
+                              video.video_description,
+                              video.video_resource
+                            )
                           }
                         >
                           <div className="flex flex-row">
@@ -253,7 +258,7 @@ const BuyCourse = () => {
                             onClick={() =>
                               handleButtonClick(
                                 index,
-                                video.video_surl,
+                                video.video_url,
                                 video.video_description,
                                 video.video_resource
                               )
