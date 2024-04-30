@@ -1,17 +1,48 @@
 import React, { useState } from "react";
 import Moment from "react-moment";
 import AddCommentModal from "./AddCommentModal";
+import { Fragment } from "react";
+import { Menu, Transition } from "@headlessui/react";
+import { PencilIcon, EllipsisVerticalIcon } from "@heroicons/react/20/solid";
+import EditCommentModal from "./EditCommentModal";
+import DeleteCommentModal from "./DeleteCommentModal";
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
 
 const Comment = ({ data }) => {
   const [addModal, setAddModal] = useState(false);
+  const [editModal, setEditModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [commentData, setComment] = useState("");
+  const [commentId, setCommentId] = useState("");
+  const [deleteCommentId, setDeleteCommentId] = useState("");
 
   const addModalOpen = () => {
-    console.log(true);
     setAddModal(true);
   };
 
   const closeAddModal = () => {
     setAddModal(false);
+  };
+  const editModalOpen = (comment, id) => {
+    setEditModal(true);
+    setComment(comment);
+    setCommentId(id);
+  };
+
+  const closeEditModal = () => {
+    setEditModal(false);
+  };
+
+  const deleteModalOpen = (id) => {
+    setDeleteCommentId(id);
+    setDeleteModal(true);
+  };
+
+  const closeDeleteModal = () => {
+    setDeleteModal(false);
   };
 
   return (
@@ -41,7 +72,7 @@ const Comment = ({ data }) => {
           </div>
         </div>
       ) : (
-        <div className="mt-3 overflow-y-auto max-h-[600px]">
+        <div className="mt-3 overflow-y-auto max-h-[600px] py-3">
           {data?.data?.comments.map((comment) => (
             <div className="space-y-4 mt-3">
               <div className="flex">
@@ -71,20 +102,89 @@ const Comment = ({ data }) => {
                         <Moment fromNow>{comment?.createdAt}</Moment>
                       </span>
                     </div>
-                    <div className="flex">
-                      <button
-                        type="button"
-                        className="rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                    {comment?.user?.id === localStorage.getItem("userId") ? (
+                      <Menu
+                        as="div"
+                        className="relative inline-block text-left"
                       >
-                        Edit
-                      </button>
-                      <button
-                        type="button"
-                        className="ml-1 rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-red-300 hover:bg-gray-50"
-                      >
-                        Delete
-                      </button>
-                    </div>
+                        <div>
+                          {editModal && (
+                            <EditCommentModal
+                              onClose={closeEditModal}
+                              comment={commentData}
+                              id={commentId}
+                              courseId={data?.data?.id}
+                            />
+                          )}
+                          <Menu.Button className="flex items-center rounded-full text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
+                            <span className="sr-only">Open options</span>
+                            <EllipsisVerticalIcon
+                              className="h-5 w-5"
+                              aria-hidden="true"
+                            />
+                          </Menu.Button>
+                          {deleteModal && (
+                            <DeleteCommentModal
+                              onClose={closeDeleteModal}
+                              commentId={deleteCommentId}
+                              courseId={data?.data?.id}
+                            />
+                          )}
+                        </div>
+
+                        <Transition
+                          as={Fragment}
+                          enter="transition ease-out duration-100"
+                          enterFrom="transform opacity-0 scale-95"
+                          enterTo="transform opacity-100 scale-100"
+                          leave="transition ease-in duration-75"
+                          leaveFrom="transform opacity-100 scale-100"
+                          leaveTo="transform opacity-0 scale-95"
+                        >
+                          <Menu.Items className="absolute right-0 z-10 mt-2 w-fit origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            <div className="py-1">
+                              <Menu.Item>
+                                {({ active }) => (
+                                  <button
+                                    onClick={() =>
+                                      editModalOpen(
+                                        comment?.commentData,
+                                        comment?.id
+                                      )
+                                    }
+                                    className={classNames(
+                                      active
+                                        ? "bg-gray-100 text-gray-900"
+                                        : "text-gray-700",
+                                      "block w-full px-4 py-2 text-left text-sm"
+                                    )}
+                                  >
+                                    Edit
+                                  </button>
+                                )}
+                              </Menu.Item>
+                              <Menu.Item>
+                                {({ active }) => (
+                                  <button
+                                    onClick={() => deleteModalOpen(comment?.id)}
+                                    className={classNames(
+                                      active
+                                        ? "bg-gray-100 text-gray-900"
+                                        : "text-gray-700",
+                                      "block w-full px-4 py-2 text-left text-sm"
+                                    )}
+                                  >
+                                    Delete
+                                  </button>
+                                )}
+                              </Menu.Item>
+                            </div>
+                          </Menu.Items>
+                        </Transition>
+                      </Menu>
+                    ) : (
+                      <div className=" hidden">test</div>
+                    )}
                   </div>
                   <p className="text-sm mt-2 text-justify">
                     {comment?.commentData}
@@ -92,7 +192,7 @@ const Comment = ({ data }) => {
                   <button className="my-5 text-gray-500 font-bold text-xs">
                     Replies
                   </button>
-                  <div className="space-y-4">
+                  {/* <div className="space-y-4">
                     <div className="flex">
                       <div className="flex-shrink-0 mr-3">
                         <img
@@ -112,7 +212,7 @@ const Comment = ({ data }) => {
                         </p>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

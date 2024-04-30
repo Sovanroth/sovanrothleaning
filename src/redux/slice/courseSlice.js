@@ -546,6 +546,47 @@ export const postComment = (courseId, param) => async (dispatch) => {
   }
 };
 
+export const deleteComemet = (commentId) => async (dispatch) => {
+  dispatch(startLoading());
+
+  try {
+    const response = await axiosInstance.delete(
+      `/comments/delete-comment/${commentId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+  } catch (error) {
+    console.log(error);
+    return error;
+  } finally {
+    dispatch(stopLoading());
+  }
+};
+
+export const editComment = (commentId, param) => async (dispatch) => {
+  dispatch(startLoading());
+
+  try {
+    const response = await axiosInstance.put(
+      `/comments/upadte-comment/${commentId}`,
+      param,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+  } catch (error) {
+    console.log(error);
+    return error;
+  } finally {
+    dispatch(stopLoading());
+  }
+};
+
 export const {
   startLoading,
   stopLoading,
