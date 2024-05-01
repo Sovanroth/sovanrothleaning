@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { XMarkIcon } from "@heroicons/react/20/solid";
 
 export default function Banner() {
   const [isOpen, setIsOpen] = useState(true);
@@ -15,7 +14,7 @@ export default function Banner() {
           {" "}
           {/* Added z-20 class here */}
           <div className="pointer-events-auto ml-auto max-w-xl rounded-xl bg-white p-6 shadow-lg ring-1 ring-gray-900/10">
-            <p className="text-sm leading-6 text-gray-900">
+            <p className="text-sm leading-6 text-gray-900 text-justify">
               This website is under active development. Stay tuned! and all of
               the data on this website is just for testing! If you are required
               to delete your video, you can contact my email{" "}
