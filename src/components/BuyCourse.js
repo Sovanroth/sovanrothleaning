@@ -10,6 +10,7 @@ import LoadingScreen from "./LoadingScreen";
 import "video-react/dist/video-react.css";
 import { Tooltip } from "react-tooltip";
 import ReactPlayer from "react-player";
+import Comment from "./Comment";
 
 const BuyCourse = () => {
   const { id } = useParams();
@@ -326,21 +327,7 @@ const BuyCourse = () => {
                   //   </a>
                   // </div>
                   <div>
-                    {currentVideoDescription === "" ? (
-                      <div class="mt-6 border bg-slate-100 rounded-md p-4">
-                        <div class="font-medium text-sm flex items-center justify-between">
-                          Resource and Attatchments
-                        </div>
-                        <a
-                          href={oneData?.data?.courseResource}
-                          className="mt-3 text-sm italic text-blue-800 hover:underline"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {oneCourseByUser?.data?.courseResource}
-                        </a>
-                      </div>
-                    ) : (
+                    {currentVideoDescription ? (
                       <div>
                         <div class="mt-6 border bg-slate-100 rounded-md p-4">
                           <div class="font-medium text-sm flex items-center justify-between">
@@ -363,6 +350,20 @@ const BuyCourse = () => {
                             {currentVideoResource}
                           </a>
                         </div>
+                      </div>
+                    ) : (
+                      <div class="mt-6 border bg-slate-100 rounded-md p-4">
+                        <div class="font-medium text-sm flex items-center justify-between">
+                          Resource and Attatchments
+                        </div>
+                        <a
+                          href={oneData?.data?.courseResource}
+                          className="mt-3 text-sm italic text-blue-800 hover:underline"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {oneCourseByUser?.data?.courseResource}
+                        </a>
                       </div>
                     )}
                   </div>
@@ -390,6 +391,11 @@ const BuyCourse = () => {
               </div>
             </div>
           </div>
+          {oneCourseByUser?.data?.owned === 1 ? (
+            <Comment data={oneCourseByUser} />
+          ) : (
+            <></>
+          )}
         </div>
       )}
     </div>
