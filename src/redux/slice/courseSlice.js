@@ -17,6 +17,7 @@ const initialState = {
   checkout: {},
   excecutePayment: {},
   comment: {},
+  replyData: {},
 };
 
 const coursesSlice = createSlice({
@@ -100,6 +101,10 @@ const coursesSlice = createSlice({
     createCommentSuccess(state, actions) {
       state.loading = false;
       state.comment = actions.payload;
+    },
+    createReplySuccess(state, actions) {
+      state.loading = false;
+      state.replyData = actions.payload;
     },
   },
 });
@@ -587,6 +592,31 @@ export const editComment = (commentId, param) => async (dispatch) => {
   }
 };
 
+export const createReply = (commmentId, param) => async (dispatch) => {
+  dispatch(startLoading());
+  try {
+    const response = await axiosInstance.post(
+      `/replies/create-reply/${localStorage.getItem("userId")}/${commmentId}`,
+      param,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+
+    if (response?.data) {
+      dispatch(createReplySuccess(response?.data));
+      return response;
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
+  } finally {
+    dispatch(stopLoading);
+  }
+};
+
 export const {
   startLoading,
   stopLoading,
@@ -608,6 +638,7 @@ export const {
   getCheckOutSuccess,
   getExcecutePaymentSuccess,
   createCommentSuccess,
+  createReplySuccess,
 } = coursesSlice.actions;
 
 export default coursesSlice.reducer;

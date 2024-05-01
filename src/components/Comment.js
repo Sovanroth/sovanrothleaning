@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Moment from "react-moment";
 import AddCommentModal from "./AddCommentModal";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import { PencilIcon, EllipsisVerticalIcon } from "@heroicons/react/20/solid";
+import {
+  PencilIcon,
+  EllipsisVerticalIcon,
+  StarIcon,
+} from "@heroicons/react/20/solid";
 import EditCommentModal from "./EditCommentModal";
 import DeleteCommentModal from "./DeleteCommentModal";
 
@@ -18,6 +22,12 @@ const Comment = ({ data }) => {
   const [commentData, setComment] = useState("");
   const [commentId, setCommentId] = useState("");
   const [deleteCommentId, setDeleteCommentId] = useState("");
+  const userId = localStorage.getItem("userId");
+  const [replyingCommentId, setReplyingCommentId] = useState(null);
+
+  const toggleReply = (commentId) => {
+    setReplyingCommentId(commentId === replyingCommentId ? null : commentId);
+  };
 
   const addModalOpen = () => {
     setAddModal(true);
@@ -77,7 +87,7 @@ const Comment = ({ data }) => {
             <div className="space-y-4 mt-3">
               <div className="flex">
                 <div className="flex-shrink-0 mr-3">
-                  {comment?.user?.profile?.profileImage.length === 0 ? (
+                  {comment?.user?.profile?.profileImage == null ? (
                     <div className=" text-xl">
                       <img
                         className="mt-2 rounded-full w-8 h-8 sm:w-10 sm:h-10"
@@ -102,86 +112,8 @@ const Comment = ({ data }) => {
                         <Moment fromNow>{comment?.createdAt}</Moment>
                       </span>
                     </div>
-                    {comment?.user?.id === localStorage.getItem("userId") ? (
-                      <Menu
-                        as="div"
-                        className="relative inline-block text-left"
-                      >
-                        <div>
-                          {editModal && (
-                            <EditCommentModal
-                              onClose={closeEditModal}
-                              comment={commentData}
-                              id={commentId}
-                              courseId={data?.data?.id}
-                            />
-                          )}
-                          <Menu.Button className="flex items-center rounded-full text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
-                            <span className="sr-only">Open options</span>
-                            <EllipsisVerticalIcon
-                              className="h-5 w-5"
-                              aria-hidden="true"
-                            />
-                          </Menu.Button>
-                          {deleteModal && (
-                            <DeleteCommentModal
-                              onClose={closeDeleteModal}
-                              commentId={deleteCommentId}
-                              courseId={data?.data?.id}
-                            />
-                          )}
-                        </div>
-
-                        <Transition
-                          as={Fragment}
-                          enter="transition ease-out duration-100"
-                          enterFrom="transform opacity-0 scale-95"
-                          enterTo="transform opacity-100 scale-100"
-                          leave="transition ease-in duration-75"
-                          leaveFrom="transform opacity-100 scale-100"
-                          leaveTo="transform opacity-0 scale-95"
-                        >
-                          <Menu.Items className="absolute right-0 z-10 mt-2 w-fit origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                            <div className="py-1">
-                              <Menu.Item>
-                                {({ active }) => (
-                                  <button
-                                    onClick={() =>
-                                      editModalOpen(
-                                        comment?.commentData,
-                                        comment?.id
-                                      )
-                                    }
-                                    className={classNames(
-                                      active
-                                        ? "bg-gray-100 text-gray-900"
-                                        : "text-gray-700",
-                                      "block w-full px-4 py-2 text-left text-sm"
-                                    )}
-                                  >
-                                    Edit
-                                  </button>
-                                )}
-                              </Menu.Item>
-                              <Menu.Item>
-                                {({ active }) => (
-                                  <button
-                                    onClick={() => deleteModalOpen(comment?.id)}
-                                    className={classNames(
-                                      active
-                                        ? "bg-gray-100 text-gray-900"
-                                        : "text-gray-700",
-                                      "block w-full px-4 py-2 text-left text-sm"
-                                    )}
-                                  >
-                                    Delete
-                                  </button>
-                                )}
-                              </Menu.Item>
-                            </div>
-                          </Menu.Items>
-                        </Transition>
-                      </Menu>
+                    {comment?.user?.id === userId ? (
+                      <></>
                     ) : (
                       <div className=" hidden">test</div>
                     )}
@@ -189,30 +121,58 @@ const Comment = ({ data }) => {
                   <p className="text-sm mt-2 text-justify">
                     {comment?.commentData}
                   </p>
-                  <button className="my-5 text-gray-500 font-bold text-xs">
-                    Replies
-                  </button>
-                  {/* <div className="space-y-4">
-                    <div className="flex">
-                      <div className="flex-shrink-0 mr-3">
-                        <img
-                          className="mt-3 rounded-full w-6 h-6 sm:w-8 sm:h-8"
-                          src="https://images.unsplash.com/photo-1604426633861-11b2faead63c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=200&q=80"
-                          alt=""
+                  <div className="flex items-center">
+                    <button
+                      className="my-2 mr-2 text-gray-500 font-bold text-xs"
+                      onClick={() => toggleReply(comment.id)}
+                    >
+                      Reply
+                    </button>
+                    {replyingCommentId === comment.id && (
+                      <div className="relative mt-2 w-full">
+                        <input
+                          type="text"
+                          name="name"
+                          id="name"
+                          className="block w-full border-0 bg-gray-50 py-1.5 text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
+                          placeholder="Enter your reply..."
+                        />
+                        <div
+                          className="absolute inset-x-0 bottom-0 border-t border-gray-300"
+                          aria-hidden="true"
                         />
                       </div>
-                      <div className="flex-1 bg-gray-100 rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
-                        <strong>Sarah</strong>{" "}
-                        <span className="text-xs text-gray-400">3:34 PM</span>
-                        <p className="text-xs sm:text-sm">
-                          Lorem ipsum dolor sit amet, consetetur sadipscing
-                          elitr, sed diam nonumy eirmod tempor invidunt ut
-                          labore et dolore magna aliquyam erat, sed diam
-                          voluptua.
-                        </p>
+                    )}
+                  </div>
+
+                  {comment?.replies.map((reply) => (
+                    <div className="space-y-4 mt-3">
+                      <div className="flex">
+                        <div className="flex-shrink-0 mr-3">
+                          {reply?.user.profile === null ? (
+                            <img
+                              className="mt-3 rounded-full w-6 h-6 sm:w-8 sm:h-8"
+                              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                            />
+                          ) : (
+                            <img
+                              src={reply?.user.profile?.profileImage}
+                              className="mt-3 rounded-full w-6 h-6 sm:w-8 sm:h-8"
+                            />
+                          )}
+                        </div>
+                        <div className="flex-1 bg-gray-100 rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
+                          <strong>{reply?.user?.username}</strong>{" "}
+                          <span className="text-xs text-gray-400">
+                            <Moment fromNow>{reply?.createdAt}</Moment>
+                          </span>
+                          <p className="text-xs sm:text-sm text-justify">
+                            {reply?.replyData}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div> */}
+                  ))}
                 </div>
               </div>
             </div>
@@ -224,3 +184,83 @@ const Comment = ({ data }) => {
 };
 
 export default Comment;
+
+// <Menu
+//   as="div"
+//   className="relative inline-block text-left"
+// >
+//   <div>
+//     {editModal && (
+//       <EditCommentModal
+//         onClose={closeEditModal}
+//         comment={commentData}
+//         id={commentId}
+//         courseId={data?.data?.id}
+//       />
+//     )}
+//     <Menu.Button className="flex items-center rounded-full text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
+//       <span className="sr-only">Open options</span>
+//       <EllipsisVerticalIcon
+//         className="h-5 w-5"
+//         aria-hidden="true"
+//       />
+//     </Menu.Button>
+//     {deleteModal && (
+//       <DeleteCommentModal
+//         onClose={closeDeleteModal}
+//         commentId={deleteCommentId}
+//         courseId={data?.data?.id}
+//       />
+//     )}
+//   </div>
+
+//   <Transition
+//     as={Fragment}
+//     enter="transition ease-out duration-100"
+//     enterFrom="transform opacity-0 scale-95"
+//     enterTo="transform opacity-100 scale-100"
+//     leave="transition ease-in duration-75"
+//     leaveFrom="transform opacity-100 scale-100"
+//     leaveTo="transform opacity-0 scale-95"
+//   >
+//     <Menu.Items className="absolute right-0 z-10 mt-2 w-fit origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+//       <div className="py-1">
+//         <Menu.Item>
+//           {({ active }) => (
+//             <button
+//               onClick={() =>
+//                 editModalOpen(
+//                   comment?.commentData,
+//                   comment?.id
+//                 )
+//               }
+//               className={classNames(
+//                 active
+//                   ? "bg-gray-100 text-gray-900"
+//                   : "text-gray-700",
+//                 "block w-full px-4 py-2 text-left text-sm"
+//               )}
+//             >
+//               Edit
+//             </button>
+//           )}
+//         </Menu.Item>
+//         <Menu.Item>
+//           {({ active }) => (
+//             <button
+//               onClick={() => deleteModalOpen(comment?.id)}
+//               className={classNames(
+//                 active
+//                   ? "bg-gray-100 text-gray-900"
+//                   : "text-gray-700",
+//                 "block w-full px-4 py-2 text-left text-sm"
+//               )}
+//             >
+//               Delete
+//             </button>
+//           )}
+//         </Menu.Item>
+//       </div>
+//     </Menu.Items>
+//   </Transition>
+// </Menu>
