@@ -1,10 +1,14 @@
 import { Fragment, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Dialog, Transition } from "@headlessui/react";
-import { getOneData, postComment } from "../redux/slice/courseSlice";
+import {
+  getOneCourseByUser,
+  getOneData,
+  postComment,
+} from "../redux/slice/courseSlice";
 import { useParams } from "react-router-dom";
 
-export default function AddCommentModal({ onClose }) {
+export default function AddCommentModal({ onClose, oneData }) {
   const cancelButtonRef = useRef(null);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -35,7 +39,11 @@ export default function AddCommentModal({ onClose }) {
       console.log(error);
       return error;
     } finally {
-      await dispatch(getOneData(id));
+      if (oneData?.data?.owned == 1) {
+        await dispatch(getOneCourseByUser(id));
+      } else {
+        await dispatch(getOneData(id));
+      }
       setLoading(false);
     }
   };

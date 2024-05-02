@@ -7,7 +7,11 @@ import { Menu, Transition } from "@headlessui/react";
 import { PaperAirplaneIcon } from "@heroicons/react/20/solid";
 import EditCommentModal from "./EditCommentModal";
 import DeleteCommentModal from "./DeleteCommentModal";
-import { getOneData } from "../redux/slice/courseSlice";
+import {
+  createReply,
+  getOneCourseByUser,
+  getOneData,
+} from "../redux/slice/courseSlice";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -33,8 +37,9 @@ const Comment = ({ data }) => {
     setReply(newVal);
   };
 
-  const toggleReply = (commentId) => {
-    setReplyingCommentId(commentId === replyingCommentId ? null : commentId);
+  const toggleReply = (commentID) => {
+    setCommentId(commentID);
+    setReplyingCommentId(commentID === replyingCommentId ? null : commentID);
   };
 
   const addModalOpen = () => {
@@ -63,7 +68,7 @@ const Comment = ({ data }) => {
     setDeleteModal(false);
   };
 
-  const createReply = async (idForReply) => {
+  const createReplyFunction = () => {
     setLoading(true);
 
     try {
@@ -72,14 +77,20 @@ const Comment = ({ data }) => {
       };
 
       console.log(param);
+      console.log(commentId);
 
-      const respone = await dispatch(createReply(idForReply, param));
-      return respone;
+      const response = dispatch(createReply(commentId, param));
+      return response;
     } catch (error) {
       console.log(error);
       return error;
     } finally {
-      await dispatch(getOneData(data?.data?.id));
+      if (data?.data?.owned == 1) {
+        dispatch(getOneCourseByUser(data?.data?.id));
+      } else {
+        dispatch(getOneData(data?.data?.id));
+      }
+      toggleReply(null);
       setLoading(false);
     }
   };
@@ -95,7 +106,7 @@ const Comment = ({ data }) => {
         >
           Add Comment
         </button>
-        {addModal && <AddCommentModal onClose={closeAddModal} />}
+        {addModal && <AddCommentModal onClose={closeAddModal} oneData={data} />}
       </div>
 
       {data?.data?.comments.length === 0 ? (
@@ -178,7 +189,7 @@ const Comment = ({ data }) => {
                         />
                         <button
                           className="absolute right-2"
-                          // onClick={() => createReply(comment?.id)}
+                          onClick={() => createReplyFunction()}
                         >
                           <PaperAirplaneIcon className="h-6 w-6 text-gray-500" />
                         </button>
