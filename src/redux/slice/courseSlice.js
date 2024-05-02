@@ -106,6 +106,10 @@ const coursesSlice = createSlice({
       state.loading = false;
       state.replyData = actions.payload;
     },
+    getCommentSuccess(state, actions) {
+      state.loading = false;
+      state.comment = actions.payload;
+    },
   },
 });
 
@@ -525,6 +529,30 @@ export const excecutePaymentData = (param) => async (dispatch) => {
   }
 };
 
+export const getCommentByCourse = (courseId) => async (dispatch) => {
+  dispatch(startLoading());
+
+  try {
+    const response = await axiosInstance.get(
+      `/comments/get-comment-by-course-id/${courseId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    if (response?.data) {
+      dispatch(getCommentSuccess(response?.data));
+      return response;
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
+  } finally {
+    dispatch(stopLoading);
+  }
+};
+
 export const postComment = (courseId, param) => async (dispatch) => {
   dispatch(startLoading());
 
@@ -639,6 +667,7 @@ export const {
   getExcecutePaymentSuccess,
   createCommentSuccess,
   createReplySuccess,
+  getCommentSuccess,
 } = coursesSlice.actions;
 
 export default coursesSlice.reducer;
