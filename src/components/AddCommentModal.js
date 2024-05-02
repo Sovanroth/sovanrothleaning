@@ -2,6 +2,7 @@ import { Fragment, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Dialog, Transition } from "@headlessui/react";
 import {
+  getCommentByCourse,
   getOneCourseByUser,
   getOneData,
   postComment,
@@ -31,7 +32,6 @@ export default function AddCommentModal({ onClose, oneData }) {
       };
 
       const response = await dispatch(postComment(id, params));
-      console.log(id, params);
 
       onClose();
       return response;
@@ -39,11 +39,7 @@ export default function AddCommentModal({ onClose, oneData }) {
       console.log(error);
       return error;
     } finally {
-      if (oneData?.data?.owned == 1) {
-        await dispatch(getOneCourseByUser(id));
-      } else {
-        await dispatch(getOneData(id));
-      }
+      dispatch(getCommentByCourse(oneData?.data?.id));
       setLoading(false);
     }
   };

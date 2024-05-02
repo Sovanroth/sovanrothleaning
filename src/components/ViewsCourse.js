@@ -60,7 +60,7 @@ const ViewsCourse = () => {
       response = error;
     }
     setLoading(false);
-    console.log(response);
+    // console.log(response);
     return response;
   };
 

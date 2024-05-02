@@ -6,13 +6,13 @@ import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import {
   PaperAirplaneIcon,
-  ChatBubbleBottomCenterIcon,
+  EllipsisVerticalIcon,
 } from "@heroicons/react/20/solid";
 import EditCommentModal from "./EditCommentModal";
 import DeleteCommentModal from "./DeleteCommentModal";
 import {
   createReply,
-  getOneCourseByUser,
+  getCommentByCourse,
   getOneData,
 } from "../redux/slice/courseSlice";
 
@@ -35,6 +35,7 @@ const Comment = ({ data }) => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const [showReplies, setShowReplies] = useState(false);
+  const comment = useSelector((state) => state?.courses?.comment);
 
   const handleChangeReply = (e) => {
     const newVal = { ...reply, replyData: e.target.value };
@@ -93,15 +94,28 @@ const Comment = ({ data }) => {
       console.log(error);
       return error;
     } finally {
-      if (data?.data?.owned == 1) {
-        dispatch(getOneCourseByUser(data?.data?.id));
-      } else {
-        dispatch(getOneData(data?.data?.id));
-      }
+      dispatch(getCommentByCourse(data?.data?.id));
       toggleReply(null);
       setLoading(false);
     }
   };
+
+  const getComentData = async () => {
+    setLoading(true);
+    try {
+      const response = await dispatch(getCommentByCourse(data?.data?.id));
+      return response;
+    } catch (error) {
+      console.log(error);
+      return error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getComentData();
+  }, []);
 
   return (
     <div className="antialiased mx-auto max-w-7xl px-6 lg:px-4 mt-5">
@@ -117,7 +131,7 @@ const Comment = ({ data }) => {
         {addModal && <AddCommentModal onClose={closeAddModal} oneData={data} />}
       </div>
 
-      {data?.data?.comments.length === 0 ? (
+      {comment?.data?.length === 0 ? (
         <div className="flex flex-col items-center justify-center mt-10 mb-10">
           <img
             height="100"
@@ -131,7 +145,7 @@ const Comment = ({ data }) => {
         </div>
       ) : (
         <div className="mt-3 overflow-y-auto max-h-[600px] py-3">
-          {data?.data?.comments.map((comment) => (
+          {comment?.data?.map((comment) => (
             <div className="space-y-4 mt-3">
               <div className="flex">
                 <div className="flex-shrink-0 mr-3">
@@ -168,6 +182,85 @@ const Comment = ({ data }) => {
                       )}
                     </div>
                     {comment?.user?.id === userId ? (
+                      // <Menu
+                      //   as="div"
+                      //   className="relative inline-block text-left"
+                      // >
+                      //   <div>
+                      //     {editModal && (
+                      //       <EditCommentModal
+                      //         onClose={closeEditModal}
+                      //         comment={commentData}
+                      //         id={commentId}
+                      //         courseId={data?.data?.id}
+                      //       />
+                      //     )}
+                      //     <Menu.Button className="flex items-center rounded-full text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
+                      //       <span className="sr-only">Open options</span>
+                      //       <EllipsisVerticalIcon
+                      //         className="h-5 w-5"
+                      //         aria-hidden="true"
+                      //       />
+                      //     </Menu.Button>
+                      //     {deleteModal && (
+                      //       <DeleteCommentModal
+                      //         onClose={closeDeleteModal}
+                      //         commentId={deleteCommentId}
+                      //         courseId={data?.data?.id}
+                      //       />
+                      //     )}
+                      //   </div>
+
+                      //   <Transition
+                      //     as={Fragment}
+                      //     enter="transition ease-out duration-100"
+                      //     enterFrom="transform opacity-0 scale-95"
+                      //     enterTo="transform opacity-100 scale-100"
+                      //     leave="transition ease-in duration-75"
+                      //     leaveFrom="transform opacity-100 scale-100"
+                      //     leaveTo="transform opacity-0 scale-95"
+                      //   >
+                      //     <Menu.Items className="absolute right-0 z-10 mt-2 w-fit origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      //       <div className="py-1">
+                      //         <Menu.Item>
+                      //           {({ active }) => (
+                      //             <button
+                      //               onClick={() =>
+                      //                 editModalOpen(
+                      //                   comment?.commentData,
+                      //                   comment?.id
+                      //                 )
+                      //               }
+                      //               className={classNames(
+                      //                 active
+                      //                   ? "bg-gray-100 text-gray-900"
+                      //                   : "text-gray-700",
+                      //                 "block w-full px-4 py-2 text-left text-sm"
+                      //               )}
+                      //             >
+                      //               Edit
+                      //             </button>
+                      //           )}
+                      //         </Menu.Item>
+                      //         <Menu.Item>
+                      //           {({ active }) => (
+                      //             <button
+                      //               onClick={() => deleteModalOpen(comment?.id)}
+                      //               className={classNames(
+                      //                 active
+                      //                   ? "bg-gray-100 text-gray-900"
+                      //                   : "text-gray-700",
+                      //                 "block w-full px-4 py-2 text-left text-sm"
+                      //               )}
+                      //             >
+                      //               Delete
+                      //             </button>
+                      //           )}
+                      //         </Menu.Item>
+                      //       </div>
+                      //     </Menu.Items>
+                      //   </Transition>
+                      // </Menu>
                       <></>
                     ) : (
                       <div className=" hidden">test</div>
@@ -305,83 +398,3 @@ const Comment = ({ data }) => {
 };
 
 export default Comment;
-
-// <Menu
-//   as="div"
-//   className="relative inline-block text-left"
-// >
-//   <div>
-//     {editModal && (
-//       <EditCommentModal
-//         onClose={closeEditModal}
-//         comment={commentData}
-//         id={commentId}
-//         courseId={data?.data?.id}
-//       />
-//     )}
-//     <Menu.Button className="flex items-center rounded-full text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
-//       <span className="sr-only">Open options</span>
-//       <EllipsisVerticalIcon
-//         className="h-5 w-5"
-//         aria-hidden="true"
-//       />
-//     </Menu.Button>
-//     {deleteModal && (
-//       <DeleteCommentModal
-//         onClose={closeDeleteModal}
-//         commentId={deleteCommentId}
-//         courseId={data?.data?.id}
-//       />
-//     )}
-//   </div>
-
-//   <Transition
-//     as={Fragment}
-//     enter="transition ease-out duration-100"
-//     enterFrom="transform opacity-0 scale-95"
-//     enterTo="transform opacity-100 scale-100"
-//     leave="transition ease-in duration-75"
-//     leaveFrom="transform opacity-100 scale-100"
-//     leaveTo="transform opacity-0 scale-95"
-//   >
-//     <Menu.Items className="absolute right-0 z-10 mt-2 w-fit origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-//       <div className="py-1">
-//         <Menu.Item>
-//           {({ active }) => (
-//             <button
-//               onClick={() =>
-//                 editModalOpen(
-//                   comment?.commentData,
-//                   comment?.id
-//                 )
-//               }
-//               className={classNames(
-//                 active
-//                   ? "bg-gray-100 text-gray-900"
-//                   : "text-gray-700",
-//                 "block w-full px-4 py-2 text-left text-sm"
-//               )}
-//             >
-//               Edit
-//             </button>
-//           )}
-//         </Menu.Item>
-//         <Menu.Item>
-//           {({ active }) => (
-//             <button
-//               onClick={() => deleteModalOpen(comment?.id)}
-//               className={classNames(
-//                 active
-//                   ? "bg-gray-100 text-gray-900"
-//                   : "text-gray-700",
-//                 "block w-full px-4 py-2 text-left text-sm"
-//               )}
-//             >
-//               Delete
-//             </button>
-//           )}
-//         </Menu.Item>
-//       </div>
-//     </Menu.Items>
-//   </Transition>
-// </Menu>
