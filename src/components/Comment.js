@@ -4,7 +4,10 @@ import { useSelector, useDispatch } from "react-redux";
 import AddCommentModal from "./AddCommentModal";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import { PaperAirplaneIcon } from "@heroicons/react/20/solid";
+import {
+  PaperAirplaneIcon,
+  ChatBubbleBottomCenterIcon,
+} from "@heroicons/react/20/solid";
 import EditCommentModal from "./EditCommentModal";
 import DeleteCommentModal from "./DeleteCommentModal";
 import {
@@ -31,6 +34,7 @@ const Comment = ({ data }) => {
   });
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const [showReplies, setShowReplies] = useState(false);
 
   const handleChangeReply = (e) => {
     const newVal = { ...reply, replyData: e.target.value };
@@ -40,6 +44,10 @@ const Comment = ({ data }) => {
   const toggleReply = (commentID) => {
     setCommentId(commentID);
     setReplyingCommentId(commentID === replyingCommentId ? null : commentID);
+  };
+
+  const toggleReplies = () => {
+    setShowReplies(!showReplies);
   };
 
   const addModalOpen = () => {
@@ -197,6 +205,60 @@ const Comment = ({ data }) => {
                     )}
                   </div>
 
+                  <div>
+                    {comment?.replies.length === 0 ? (
+                      <></>
+                    ) : (
+                      <div
+                        className="text-sm text-gray-500 font-bold cursor-pointer"
+                        onClick={() => setShowReplies(!showReplies)}
+                      >
+                        {showReplies ? "Hide" : "View"}{" "}
+                        {comment?.replies.length} replies
+                      </div>
+                    )}
+
+                    {showReplies &&
+                      comment?.replies.map((reply, index) => (
+                        <div key={index} className="space-y-4 mt-3">
+                          <div className="flex">
+                            <div className="flex-shrink-0 mr-3">
+                              {reply?.user.profile === null ? (
+                                <img
+                                  className="mt-3 rounded-full w-6 h-6 sm:w-8 sm:h-8"
+                                  src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                                  alt="Profile"
+                                />
+                              ) : (
+                                <img
+                                  src={reply?.user.profile?.profileImage}
+                                  className="mt-3 rounded-full w-6 h-6 sm:w-8 sm:h-8"
+                                  alt="Profile"
+                                />
+                              )}
+                            </div>
+                            <div className="flex-1 bg-gray-100 rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
+                              <strong>{reply?.user?.username}</strong>{" "}
+                              <span className="text-xs text-gray-400">
+                                <Moment fromNow>{reply?.createdAt}</Moment>
+                              </span>
+                              {reply?.user?.role === 1 && (
+                                <span className="inline-flex ml-1 items-center rounded-full bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
+                                  Admin
+                                </span>
+                              )}
+                              <p className="text-xs sm:text-sm text-justify">
+                                {reply?.replyData}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                  {/* <div className=" text-sm text-gray-500 font-bold">
+                    View {comment?.replies.length} replies
+                  </div>
+
                   {comment?.replies.map((reply) => (
                     <div className="space-y-4 mt-3">
                       <div className="flex">
@@ -231,7 +293,7 @@ const Comment = ({ data }) => {
                         </div>
                       </div>
                     </div>
-                  ))}
+                  ))} */}
                 </div>
               </div>
             </div>
