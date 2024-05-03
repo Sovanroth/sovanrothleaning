@@ -77,7 +77,20 @@ const Comment = ({ data }) => {
     setDeleteModal(false);
   };
 
-  const createReplyFunction = () => {
+  const getComentData = async () => {
+    setLoading(true);
+    try {
+      const response = await dispatch(getCommentByCourse(data?.data?.id));
+      return response;
+    } catch (error) {
+      console.log(error);
+      return error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const createReplyFunction = async () => {
     setLoading(true);
 
     try {
@@ -88,27 +101,17 @@ const Comment = ({ data }) => {
       console.log(param);
       console.log(commentId);
 
-      const response = dispatch(createReply(commentId, param));
-      return response;
-    } catch (error) {
-      console.log(error);
-      return error;
-    } finally {
-      dispatch(getCommentByCourse(data?.data?.id));
-      toggleReply(null);
-      setLoading(false);
-    }
-  };
+      const response = await dispatch(createReply(commentId, param));
 
-  const getComentData = async () => {
-    setLoading(true);
-    try {
-      const response = await dispatch(getCommentByCourse(data?.data?.id));
+      await getComentData();
+
       return response;
     } catch (error) {
       console.log(error);
       return error;
     } finally {
+      setReply({ replyData: "" });
+      toggleReply(null);
       setLoading(false);
     }
   };
