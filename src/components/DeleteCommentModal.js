@@ -3,7 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-import { deleteComemet, getOneData } from "../redux/slice/courseSlice";
+import {
+  deleteComemet,
+  getCommentByCourse,
+  getOneData,
+} from "../redux/slice/courseSlice";
 
 export default function DeleteCommentModal({ onClose, commentId, courseId }) {
   const cancelButtonRef = useRef(null);
@@ -21,7 +25,7 @@ export default function DeleteCommentModal({ onClose, commentId, courseId }) {
       console.log(error);
       return error;
     } finally {
-      await dispatch(getOneData(courseId));
+      await dispatch(getCommentByCourse(courseId));
       setLoading(false);
     }
   };

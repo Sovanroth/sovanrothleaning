@@ -6,6 +6,8 @@ import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import {
   PaperAirplaneIcon,
+  PencilSquareIcon,
+  TrashIcon,
   EllipsisVerticalIcon,
 } from "@heroicons/react/20/solid";
 import EditCommentModal from "./EditCommentModal";
@@ -58,6 +60,7 @@ const Comment = ({ data }) => {
   const closeAddModal = () => {
     setAddModal(false);
   };
+
   const editModalOpen = (comment, id) => {
     setEditModal(true);
     setComment(comment);
@@ -180,94 +183,104 @@ const Comment = ({ data }) => {
                         <span className="inline-flex ml-1 items-center rounded-full bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
                           Admin
                         </span>
-                      ) : (
-                        <div></div>
-                      )}
+                      ) : null}
                     </div>
-                    {comment?.user?.id === userId ? (
-                      // <Menu
-                      //   as="div"
-                      //   className="relative inline-block text-left"
-                      // >
-                      //   <div>
-                      //     {editModal && (
-                      //       <EditCommentModal
-                      //         onClose={closeEditModal}
-                      //         comment={commentData}
-                      //         id={commentId}
-                      //         courseId={data?.data?.id}
-                      //       />
-                      //     )}
-                      //     <Menu.Button className="flex items-center rounded-full text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
-                      //       <span className="sr-only">Open options</span>
-                      //       <EllipsisVerticalIcon
-                      //         className="h-5 w-5"
-                      //         aria-hidden="true"
-                      //       />
-                      //     </Menu.Button>
-                      //     {deleteModal && (
-                      //       <DeleteCommentModal
-                      //         onClose={closeDeleteModal}
-                      //         commentId={deleteCommentId}
-                      //         courseId={data?.data?.id}
-                      //       />
-                      //     )}
-                      //   </div>
+                    {/* {comment?.user?.id === userId ? (
+                      <>
+                        <span>
+                          {editModal && (
+                            <EditCommentModal
+                              onClose={closeEditModal}
+                              comment={comment?.commentData}
+                              id={comment?.id}
+                              courseId={data?.data?.id}
+                            />
+                          )}
+                          {deleteModal && (
+                            <DeleteCommentModal
+                              onClose={closeDeleteModal}
+                              commentId={comment?.id}
+                              courseId={data?.data?.id}
+                            />
+                          )}
+                        </span>
+                        <Menu
+                          as="div"
+                          className="relative inline-block text-left"
+                        >
+                          <div>
+                            <Menu.Button className="flex items-center rounded-full bg-gray-100 text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
+                              <span className="sr-only">Open options</span>
+                              <EllipsisVerticalIcon
+                                className="h-5 w-5"
+                                aria-hidden="true"
+                              />
+                            </Menu.Button>
+                          </div>
 
-                      //   <Transition
-                      //     as={Fragment}
-                      //     enter="transition ease-out duration-100"
-                      //     enterFrom="transform opacity-0 scale-95"
-                      //     enterTo="transform opacity-100 scale-100"
-                      //     leave="transition ease-in duration-75"
-                      //     leaveFrom="transform opacity-100 scale-100"
-                      //     leaveTo="transform opacity-0 scale-95"
-                      //   >
-                      //     <Menu.Items className="absolute right-0 z-10 mt-2 w-fit origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      //       <div className="py-1">
-                      //         <Menu.Item>
-                      //           {({ active }) => (
-                      //             <button
-                      //               onClick={() =>
-                      //                 editModalOpen(
-                      //                   comment?.commentData,
-                      //                   comment?.id
-                      //                 )
-                      //               }
-                      //               className={classNames(
-                      //                 active
-                      //                   ? "bg-gray-100 text-gray-900"
-                      //                   : "text-gray-700",
-                      //                 "block w-full px-4 py-2 text-left text-sm"
-                      //               )}
-                      //             >
-                      //               Edit
-                      //             </button>
-                      //           )}
-                      //         </Menu.Item>
-                      //         <Menu.Item>
-                      //           {({ active }) => (
-                      //             <button
-                      //               onClick={() => deleteModalOpen(comment?.id)}
-                      //               className={classNames(
-                      //                 active
-                      //                   ? "bg-gray-100 text-gray-900"
-                      //                   : "text-gray-700",
-                      //                 "block w-full px-4 py-2 text-left text-sm"
-                      //               )}
-                      //             >
-                      //               Delete
-                      //             </button>
-                      //           )}
-                      //         </Menu.Item>
-                      //       </div>
-                      //     </Menu.Items>
-                      //   </Transition>
-                      // </Menu>
-                      <></>
-                    ) : (
-                      <div className=" hidden">test</div>
-                    )}
+                          <Transition
+                            as={Fragment}
+                            enter="transition ease-out duration-100"
+                            enterFrom="transform opacity-0 scale-95"
+                            enterTo="transform opacity-100 scale-100"
+                            leave="transition ease-in duration-75"
+                            leaveFrom="transform opacity-100 scale-100"
+                            leaveTo="transform opacity-0 scale-95"
+                          >
+                            <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                              <div className="py-1">
+                                <Menu.Item>
+                                  {({ active }) => (
+                                    <button
+                                      className={classNames(
+                                        active
+                                          ? "bg-gray-100 text-gray-900"
+                                          : "text-gray-700",
+                                        "group flex items-center px-4 py-2 text-sm"
+                                      )}
+                                      onClick={editModalOpen(
+                                        comment?.id,
+                                        comment
+                                      )}
+                                    >
+                                      <PencilSquareIcon
+                                        className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+                                        aria-hidden="true"
+                                      />
+                                      Edit
+                                    </button>
+                                  )}
+                                </Menu.Item>
+                              </div>
+                              <div className="py-1">
+                                <Menu.Item>
+                                  {({ active }) => (
+                                    <a
+                                      onClick={deleteModalOpen(
+                                        comment?.commentData,
+                                        comment?.id
+                                      )}
+                                      className={classNames(
+                                        active
+                                          ? "bg-gray-100 text-gray-900"
+                                          : "text-gray-700",
+                                        "group flex items-center px-4 py-2 text-sm"
+                                      )}
+                                    >
+                                      <TrashIcon
+                                        className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+                                        aria-hidden="true"
+                                      />
+                                      Delete
+                                    </a>
+                                  )}
+                                </Menu.Item>
+                              </div>
+                            </Menu.Items>
+                          </Transition>
+                        </Menu>
+                      </>
+                    ) : null} */}
                   </div>
                   <p className="text-sm mt-2 text-justify">
                     {comment?.commentData}
