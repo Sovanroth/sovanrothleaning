@@ -49,6 +49,9 @@ const Search = () => {
     let response = {};
     try {
       response = await dispatch(getOneCourseByUser(id));
+      if (response?.data?.data === null) {
+        navigate("/404");
+      }
     } catch (error) {
       response = error;
     }

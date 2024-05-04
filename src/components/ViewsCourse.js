@@ -55,6 +55,9 @@ const ViewsCourse = () => {
 
     try {
       response = await dispatch(getOneData(id));
+      if (response?.data?.data === null) {
+        navigate("/404");
+      }
     } catch (error) {
       console.log(error);
       response = error;
