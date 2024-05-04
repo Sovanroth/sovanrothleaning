@@ -379,8 +379,6 @@ const BuyCourse = () => {
                         type="button"
                         className="rounded-full mt-5 bg-indigo-600 px-3.5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                       >
-                        {/* {loading ? "Loading..." : "Log in"} */}
-                        {/* Enroll for {oneCourseByUser?.data?.coursePrice} */}
                         {loading
                           ? "Loading ..."
                           : `Enroll for ${oneCourseByUser?.data?.coursePrice}$`}
@@ -393,9 +391,7 @@ const BuyCourse = () => {
           </div>
           {oneCourseByUser?.data?.owned === 1 ? (
             <Comment data={oneCourseByUser} />
-          ) : (
-            <></>
-          )}
+          ) : null}
         </div>
       )}
     </div>

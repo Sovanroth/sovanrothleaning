@@ -11,6 +11,7 @@ import "video-react/dist/video-react.css";
 import { Tooltip } from "react-tooltip";
 import ReactPlayer from "react-player";
 import { Helmet } from "react-helmet";
+import Comment from "./Comment";
 
 const Search = () => {
   const { id } = useParams();
@@ -321,6 +322,9 @@ const Search = () => {
               </div>
             </div>
           </div>
+          {oneCourseByUser?.data?.owned === 1 ? (
+            <Comment data={oneCourseByUser} />
+          ) : null}
         </div>
       )}
     </div>
