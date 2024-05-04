@@ -154,7 +154,7 @@ export default function CourseOwned() {
         </div>
       ) : (
         <div className="bg-white ">
-          {role === 1 ? (
+          {role === "1" ? (
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
               <div className="mx-auto mt-5 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-4 md:grid-cols-2">
                 {activeCourse?.data?.map((post, index) => (
@@ -191,14 +191,7 @@ export default function CourseOwned() {
                             >
                               {getCategoryName(post.category)}
                             </a>
-                            {/* <p
-                          key={post.coursePrice}
-                          className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 "
-                        >
-                          {post.coursePrice}
-                        </p> */}
                           </div>
-                          {/* <Link to={`/browse/buy-course/${post.course_id}`}> */}
                           <div className="group relative">
                             <h3 className="mt-1 font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
                               <a href={post.href} key={post.courseTitle}>
@@ -213,10 +206,8 @@ export default function CourseOwned() {
                               {post.courseDescription}
                             </p>
                           </div>
-                          {/* </Link> */}
                         </div>
                       </article>
-                      {/* </Link> */}
                     </motion.article>
                   </Link>
                 ))}
@@ -259,14 +250,7 @@ export default function CourseOwned() {
                             >
                               {getCategoryName(post.category)}
                             </a>
-                            {/* <p
-                            key={post.coursePrice}
-                            className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 "
-                          >
-                            {post.coursePrice}
-                          </p> */}
                           </div>
-                          {/* <Link to={`/browse/buy-course/${post.course_id}`}> */}
                           <div className="group relative">
                             <h3 className="mt-1 font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
                               <a href={post.href} key={post.courseTitle}>
@@ -281,10 +265,8 @@ export default function CourseOwned() {
                               {post.courseDescription}
                             </p>
                           </div>
-                          {/* </Link> */}
                         </div>
                       </article>
-                      {/* </Link> */}
                     </motion.article>
                   </Link>
                 ))}
