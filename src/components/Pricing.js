@@ -94,7 +94,7 @@ export default function Pricing() {
               <h3 className="text-2xl font-bold tracking-tight text-gray-900">
                 {oneData?.data?.courseTitle}
               </h3>
-              <p className="mt-6 text-base leading-7 text-gray-600">
+              <p className="mt-6 text-base leading-7 text-gray-600 line-clamp-6">
                 {oneData?.data?.courseDescription}
               </p>
               <div className="mt-10 flex items-center gap-x-4">
