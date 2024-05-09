@@ -84,7 +84,6 @@ export default function CourseOwned() {
     setLoading(true);
     try {
       const response = await dispatch(getActiveData());
-      console.log(response?.data?.data);
       return response;
     } catch (error) {
       console.log(error);

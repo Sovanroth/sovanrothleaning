@@ -2,7 +2,7 @@ import axios from "axios";
 
 // const axiosInstance = axios.create({ baseURL: "http://localhost:3000" });
 const axiosInstance = axios.create({
-  baseURL: "https://server.decapsoul.one/",
+  baseURL: "https://server.sovanrothnath.site/",
 });
 
 axiosInstance.interceptors.response.use(
