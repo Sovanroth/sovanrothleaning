@@ -97,9 +97,9 @@ export default function SignUp() {
                   Sign in here
                 </Link>
               </p>
-              <p className=" text-sm leading-6 text-gray-500">
-                Please use a correct email address. You will not be able to
-                modify your email address again!
+              <p className=" text-sm leading-6 text-gray-500 text-center">
+                Please use a <strong>valid email address.</strong> You will not
+                be able to modify your email address again!
               </p>
             </div>
 
