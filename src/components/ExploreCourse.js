@@ -7,7 +7,14 @@ import {
 } from "../redux/slice/courseSlice";
 import Moment from "react-moment";
 import { Link } from "react-router-dom";
-import { AreaChart, Clapperboard, Code2, DatabaseZap, Music, Settings } from "lucide-react";
+import {
+  AreaChart,
+  Clapperboard,
+  Code2,
+  DatabaseZap,
+  Music,
+  Settings,
+} from "lucide-react";
 import LoadingScreen from "./LoadingScreen";
 import { isEmpty } from "@firebase/util";
 import { motion } from "framer-motion";
@@ -112,14 +119,16 @@ export default function ExploreCourse() {
               <button
                 key={data.id}
                 type="button"
-                className={`rounded-full bg-white px-3 py-1.5 text-xs text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 transition-colors duration-300 ${
-                  activeId === data.id ? "bg-gray-300" : ""
-                }`}
                 onClick={() => handleButtonClick(data.id)}
+                className={`rounded-full px-3 py-1.5 text-xs text-gray-900 shadow-sm ring-1 ring-inset transition-colors duration-300 ${
+                  activeId === data.id
+                    ? "bg-gray-300 ring-gray-400"
+                    : "bg-white ring-gray-300"
+                } hover:bg-gray-200`}
               >
                 <div className="flex flex-row">
                   {data.icon}
-                  <div className="ml-1 align-middle"> {data.category}</div>
+                  <div className="ml-1 align-middle">{data.category}</div>
                 </div>
               </button>
             ))}

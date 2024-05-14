@@ -10,6 +10,7 @@ import { createProfile, updateProfile } from "../redux/slice/loginSlice";
 import LoadingScreen from "./LoadingScreen";
 import { Helmet } from "react-helmet";
 import ChangePasswordModal from "./ChangePasswordModal";
+import FAQ from "./FAQ";
 
 export default function Setting() {
   const data = useSelector((state) => state?.courses?.getCourseByUser);

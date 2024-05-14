@@ -36,6 +36,7 @@ import Banner from "./components/Banner";
 import CheckOutForm from "./components/CheckOutForm";
 import Comment from "./components/Comment";
 import PaidSuccess from "./components/PaidSuccess";
+import AboutUs from "./view/AboutUs";
 
 function App() {
   document.addEventListener("contextmenu", (e) => e.preventDefault());
@@ -73,6 +74,7 @@ function App() {
             <Route path="/search-course/:id" element={<SearchPage />} />
             <Route path="/confirm-order/:id" element={<CheckOutForm />} />
             <Route path="/paid-success" element={<PaidSuccess />} />
+            <Route path="/about-us" element={<AboutUs />} />
           </Route>
 
           <Route element={<TeacherPrivateRoute />}>
