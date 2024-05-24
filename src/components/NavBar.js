@@ -13,7 +13,7 @@ import SearchCourseModal from "./SearchCourseModal";
 const navigation = [
   { name: "Dashboard", href: "/", current: false },
   { name: "Browse", href: "/browse", current: false },
-  { name: "About Us", href: "/about-us", current: false },
+  // { name: "About Us", href: "/about-us", current: false },
 ];
 
 const userNavigation = [
